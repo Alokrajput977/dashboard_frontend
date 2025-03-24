@@ -13,17 +13,14 @@ const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
-            className={`task-list ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
+            className={`task-list ${
+              snapshot.isDraggingOver ? 'dragging-over' : ''
+            }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
             {tasks.map((task, index) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                index={index}
-                removeTask={() => removeTask(column.id, task.id)}
-              />
+              <TaskCard key={task.id} task={task} index={index} />
             ))}
             {provided.placeholder}
           </div>
