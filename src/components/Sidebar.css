@@ -1,0 +1,170 @@
+/* Root variables for easy theme adjustments */
+:root {
+  --sidebar-color: #1f1f1f;     /* Sidebar background color */
+  --accent-color: #00FFAB;      /* Hover highlight color */
+  --heading-border-color: #fff; /* Border color under headings */
+  --transition-speed: 0.3s;
+  --text-color: #ffffff;        /* Default text color */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f5f5f5; /* Page background for contrast */
+}
+
+/* Sidebar Container */
+.sidebar-container {
+  width: 240px;
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  max-height: 100vh; /* Full height */
+  overflow-y: auto;  /* Enables vertical scrolling */
+}
+
+/* Custom Scrollbar for WebKit browsers */
+.sidebar-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: var(--sidebar-color);
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+  border-radius: 4px;
+}
+
+/* For Firefox */
+.sidebar-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--sidebar-color);
+}
+
+/* Logo / Top Section */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
+.sidebar-logo span {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* Main Sections */
+.sidebar-sections {
+  flex-grow: 1;
+}
+
+/* Each section grouping */
+.sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Section Heading */
+.sidebar-heading {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--heading-border-color);
+  padding-bottom: 0.5rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+/* Individual items */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  padding: 0.4rem 0.2rem;
+  border-radius: 4px;
+}
+
+.sidebar-item span {
+  margin-left: 0.8rem;
+  font-size: 0.95rem;
+}
+
+/* Hover effect */
+.sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--accent-color);
+}
+
+/* Notification badge styling */
+.notification-item {
+  position: relative;
+}
+
+.notification-badge {
+  background-color: #ff4141;
+  color: #ffffff;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  margin-left: auto;
+}
+
+/* Footer */
+.sidebar-footer {
+  margin-top: 2rem;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: static;
+    min-height: auto;
+    padding: 0.5rem;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 0;
+  }
+
+  .sidebar-sections {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-grow: 1;
+  }
+
+  .sidebar-section {
+    margin-bottom: 0;
+    margin: 0 1rem;
+  }
+
+  .sidebar-heading {
+    display: none; /* Hide headings on mobile for space */
+  }
+
+  .sidebar-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-footer {
+    margin-top: 0;
+  }
+}

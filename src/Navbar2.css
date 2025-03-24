@@ -1,0 +1,81 @@
+:root {
+    --nav2-bg: #222831;
+    --nav2-accent: #00adb5;
+    --nav2-hover: #009ca2;
+    --nav2-text: #eeeeee;
+    --nav2-transition: 0.3s;
+  }
+  
+  /* NAVBAR2 CONTAINER */
+  .navbar2-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--nav2-bg);
+    padding: 1rem 2rem;
+    color: var(--nav2-text);
+    margin-top: 1px; /* Just to separate from first navbar visually */
+  }
+  
+  /* BRAND */
+  .navbar2-brand h1 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  
+  /* LINKS */
+  .navbar2-links {
+    list-style: none;
+    display: flex;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar2-links li {
+    cursor: pointer;
+    position: relative;
+    transition: color var(--nav2-transition);
+  }
+  
+  .navbar2-links li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    background-color: var(--nav2-accent);
+    transition: width var(--nav2-transition);
+  }
+  
+  .navbar2-links li:hover {
+    color: var(--nav2-accent);
+  }
+  
+  .navbar2-links li:hover::after {
+    width: 100%;
+  }
+  
+  /* RIGHT SECTION */
+  .navbar2-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar2-add-btn {
+    background-color: var(--nav2-accent);
+    color: var(--nav2-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color var(--nav2-transition), transform var(--nav2-transition);
+  }
+  
+  .navbar2-add-btn:hover {
+    background-color: var(--nav2-hover);
+    transform: translateY(-2px);
+  }
+  

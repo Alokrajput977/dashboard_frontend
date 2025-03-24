@@ -1,0 +1,87 @@
+/* Root variables for easy color/theme changes */
+:root {
+  --primary-color: #1f1f1f;
+  --accent-color: #8b5cf6;
+  --hover-color: #7c3aed;
+  --text-color: #ffffff;
+  --transition-speed: 0.3s;
+}
+
+/* Basic Reset / Body Style */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* NAVBAR CONTAINER */
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  padding: 1rem 2rem;
+  color: var(--text-color);
+}
+
+/* LEFT: BRAND */
+.navbar-brand h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* CENTER: LINKS */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition-speed);
+}
+
+.navbar-links li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: width var(--transition-speed);
+}
+
+.navbar-links li:hover {
+  color: var(--accent-color);
+}
+
+.navbar-links li:hover::after {
+  width: 100%;
+}
+
+/* RIGHT: BUTTON */
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.add-member-btn {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.add-member-btn:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.05);
+}

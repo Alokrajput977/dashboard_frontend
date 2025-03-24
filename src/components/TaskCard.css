@@ -1,0 +1,80 @@
+/* TaskCard.css */
+.task-card {
+  position: relative;
+  background-color: #3a3a3a;
+  margin-bottom: 1rem;
+  padding: 1.5rem 0.75rem 0.75rem 0.75rem; /* Increased top padding */
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.task-card:hover {
+  background-color: #4a4a4a;
+}
+
+.task-card.dragging {
+  background-color: #2f2f2f;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.task-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.task-title {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.task-date {
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.priority {
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.priority.high {
+  background-color: #e74c3c;
+}
+
+.priority.medium {
+  background-color: #f1c40f;
+}
+
+.priority.low {
+  background-color: #2ecc71;
+}
+
+/* Remove button styling with attractive cross icon */
+.remove-task-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #e74c3c;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.remove-task-button:hover {
+  opacity: 1;
+}
+
+
