@@ -1,6 +1,9 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import TaskCard from './TaskCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
 import './Column.css';
 
 const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
@@ -13,9 +16,7 @@ const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
-            className={`task-list ${
-              snapshot.isDraggingOver ? 'dragging-over' : ''
-            }`}
+            className={`task-list ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -27,12 +28,12 @@ const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
         )}
       </Droppable>
 
-      {/* Attractive Add Task Button with Unicode plus sign */}
       <button
         className="add-task-button"
         onClick={() => openNewTaskModal(column.id)}
       >
-        ➕ Add Task
+        <FontAwesomeIcon icon={faPlusCircle} className="icon" />
+        <span>Add Task</span>
       </button>
     </div>
   );

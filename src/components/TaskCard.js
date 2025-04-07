@@ -3,7 +3,13 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import './TaskCard.css';
 
-const TaskCard = ({ task, index, removeTask }) => {
+const TaskCard = ({ task, index, removeTask = () => {} }) => {
+  // Handler to remove task and prevent drag events from firing
+  const handleRemove = (event) => {
+    event.stopPropagation(); // Prevent drag start
+    removeTask(task.id);
+  };
+
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
@@ -13,7 +19,11 @@ const TaskCard = ({ task, index, removeTask }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <button className="remove-task-button" onClick={removeTask}>
+          <button 
+            className="remove-task-button"
+            onMouseDown={(e) => e.stopPropagation()}  // Prevent drag on mouse down
+            onClick={handleRemove}
+          >
             ✖
           </button>
           <div className="task-label">
