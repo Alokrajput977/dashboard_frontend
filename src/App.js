@@ -1,17 +1,28 @@
-import React from 'react';
-import Sidebar from './components/Sidebar.js';
-import Navbar from './components/Navbar.js';
-import Board from './components/Board.js';
-// import Navbar2 from './Navbar2.js';
+import React, { useState, useEffect } from 'react';
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
+import Board from './components/Board';
+import './index.css';
 
 function App() {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <div className="app-container">
       <Sidebar />
       <div className="main-content">
-        <Navbar />
-        {/* <Navbar2 /> */}
-        <Board />
+        <Navbar theme={theme} toggleTheme={toggleTheme} />
+        <div className="content-area">
+          <Board />
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,12 @@
-// src/components/TaskCard.js
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import './TaskCard.css';
 
-const TaskCard = ({ task, index, removeTask = () => {} }) => {
-  // Handler to remove task and prevent drag events from firing
+const TaskCard = ({ task, index, removeTask }) => {
+  // Handler to remove task and prevent drag events
   const handleRemove = (event) => {
-    event.stopPropagation(); // Prevent drag start
-    removeTask(task.id);
+    event.stopPropagation();
+    removeTask();  // no args needed—Column has already bound them
   };
 
   return (
@@ -19,9 +18,9 @@ const TaskCard = ({ task, index, removeTask = () => {} }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <button 
+          <button
             className="remove-task-button"
-            onMouseDown={(e) => e.stopPropagation()}  // Prevent drag on mouse down
+            onMouseDown={e => e.stopPropagation()}  // don't start a drag
             onClick={handleRemove}
           >
             ✖

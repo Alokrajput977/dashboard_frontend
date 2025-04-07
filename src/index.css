@@ -1,13 +1,99 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*----------------------------------------
+  1) Theme Variables
+-----------------------------------------*/
+/* Light theme (default) */
+:root {
+  /* Global colors */
+  --primary-color:       #ffffff;  /* navbar & content bg */
+  --sidebar-color:       #ffffff;  /* sidebar bg */
+  --bg-color:            #f5f5f5;  /* page bg */
+  --text-color:          #1f1f1f;  /* main text & headings */
+  --heading-border-color:#1f1f1f;  /* under headings */
+  --accent-color:        #8b5cf6;  /* buttons & link hovers */
+  --hover-color:         #7c3aed;  /* button hover */
+  --sidebar-hover-bg:    rgba(0,0,0,0.05);
+  --transition-speed:    0.3s;
+
+  /* Board / Column */
+  --board-bg-color:      #ffffff;
+  --column-bg:           #f4f5f7;
+  --task-list-bg:        #ebecf0;
+  --column-text:         #333333;
+  --column-shadow:       rgba(0,0,0,0.1);
+
+  /* Add‑task button */
+  --add-task-bg:         linear-gradient(145deg, #6fcf97, #56ab2f);
+  --add-task-shadow:     rgba(0,0,0,0.15);
+
+  /* TaskCard */
+  --task-card-bg:        #ffffff;
+  --task-card-hover:     #f9f9f9;
+  --task-card-drag:      #f0f0f0;
+  --task-card-text:      #1f1f1f;
+  --task-date-color:     #555555;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Dark theme overrides */
+[data-theme='dark'] {
+  --primary-color:       #1f1f1f;
+  --sidebar-color:       #1f1f1f;
+  --bg-color:            #121212;
+  --text-color:          #ffffff;
+  --heading-border-color:#ffffff;
+  --accent-color:        #8b5cf6;
+  --hover-color:         #7c3aed;
+  --sidebar-hover-bg:    rgba(255,255,255,0.1);
+
+  --board-bg-color:      #1e1e1e;
+  --column-bg:           #2a2a2a;
+  --task-list-bg:        #333333;
+  --column-text:         #ffffff;
+  --column-shadow:       rgba(0,0,0,0.2);
+
+  --add-task-bg:         linear-gradient(145deg, #56ab2f, #6fcf97);
+  --add-task-shadow:     rgba(0,0,0,0.3);
+
+  --task-card-bg:        #3a3a3a;
+  --task-card-hover:     #4a4a4a;
+  --task-card-drag:      #2f2f2f;
+  --task-card-text:      #ffffff;
+  --task-date-color:     #cccccc;
+}
+
+/*----------------------------------------
+  2) Base & Layout
+-----------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed),
+              color var(--transition-speed);
+}
+
+/* App layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
+  background-color: var(--primary-color);
+  padding: 1rem;
+  overflow-y: auto;
+  transition: background-color var(--transition-speed);
 }

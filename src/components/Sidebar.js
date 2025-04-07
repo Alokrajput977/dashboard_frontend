@@ -12,83 +12,59 @@ import {
   faQuestionCircle,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
-
 import './Sidebar.css';
 
 function Sidebar() {
   return (
     <div className="sidebar-container">
-      {/* Logo / Top Section */}
       <div className="sidebar-logo">
-        {/* If you have an image logo, uncomment and update the path below */}
-        {/* <img src="https://via.placeholder.com/30x30?text=Logo" alt="Logo" className="logo-image" /> */}
         <span>Dashboard</span>
       </div>
-
-      {/* Main Sections */}
       <div className="sidebar-sections">
-        {/* GENERAL */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">GENERAL</h3>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faCalendar} />
-            <span>My Time</span>
+            <FontAwesomeIcon icon={faCalendar} /><span>My Time</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faCheckSquare} />
-            <span>My Work</span>
+            <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faClipboardList} />
-            <span>Boards</span>
+            <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
           </div>
           <div className="sidebar-item notification-item">
-            <FontAwesomeIcon icon={faBell} />
-            <span>Notification</span>
+            <FontAwesomeIcon icon={faBell} /><span>Notification</span>
             <span className="notification-badge">4</span>
           </div>
         </div>
-
-        {/* PROJECTS */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">PROJECTS</h3>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faProjectDiagram} />
-            <span>Hologram</span>
+            <FontAwesomeIcon icon={faProjectDiagram} /><span>Hologram</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faPaintBrush} />
-            <span>DailyArt App</span>
+            <FontAwesomeIcon icon={faPaintBrush} /><span>DailyArt App</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faStar} /> 
-            <span>Weszio.com</span>
+            <FontAwesomeIcon icon={faStar} /><span>Weszio.com</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faStar} />
-            <span>Starlight Team</span>
+            <FontAwesomeIcon icon={faStar} /><span>Starlight Team</span>
           </div>
         </div>
-
-        {/* OTHER */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">OTHER</h3>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faCog} />
-            <span>Settings</span>
+            <FontAwesomeIcon icon={faCog} /><span>Settings</span>
           </div>
           <div className="sidebar-item">
-            <FontAwesomeIcon icon={faQuestionCircle} />
-            <span>Help Center</span>
+            <FontAwesomeIcon icon={faQuestionCircle} /><span>Help Center</span>
           </div>
         </div>
       </div>
-
-      {/* Footer / Logout */}
       <div className="sidebar-footer">
         <div className="sidebar-item">
-          <FontAwesomeIcon icon={faSignOutAlt} />
-          <span>Logout</span>
+          <FontAwesomeIcon icon={faSignOutAlt} /><span>Logout</span>
         </div>
       </div>
     </div>

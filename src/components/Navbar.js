@@ -1,19 +1,14 @@
 import React from 'react';
-// Import the FontAwesome icon(s) you need
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { faPlus, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ theme, toggleTheme }) {
   return (
     <nav className="navbar-container">
-      {/* Left Section: Title/Logo */}
       <div className="navbar-brand">
-       
+        <h1>My App</h1>
       </div>
-
-      {/* Center Section: Links */}
       <ul className="navbar-links">
         <li>Overview</li>
         <li>Tasks</li>
@@ -22,9 +17,14 @@ function Navbar() {
         <li>Files</li>
         <li>Members</li>
       </ul>
-
-      {/* Right Section: Button */}
       <div className="navbar-right">
+        <button
+          className="theme-toggle-btn"
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+        >
+          <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
+        </button>
         <button className="add-member-btn">
           <FontAwesomeIcon icon={faPlus} /> Add Member
         </button>

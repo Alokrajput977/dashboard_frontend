@@ -1,20 +1,20 @@
-/* TaskCard.css */
 .task-card {
   position: relative;
-  background-color: #3a3a3a;
+  background-color: var(--task-card-bg);
   margin-bottom: 1rem;
-  padding: 1.5rem 0.75rem 0.75rem 0.75rem; /* Increased top padding */
+  padding: 1.5rem 0.75rem 0.75rem;
   border-radius: 6px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color var(--transition-speed),
+              transform var(--transition-speed);
   cursor: pointer;
 }
 
 .task-card:hover {
-  background-color: #4a4a4a;
+  background-color: var(--task-card-hover);
 }
 
 .task-card.dragging {
-  background-color: #2f2f2f;
+  background-color: var(--task-card-drag);
   transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -24,19 +24,19 @@
   justify-content: space-between;
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
-  color: #fff;
+  color: var(--task-card-text);
 }
 
 .task-title {
   margin: 0 0 0.5rem;
-  color: #fff;
+  color: var(--task-card-text);
   font-size: 1rem;
   font-weight: bold;
 }
 
 .task-date {
   font-size: 0.8rem;
-  color: #ccc;
+  color: var(--task-date-color);
 }
 
 .priority {
@@ -46,23 +46,13 @@
   font-weight: bold;
 }
 
-.priority.high {
-  background-color: #e74c3c;
-}
+.priority.high   { background-color: #e74c3c; }
+.priority.medium { background-color: #f1c40f; }
+.priority.low    { background-color: #2ecc71; }
 
-.priority.medium {
-  background-color: #f1c40f;
-}
-
-.priority.low {
-  background-color: #2ecc71;
-}
-
-/* Remove button styling with attractive cross icon */
 .remove-task-button {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 4px; right: 4px;
   background: transparent;
   border: none;
   font-size: 14px;
@@ -76,5 +66,3 @@
 .remove-task-button:hover {
   opacity: 1;
 }
-
-

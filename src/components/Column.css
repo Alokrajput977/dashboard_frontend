@@ -1,50 +1,47 @@
-/* Container for the column */
 .column-container {
-  background-color: #f4f5f7;
+  background-color: var(--column-bg);
   border-radius: 6px;
   width: 250px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   margin-right: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px var(--column-shadow);
+  transition: background-color var(--transition-speed),
+              box-shadow var(--transition-speed);
 }
 
-/* Column title styling */
 .column-title {
   margin-bottom: 12px;
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--column-text);
 }
 
-/* Task list container with gap between items */
 .task-list {
   flex-grow: 1;
   min-height: 120px;
   padding: 12px;
-  background-color: #ebecf0;
+  background-color: var(--task-list-bg);
   border-radius: 6px;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--transition-speed);
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* When dragging over, update background */
 .task-list.dragging-over {
-  background-color: #d2d7e0;
+  background-color: var(--hover-color);
 }
 
-/* Add Task button styling */
 .add-task-button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px;
-  background: linear-gradient(145deg, #6fcf97, #56ab2f);
+  background: var(--add-task-bg);
   border: none;
   border-radius: 6px;
   color: #fff;
@@ -54,18 +51,15 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Icon styling inside the button */
 .add-task-button .icon {
   font-size: 18px;
 }
 
-/* Hover effects for button */
 .add-task-button:hover {
   transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--add-task-shadow);
 }
 
-/* Optional active/click effect */
 .add-task-button:active {
   transform: scale(0.98);
 }

@@ -21,7 +21,13 @@ const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
             {...provided.droppableProps}
           >
             {tasks.map((task, index) => (
-              <TaskCard key={task.id} task={task} index={index} />
+              <TaskCard
+                key={task.id}
+                task={task}
+                index={index}
+                /** bind both columnId and taskId here **/
+                removeTask={() => removeTask(column.id, task.id)}
+              />
             ))}
             {provided.placeholder}
           </div>
