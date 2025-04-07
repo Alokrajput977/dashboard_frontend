@@ -40,3 +40,33 @@ body {
     flex-direction: column;
   }
 }
+
+/* src/App.css */
+:root {
+  --bg-page: #ffffff;
+  --text-primary: #333333;
+  --modal-bg: #ffffff;
+  --input-bg: #ffffff;
+  --input-text: #333333;
+  --border-color: #cccccc;
+  --overlay-bg: rgba(0,0,0,0.6);
+  --btn-confirm: #4caf50;
+  --btn-cancel: #f44336;
+}
+
+body[data-theme='dark'] {
+  --bg-page: #1e1e1e;
+  --text-primary: #eeeeee;
+  --modal-bg: #2c2c2c;
+  --input-bg: #3a3a3a;
+  --input-text: #ffffff;
+  --border-color: #555555;
+  --overlay-bg: rgba(0,0,0,0.8);
+  --btn-confirm: #388e3c;
+  --btn-cancel: #d32f2f;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}

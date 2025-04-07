@@ -7,7 +7,6 @@ function Navbar({ theme, toggleTheme }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-brand">
-        <h1>My App</h1>
       </div>
       <ul className="navbar-links">
         <li>Overview</li>

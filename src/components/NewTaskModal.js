@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import './NewTaskModal.css';
 
-function NewTaskModal({ columnId, onClose, onSubmit }) {
-  const [title, setTitle] = useState('');
-  const [label, setLabel] = useState('');
+function NewTaskModal({ columnId, onClose, onSubmit, theme }) {
+  const [title, setTitle]     = useState('');
+  const [label, setLabel]     = useState('');
   const [priority, setPriority] = useState('Medium');
   const [dueDate, setDueDate] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!title.trim()) return;
     onSubmit(columnId, { title, label, priority, dueDate });
@@ -17,31 +17,35 @@ function NewTaskModal({ columnId, onClose, onSubmit }) {
 
   return (
     <div className="modal-overlay">
+      {/* add theme as a class here if you prefer class-based theming */}
       <div className="modal-content">
         <h3>Add New Task</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Task Title</label>
-            <input 
+            <input
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={e => setTitle(e.target.value)}
               required
               placeholder="Enter task title"
             />
           </div>
           <div className="form-group">
             <label>Label</label>
-            <input 
+            <input
               type="text"
               value={label}
-              onChange={(e) => setLabel(e.target.value)}
+              onChange={e => setLabel(e.target.value)}
               placeholder="Enter label (e.g., Design System)"
             />
           </div>
           <div className="form-group">
             <label>Priority</label>
-            <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <select
+              value={priority}
+              onChange={e => setPriority(e.target.value)}
+            >
               <option>High</option>
               <option>Medium</option>
               <option>Low</option>
@@ -49,15 +53,23 @@ function NewTaskModal({ columnId, onClose, onSubmit }) {
           </div>
           <div className="form-group">
             <label>Due Date</label>
-            <input 
+            <input
               type="date"
               value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
+              onChange={e => setDueDate(e.target.value)}
             />
           </div>
           <div className="modal-actions">
-            <button type="submit" className="submit-button">Add Task</button>
-            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+            <button type="submit" className="submit-button">
+              Add Task
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
