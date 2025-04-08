@@ -1,12 +1,14 @@
-import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import React, { useState } from 'react';
+import { Draggable } from '@hello-pangea/dnd';
 import './TaskCard.css';
 
-const TaskCard = ({ task, index, removeTask }) => {
-  // Handler to remove task and prevent drag events
-  const handleRemove = (event) => {
-    event.stopPropagation();
-    removeTask();  // no args needed—Column has already bound them
+const TaskCard = ({ task, index, userRole, onEdit }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(task.title);
+
+  const handleSaveEdit = () => {
+    onEdit(task.id, { ...task, title: editedTitle });
+    setIsEditing(false);
   };
 
   return (
@@ -18,21 +20,31 @@ const TaskCard = ({ task, index, removeTask }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <button
-            className="remove-task-button"
-            onMouseDown={e => e.stopPropagation()}  // don't start a drag
-            onClick={handleRemove}
-          >
-            ✖
-          </button>
-          <div className="task-label">
-            <span>{task.label}</span>
-            <span className={`priority ${task.priority.toLowerCase()}`}>
-              {task.priority}
-            </span>
-          </div>
-          <h4 className="task-title">{task.title}</h4>
-          <p className="task-date">Due Date: {task.dueDate}</p>
+          {isEditing ? (
+            <div className="task-edit">
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+              />
+              <button onClick={handleSaveEdit}>Save</button>
+              <button onClick={() => setIsEditing(false)}>Cancel</button>
+            </div>
+          ) : (
+            <div className="task-view">
+              <div className="task-label">
+                <span>{task.label}</span>
+                <span className={`priority ${task.priority.toLowerCase()}`}>
+                  {task.priority}
+                </span>
+              </div>
+              <h4 className="task-title">{task.title}</h4>
+              <p className="task-date">Due Date: {task.dueDate}</p>
+              {userRole === 'manager' && (
+                <button onClick={() => setIsEditing(true)}>Edit</button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </Draggable>

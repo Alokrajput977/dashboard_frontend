@@ -1,18 +1,24 @@
-import React from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+// Column.js
+import React, { useState } from 'react';
+import { Droppable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-
+import NewTaskModal from './NewTaskModal';
 import './Column.css';
 
-const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
+const Column = ({ column, tasks, userRole, onEditTask, onAddTask }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  // When the modal submits, pass the new task info up to the Board.
+  const handleModalSubmit = (columnId, taskData) => {
+    onAddTask(columnId, taskData);
+    setShowModal(false);
+  };
+
   return (
     <div className="column-container">
       <h3 className="column-title">
         {column.title} <span>({tasks.length})</span>
       </h3>
-
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
@@ -25,22 +31,31 @@ const Column = ({ column, tasks, openNewTaskModal, removeTask }) => {
                 key={task.id}
                 task={task}
                 index={index}
-                /** bind both columnId and taskId here **/
-                removeTask={() => removeTask(column.id, task.id)}
+                userRole={userRole}
+                onEdit={onEditTask}
               />
             ))}
             {provided.placeholder}
           </div>
         )}
       </Droppable>
-
-      <button
-        className="add-task-button"
-        onClick={() => openNewTaskModal(column.id)}
-      >
-        <FontAwesomeIcon icon={faPlusCircle} className="icon" />
-        <span>Add Task</span>
-      </button>
+      {userRole === 'manager' && (
+        <div className="add-task-container">
+          <button
+            className="add-task-button"
+            onClick={() => setShowModal(true)}
+          >
+            + Add Task
+          </button>
+          {showModal && (
+            <NewTaskModal
+              columnId={column.id}
+              onClose={() => setShowModal(false)}
+              onSubmit={handleModalSubmit}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };
