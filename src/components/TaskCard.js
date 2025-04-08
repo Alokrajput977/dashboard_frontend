@@ -41,7 +41,10 @@ const TaskCard = ({ task, index, userRole, onEdit }) => {
               <h4 className="task-title">{task.title}</h4>
               <p className="task-date">Due Date: {task.dueDate}</p>
               {userRole === 'manager' && (
-                <button onClick={() => setIsEditing(true)}>Edit</button>
+               <button className="edit-btn" onClick={() => onEdit(task)}>
+               ✎ Edit
+             </button>
+             
               )}
             </div>
           )}

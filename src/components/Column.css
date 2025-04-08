@@ -53,6 +53,7 @@
 
 .add-task-button .icon {
   font-size: 18px;
+
 }
 
 .add-task-button:hover {
@@ -62,4 +63,87 @@
 
 .add-task-button:active {
   transform: scale(0.98);
+  
+}
+
+.custom-add-task-btn{
+  margin-bottom: 10px;
+}
+.edit-btn {
+  background-color: #2196f3; /* Blue */
+  color: white;
+  font-weight: 500;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}
+
+.edit-btn:active {
+  background-color: #1565c0;
+  transform: scale(0.95);
+}
+
+.custom-add-task-btn {
+  background-color: #4caf50; /* Green */
+  color: white;
+  font-weight: 600;
+  padding: 10px 16px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-add-task-btn:hover {
+  background-color: #43a047;
+  transform: scale(1.03);
+}
+
+.custom-add-task-btn:active {
+  transform: scale(0.97);
+  background-color: #388e3c;
+}
+
+.plus-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.edit-btn {
+  background-color: #2196f3; /* Blue */
+  color: white;
+  font-weight: 500;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}
+
+.edit-btn:active {
+  background-color: #1565c0;
+  transform: scale(0.95);
 }

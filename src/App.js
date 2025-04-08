@@ -16,12 +16,12 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Sidebar />
+    <div className={`app-container ${theme}`}>
+      <Sidebar theme={theme} />
       <div className="main-content">
         <Navbar theme={theme} toggleTheme={toggleTheme} />
         <div className="content-area">
-          <Board />
+          <Board theme={theme} />
         </div>
       </div>
     </div>

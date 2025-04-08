@@ -97,3 +97,15 @@ body {
   overflow-y: auto;
   transition: background-color var(--transition-speed);
 }
+
+
+:root {
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --modal-bg: #fff;
+  --text-primary: #333;
+  --input-bg: #f9f9f9;
+  --input-text: #000;
+  --border-color: #ccc;
+  --btn-confirm: #28a745;
+  --btn-cancel: #dc3545;
+}

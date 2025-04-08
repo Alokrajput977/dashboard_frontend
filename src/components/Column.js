@@ -4,10 +4,9 @@ import TaskCard from './TaskCard';
 import NewTaskModal from './NewTaskModal';
 import './Column.css';
 
-const Column = ({ column, tasks, userRole, onEditTask, onAddTask }) => {
+const Column = ({ column, tasks, userRole = 'manager', onEditTask, onAddTask }) => {
   const [showModal, setShowModal] = useState(false);
 
-  // When the modal submits, pass the new task info up to the Board.
   const handleModalSubmit = (columnId, taskData) => {
     onAddTask(columnId, taskData);
     setShowModal(false);
@@ -15,9 +14,23 @@ const Column = ({ column, tasks, userRole, onEditTask, onAddTask }) => {
 
   return (
     <div className="column-container">
-      <h3 className="column-title">
-        {column.title} <span>({tasks.length})</span>
-      </h3>
+      <div className="column-header">
+        <h3 className="column-title">
+          {column.title} <span>({tasks.length})</span>
+        </h3>
+
+        {/* Show the "Add Task" button if user is manager */}
+        {userRole === 'manager' && (
+          <button
+            className="custom-add-task-btn"
+            onClick={() => setShowModal(true)}
+            title="Add a new task to this column"
+          >
+            <span className="plus-icon">＋</span> Add Task
+          </button>
+        )}
+      </div>
+
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
@@ -38,22 +51,20 @@ const Column = ({ column, tasks, userRole, onEditTask, onAddTask }) => {
           </div>
         )}
       </Droppable>
+
+      {/* Optional: another Add button at the bottom */}
       {userRole === 'manager' && (
-        <div className="add-task-container">
-          <button
-            className="add-task-button"
-            onClick={() => setShowModal(true)}
-          >
-            + Add Task
-          </button>
-          {showModal && (
-            <NewTaskModal
-              columnId={column.id}
-              onClose={() => setShowModal(false)}
-              onSubmit={handleModalSubmit}
-            />
-          )}
+        <div className="add-task-footer">
         </div>
+      )}
+
+      {/* Show modal if triggered */}
+      {showModal && (
+        <NewTaskModal
+          columnId={column.id}
+          onClose={() => setShowModal(false)}
+          onSubmit={handleModalSubmit}
+        />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './NewTaskModal.css';
 
-const NewTaskModal = ({ columnId, onClose, onSubmit }) => {
+const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
   const [title, setTitle] = useState('');
   const [label, setLabel] = useState('');
   const [priority, setPriority] = useState('Medium');
@@ -14,49 +14,52 @@ const NewTaskModal = ({ columnId, onClose, onSubmit }) => {
     setLabel('');
     setPriority('Medium');
     setDueDate('');
+    onClose();
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Add New Task</h2>
+    <div className={`modal-overlay ${theme}`}>
+      <div className={`modal-content animated ${theme}`}>
+        <h2 className="modal-title">📝 Add New Task</h2>
         <form onSubmit={handleSubmit}>
-          <label>
-            Title:
-            <input 
-              type="text" 
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              type="text"
+              placeholder="Enter task title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required 
+              required
             />
-          </label>
-          <label>
-            Label:
-            <input 
-              type="text" 
+          </div>
+          <div className="form-group">
+            <label>Label</label>
+            <input
+              type="text"
+              placeholder="Optional tag or category"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
             />
-          </label>
-          <label>
-            Priority:
+          </div>
+          <div className="form-group">
+            <label>Priority</label>
             <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Low">Low</option>
+              <option value="High">🔥 High</option>
+              <option value="Medium">⚖️ Medium</option>
+              <option value="Low">🌱 Low</option>
             </select>
-          </label>
-          <label>
-            Due Date:
-            <input 
-              type="date" 
+          </div>
+          <div className="form-group">
+            <label>Due Date</label>
+            <input
+              type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
             />
-          </label>
-          <div className="modal-buttons">
-            <button type="submit">Add Task</button>
-            <button type="button" onClick={onClose}>Cancel</button>
+          </div>
+          <div className="modal-actions">
+            <button type="submit" className="btn primary">✅ Add Task</button>
+            <button type="button" className="btn secondary" onClick={onClose}>❌ Cancel</button>
           </div>
         </form>
       </div>
