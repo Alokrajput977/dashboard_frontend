@@ -1,4 +1,3 @@
-// Column.js
 import React, { useState } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';

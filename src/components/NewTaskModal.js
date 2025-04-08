@@ -1,4 +1,3 @@
-// NewTaskModal.js
 import React, { useState } from 'react';
 import './NewTaskModal.css';
 
