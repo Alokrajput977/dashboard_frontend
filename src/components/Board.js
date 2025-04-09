@@ -41,7 +41,7 @@ const Board = ({ authToken, userRole }) => {
     if (authToken) {
       fetchData();
     } else {
-      // For local (non-authenticated) usage, load board from localStorage if available.
+      // For local usage, load board from localStorage if available
       const savedData = localStorage.getItem('boardData');
       if (savedData) {
         setData(JSON.parse(savedData));
@@ -51,14 +51,14 @@ const Board = ({ authToken, userRole }) => {
     }
   }, [authToken, fetchData]);
 
-  // Persist local board state when not using authToken.
+  // Persist local board state when not authenticated
   useEffect(() => {
     if (!authToken) {
       localStorage.setItem('boardData', JSON.stringify(data));
     }
   }, [data, authToken]);
 
-  // Save board data to API (if in authenticated mode)
+  // Save board data to API (if authenticated)
   const saveBoardData = useCallback(async (boardData) => {
     if (authToken) {
       try {
@@ -83,7 +83,7 @@ const Board = ({ authToken, userRole }) => {
   const handleCreateTask = async () => {
     if (userRole === 'manager' && newTaskTitle && newTaskColumnId) {
       const newTask = {
-        id: `task-${Date.now()}`, // simple unique id based on timestamp
+        id: `task-${Date.now()}`, // unique ID based on timestamp
         label: 'New',
         title: newTaskTitle,
         dueDate: new Date().toISOString().split('T')[0],
@@ -91,7 +91,7 @@ const Board = ({ authToken, userRole }) => {
       };
 
       if (authToken) {
-        // Create task using backend API.
+        // Create task in backend
         try {
           const response = await fetch('http://localhost:5000/api/tasks', {
             method: 'POST',
@@ -110,7 +110,8 @@ const Board = ({ authToken, userRole }) => {
                 createdTask.id,
               ];
               const newTasks = { ...prevData.tasks, [createdTask.id]: createdTask };
-              return { ...prevData, tasks: newTasks, columns: newColumns };
+              const newBoard = { ...prevData, tasks: newTasks, columns: newColumns };
+              return newBoard;
             });
             setIsCreatingTask(false);
             setNewTaskTitle('');
@@ -122,7 +123,7 @@ const Board = ({ authToken, userRole }) => {
           console.error('Error creating task:', err);
         }
       } else {
-        // Local creation for non-authenticated usage.
+        // Local creation
         const newTaskId = `task-${Object.keys(data.tasks).length + 1}`;
         const newTaskLocal = { ...newTask, id: newTaskId };
         setData(prevData => {
@@ -130,7 +131,11 @@ const Board = ({ authToken, userRole }) => {
           const newTaskIds = [...column.taskIds, newTaskId];
           const newColumn = { ...column, taskIds: newTaskIds };
           const newTasks = { ...prevData.tasks, [newTaskId]: newTaskLocal };
-          return { ...prevData, tasks: newTasks, columns: { ...prevData.columns, [newTaskColumnId]: newColumn } };
+          return {
+            ...prevData,
+            tasks: newTasks,
+            columns: { ...prevData.columns, [newTaskColumnId]: newColumn },
+          };
         });
         setIsCreatingTask(false);
         setNewTaskTitle('');
@@ -168,7 +173,7 @@ const Board = ({ authToken, userRole }) => {
           console.error('Error editing task:', err);
         }
       } else {
-        // Update task locally for non-authenticated usage.
+        // Local update
         setData(prevData => ({
           ...prevData,
           tasks: { ...prevData.tasks, [taskId]: updatedTask },
@@ -179,6 +184,34 @@ const Board = ({ authToken, userRole }) => {
     }
   };
 
+  // Handler for removing a task (by ID) from the board
+  const handleRemoveTask = (taskId, columnId) => {
+    if (userRole !== 'manager') {
+      alert('Only managers can remove tasks.');
+      return;
+    }
+
+    setData(prevData => {
+      const newTasks = { ...prevData.tasks };
+      delete newTasks[taskId];
+
+      const newColumns = { ...prevData.columns };
+      const updatedTaskIds = newColumns[columnId].taskIds.filter(id => id !== taskId);
+      newColumns[columnId] = { ...newColumns[columnId], taskIds: updatedTaskIds };
+
+      const newBoard = {
+        ...prevData,
+        tasks: newTasks,
+        columns: newColumns,
+      };
+
+      if (authToken) {
+        saveBoardData(newBoard);
+      }
+      return newBoard;
+    });
+  };
+
   // Drag and drop handler
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -186,25 +219,32 @@ const Board = ({ authToken, userRole }) => {
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    ) return;
+    ) {
+      return;
+    }
 
     const startColumn = data.columns[source.droppableId];
     const endColumn = data.columns[destination.droppableId];
-    let newData = { ...data, columns: { ...data.columns } };
+
+    const newData = { ...data, columns: { ...data.columns } };
 
     if (startColumn === endColumn) {
+      // move within same column
       const newTaskIds = Array.from(startColumn.taskIds);
       newTaskIds.splice(source.index, 1);
       newTaskIds.splice(destination.index, 0, draggableId);
       const newColumn = { ...startColumn, taskIds: newTaskIds };
       newData.columns[newColumn.id] = newColumn;
     } else {
+      // move to different column
       const startTaskIds = Array.from(startColumn.taskIds);
       startTaskIds.splice(source.index, 1);
       const newStartColumn = { ...startColumn, taskIds: startTaskIds };
+
       const endTaskIds = Array.from(endColumn.taskIds);
       endTaskIds.splice(destination.index, 0, draggableId);
       const newEndColumn = { ...endColumn, taskIds: endTaskIds };
+
       newData.columns[newStartColumn.id] = newStartColumn;
       newData.columns[newEndColumn.id] = newEndColumn;
     }
@@ -215,6 +255,7 @@ const Board = ({ authToken, userRole }) => {
     }
   };
 
+  // Render loading/error if in authenticated mode
   if (authToken && loading) return <div>Loading board data...</div>;
   if (authToken && error) return <div>Error loading board data: {error}</div>;
 
@@ -222,8 +263,11 @@ const Board = ({ authToken, userRole }) => {
     <div className="board-wrapper">
       {userRole === 'manager' && (
         <div className="manager-controls">
-          <button onClick={() => setIsCreatingTask(true)} className="create-task-button">
-            Create New Task
+          <button
+            onClick={() => setIsCreatingTask(true)}
+            className="create-task-button"
+          >
+            + Create New Task
           </button>
           {isCreatingTask && (
             <div className="create-task-modal">
@@ -251,11 +295,13 @@ const Board = ({ authToken, userRole }) => {
           )}
         </div>
       )}
+
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="board-container">
           {data.columnOrder.map((columnId) => {
             const column = data.columns[columnId];
             const tasks = column.taskIds.map(taskId => data.tasks[taskId]);
+
             return (
               <Column
                 key={column.id}
@@ -263,6 +309,7 @@ const Board = ({ authToken, userRole }) => {
                 tasks={tasks}
                 userRole={userRole}
                 onEditTask={handleEditTask}
+                onRemoveTask={handleRemoveTask}  // pass down the remover
               />
             );
           })}

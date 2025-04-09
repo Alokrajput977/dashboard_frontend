@@ -4,11 +4,18 @@ import TaskCard from './TaskCard';
 import NewTaskModal from './NewTaskModal';
 import './Column.css';
 
-const Column = ({ column, tasks, userRole = 'manager', onEditTask, onAddTask }) => {
+const Column = ({
+  column,
+  tasks,
+  userRole = 'manager',
+  onEditTask,
+  onRemoveTask,
+  onAddTask
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalSubmit = (columnId, taskData) => {
-    onAddTask(columnId, taskData);
+    onAddTask && onAddTask(columnId, taskData);
     setShowModal(false);
   };
 
@@ -18,18 +25,20 @@ const Column = ({ column, tasks, userRole = 'manager', onEditTask, onAddTask }) 
         <h3 className="column-title">
           {column.title} <span>({tasks.length})</span>
         </h3>
+      </div>
 
-        {/* Show the "Add Task" button if user is manager */}
-        {userRole === 'manager' && (
+      {/* Managers see the "Add Task" button */}
+      {userRole === 'manager' && (
+        <div className="add-task-header">
           <button
             className="custom-add-task-btn"
             onClick={() => setShowModal(true)}
-            title="Add a new task to this column"
+            title="Add a new task"
           >
-            <span className="plus-icon">＋</span> Add Task
+            + Add Task
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
@@ -45,6 +54,8 @@ const Column = ({ column, tasks, userRole = 'manager', onEditTask, onAddTask }) 
                 index={index}
                 userRole={userRole}
                 onEdit={onEditTask}
+                onRemoveTask={onRemoveTask} // pass remove to each task
+                columnId={column.id}        // so we know which column to remove from
               />
             ))}
             {provided.placeholder}
@@ -52,13 +63,6 @@ const Column = ({ column, tasks, userRole = 'manager', onEditTask, onAddTask }) 
         )}
       </Droppable>
 
-      {/* Optional: another Add button at the bottom */}
-      {userRole === 'manager' && (
-        <div className="add-task-footer">
-        </div>
-      )}
-
-      {/* Show modal if triggered */}
       {showModal && (
         <NewTaskModal
           columnId={column.id}

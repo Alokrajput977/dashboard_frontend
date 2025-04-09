@@ -66,3 +66,7 @@
 .remove-task-button:hover {
   opacity: 1;
 }
+
+.remove-task-btn{
+  margin-left: 150px;
+}

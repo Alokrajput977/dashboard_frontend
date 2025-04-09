@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import './TaskCard.css';
 
-const TaskCard = ({ task, index, userRole, onEdit }) => {
+const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
 
+  // Save edits to the task title
   const handleSaveEdit = () => {
     onEdit(task.id, { ...task, title: editedTitle });
     setIsEditing(false);
+  };
+
+  // When manager clicks the "X", remove the task
+  const handleRemove = () => {
+    onRemoveTask(task.id, columnId);
   };
 
   return (
@@ -32,19 +38,30 @@ const TaskCard = ({ task, index, userRole, onEdit }) => {
             </div>
           ) : (
             <div className="task-view">
+              {userRole === 'manager' && (
+                <button
+                  className="remove-task-btn"
+                  onClick={handleRemove}
+                  title="Remove this task"
+                >
+                  X
+                </button>
+              )}
+
               <div className="task-label">
                 <span>{task.label}</span>
                 <span className={`priority ${task.priority.toLowerCase()}`}>
                   {task.priority}
                 </span>
               </div>
+
               <h4 className="task-title">{task.title}</h4>
               <p className="task-date">Due Date: {task.dueDate}</p>
+
               {userRole === 'manager' && (
-               <button className="edit-btn" onClick={() => onEdit(task)}>
-               ✎ Edit
-             </button>
-             
+                <button className="edit-btn" onClick={() => setIsEditing(true)}>
+                  ✎ Edit
+                </button>
               )}
             </div>
           )}
