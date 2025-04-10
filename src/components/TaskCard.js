@@ -13,7 +13,11 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
   };
 
   const handleRemove = () => {
-    onRemoveTask(task.id, columnId);
+    if (typeof onRemoveTask === 'function') {
+      onRemoveTask(task.id, columnId);
+    } else {
+      console.error('onRemoveTask is not a function');
+    }
   };
 
   return (

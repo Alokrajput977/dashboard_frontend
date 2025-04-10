@@ -1,3 +1,4 @@
+// src/components/Sidebar.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,7 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
-function Sidebar() {
+function Sidebar({ logout, theme }) {
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo">
@@ -63,7 +64,7 @@ function Sidebar() {
         </div>
       </div>
       <div className="sidebar-footer">
-        <div className="sidebar-item">
+        <div className="sidebar-item" onClick={logout} style={{ cursor: "pointer" }}>
           <FontAwesomeIcon icon={faSignOutAlt} /><span>Logout</span>
         </div>
       </div>

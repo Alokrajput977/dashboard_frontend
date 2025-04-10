@@ -5,15 +5,10 @@ import initialData from '../data.js';
 import Column from './Column';
 import './Board.css';
 
-const Board = ({ authToken, userRole }) => {
+const Board = ({ authToken, userRole, theme = 'light' }) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(authToken ? true : false);
   const [error, setError] = useState(null);
-
-  // For manager task creation (only managers can create tasks)
-  const [isCreatingTask, setIsCreatingTask] = useState(false);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [newTaskColumnId, setNewTaskColumnId] = useState('');
 
   // Fetch board data from the backend when authToken exists
   const fetchData = useCallback(async () => {
@@ -80,63 +75,56 @@ const Board = ({ authToken, userRole }) => {
     }
   }, [authToken]);
 
-  // Handler for creating a new task (only for managers)
-  const handleCreateTask = async () => {
-    if (userRole === 'manager' && newTaskTitle && newTaskColumnId) {
-      const newTask = {
-        id: `task-${Date.now()}`, // unique id
-        label: 'New',
-        title: newTaskTitle,
-        dueDate: new Date().toISOString().split('T')[0],
-        priority: 'Medium',
-      };
+  // Handler for adding a task from a column
+  const handleAddTask = async (columnId, taskData) => {
+    // Create a unique id for the task (for local mode)
+    const newTask = {
+      ...taskData,
+      id: `task-${Date.now()}`,
+      dueDate: taskData.dueDate || new Date().toISOString().split('T')[0],
+    };
 
-      if (authToken) {
-        try {
-          const response = await fetch('http://localhost:5000/api/tasks', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({ task: newTask, columnId: newTaskColumnId }),
-          });
-          if (response.ok) {
-            const createdTask = await response.json();
-            setData(prevData => {
-              const newColumns = { ...prevData.columns };
-              newColumns[newTaskColumnId].taskIds.push(createdTask.id);
-              const newTasks = { ...prevData.tasks, [createdTask.id]: createdTask };
-              return { ...prevData, tasks: newTasks, columns: newColumns };
-            });
-            setIsCreatingTask(false);
-            setNewTaskTitle('');
-            setNewTaskColumnId('');
-          } else {
-            console.error('Failed to create task.');
-          }
-        } catch (err) {
-          console.error('Error creating task:', err);
-        }
-      } else {
-        // Local creation for non-authenticated usage.
-        const newTaskId = `task-${Object.keys(data.tasks).length + 1}`;
-        const newTaskLocal = { ...newTask, id: newTaskId };
-        setData(prevData => {
-          const column = prevData.columns[newTaskColumnId];
-          const newTaskIds = [...column.taskIds, newTaskId];
-          const newColumn = { ...column, taskIds: newTaskIds };
-          const newTasks = { ...prevData.tasks, [newTaskId]: newTaskLocal };
-          return { ...prevData, tasks: newTasks, columns: { ...prevData.columns, [newTaskColumnId]: newColumn } };
+    if (authToken) {
+      try {
+        const response = await fetch('http://localhost:5000/api/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ task: newTask, columnId }),
         });
-        setIsCreatingTask(false);
-        setNewTaskTitle('');
-        setNewTaskColumnId('');
+        if (response.ok) {
+          const createdTask = await response.json();
+          // Update state and then use updated state for saving to backend
+          setData(prevData => {
+            const newColumns = { ...prevData.columns };
+            newColumns[columnId].taskIds.push(createdTask.id);
+            const newTasks = { ...prevData.tasks, [createdTask.id]: createdTask };
+            const updatedData = { ...prevData, tasks: newTasks, columns: newColumns };
+            saveBoardData(updatedData);
+            return updatedData;
+          });
+        } else {
+          console.error('Failed to create task on backend.');
+        }
+      } catch (err) {
+        console.error('Error creating task:', err);
       }
-    } else if (userRole !== 'manager') {
-      alert('Only managers can create tasks.');
     } else {
-      alert('Please fill in task title and select a column.');
+      // Local creation for non-authenticated usage.
+      setData(prevData => {
+        const column = prevData.columns[columnId];
+        const newTaskIds = [...column.taskIds, newTask.id];
+        const newColumn = { ...column, taskIds: newTaskIds };
+        const newTasks = { ...prevData.tasks, [newTask.id]: newTask };
+        const updatedData = {
+          ...prevData,
+          tasks: newTasks,
+          columns: { ...prevData.columns, [columnId]: newColumn }
+        };
+        return updatedData;
+      });
     }
   };
 
@@ -154,10 +142,14 @@ const Board = ({ authToken, userRole }) => {
             body: JSON.stringify(updatedTask),
           });
           if (response.ok) {
-            setData(prevData => ({
-              ...prevData,
-              tasks: { ...prevData.tasks, [taskId]: updatedTask },
-            }));
+            setData(prevData => {
+              const updatedData = {
+                ...prevData,
+                tasks: { ...prevData.tasks, [taskId]: updatedTask },
+              };
+              saveBoardData(updatedData);
+              return updatedData;
+            });
           } else {
             console.error('Failed to edit task.');
           }
@@ -175,6 +167,49 @@ const Board = ({ authToken, userRole }) => {
     }
   };
 
+  // --- Handler for removing a task (Manager Only) ---
+  const handleRemoveTask = async (taskId, columnId) => {
+    if (userRole !== 'manager') {
+      alert('Only managers can remove tasks.');
+      return;
+    }
+    if (authToken) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+          },
+        });
+        if (response.ok) {
+          // Update state and then use updated state for saving to backend
+          setData(prevData => {
+            const newTasks = { ...prevData.tasks };
+            delete newTasks[taskId];
+            const newColumns = { ...prevData.columns };
+            newColumns[columnId].taskIds = newColumns[columnId].taskIds.filter(id => id !== taskId);
+            const updatedData = { ...prevData, tasks: newTasks, columns: newColumns };
+            saveBoardData(updatedData);
+            return updatedData;
+          });
+        } else {
+          console.error('Failed to delete task.');
+        }
+      } catch (err) {
+        console.error('Error deleting task:', err);
+      }
+    } else {
+      // Local deletion for non-authenticated usage.
+      setData(prevData => {
+        const newTasks = { ...prevData.tasks };
+        delete newTasks[taskId];
+        const newColumns = { ...prevData.columns };
+        newColumns[columnId].taskIds = newColumns[columnId].taskIds.filter(id => id !== taskId);
+        return { ...prevData, tasks: newTasks, columns: newColumns };
+      });
+    }
+  };
+
   // Drag and drop handler
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -182,7 +217,8 @@ const Board = ({ authToken, userRole }) => {
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    ) return;
+    )
+      return;
 
     const startColumn = data.columns[source.droppableId];
     const endColumn = data.columns[destination.droppableId];
@@ -216,42 +252,14 @@ const Board = ({ authToken, userRole }) => {
 
   return (
     <div className="board-wrapper">
-      {userRole === 'manager' && (
-        <div className="manager-controls">
-          <button onClick={() => setIsCreatingTask(true)} className="create-task-button">
-            Create New Task
-          </button>
-          {isCreatingTask && (
-            <div className="create-task-modal">
-              <h3>Create New Task</h3>
-              <input
-                type="text"
-                placeholder="Task Title"
-                value={newTaskTitle}
-                onChange={(e) => setNewTaskTitle(e.target.value)}
-              />
-              <select
-                value={newTaskColumnId}
-                onChange={(e) => setNewTaskColumnId(e.target.value)}
-              >
-                <option value="">Select Column</option>
-                {data.columnOrder.map((columnId) => (
-                  <option key={columnId} value={columnId}>
-                    {data.columns[columnId].title}
-                  </option>
-                ))}
-              </select>
-              <button onClick={handleCreateTask}>Create</button>
-              <button onClick={() => setIsCreatingTask(false)}>Cancel</button>
-            </div>
-          )}
-        </div>
-      )}
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="board-container">
           {data.columnOrder.map((columnId) => {
             const column = data.columns[columnId];
-            const tasks = column.taskIds.map(taskId => data.tasks[taskId]);
+            // Map over taskIds and filter out any undefined tasks
+            const tasks = column.taskIds
+              .map(taskId => data.tasks[taskId])
+              .filter(task => task);
             return (
               <Column
                 key={column.id}
@@ -259,6 +267,9 @@ const Board = ({ authToken, userRole }) => {
                 tasks={tasks}
                 userRole={userRole}
                 onEditTask={handleEditTask}
+                onRemoveTask={handleRemoveTask}
+                onAddTask={handleAddTask}
+                theme={theme}
               />
             );
           })}

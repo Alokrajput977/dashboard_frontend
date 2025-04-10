@@ -58,16 +58,20 @@ function Login({ setUser }) {
         password: loginPassword,
       });
 
-      // Save token, role, and username in parent state
-      setUser({
+      // Save token, role, and username in both parent state and localStorage
+      const userData = {
         token: response.data.token,
         role: response.data.role,
         username: response.data.username,
-      });
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+
       // Show login success toast
       toast.success(response.data.message, {
         position: "top-center",
       });
+
       // After a 2-second delay, navigate to the dashboard
       setTimeout(() => {
         navigate("/dashboard");

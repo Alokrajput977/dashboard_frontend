@@ -1,3 +1,4 @@
+// frontend/src/components/NewTaskModal.js
 import React, { useState } from 'react';
 import './NewTaskModal.css';
 
@@ -9,7 +10,8 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(columnId, { title, label, priority, dueDate });
+    const taskData = { title, label, priority, dueDate };
+    onSubmit(columnId, taskData);
     setTitle('');
     setLabel('');
     setPriority('Medium');
@@ -43,7 +45,10 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
           </div>
           <div className="form-group">
             <label>Priority</label>
-            <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
               <option value="High">🔥 High</option>
               <option value="Medium">⚖️ Medium</option>
               <option value="Low">🌱 Low</option>
@@ -58,8 +63,12 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
             />
           </div>
           <div className="modal-actions">
-            <button type="submit" className="btn primary">✅ Add Task</button>
-            <button type="button" className="btn secondary" onClick={onClose}>❌ Cancel</button>
+            <button type="submit" className="btn primary">
+              ✅ Add Task
+            </button>
+            <button type="button" className="btn secondary" onClick={onClose}>
+              ❌ Cancel
+            </button>
           </div>
         </form>
       </div>

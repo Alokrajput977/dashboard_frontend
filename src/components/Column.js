@@ -1,3 +1,4 @@
+// frontend/src/components/Column.js
 import React, { useState } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';
@@ -10,7 +11,8 @@ const Column = ({
   userRole = 'manager',
   onEditTask,
   onRemoveTask,
-  onAddTask
+  onAddTask,
+  theme
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -26,8 +28,6 @@ const Column = ({
           {column.title} <span>({tasks.length})</span>
         </h3>
       </div>
-
-      {/* Managers see the "Add Task" button */}
       {userRole === 'manager' && (
         <div className="add-task-header">
           <button
@@ -39,7 +39,6 @@ const Column = ({
           </button>
         </div>
       )}
-
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
@@ -54,20 +53,20 @@ const Column = ({
                 index={index}
                 userRole={userRole}
                 onEdit={onEditTask}
-                onRemoveTask={onRemoveTask} // pass remove to each task
-                columnId={column.id}        // so we know which column to remove from
+                onRemoveTask={onRemoveTask}
+                columnId={column.id}
               />
             ))}
             {provided.placeholder}
           </div>
         )}
       </Droppable>
-
       {showModal && (
         <NewTaskModal
           columnId={column.id}
           onClose={() => setShowModal(false)}
           onSubmit={handleModalSubmit}
+          theme={theme}
         />
       )}
     </div>
