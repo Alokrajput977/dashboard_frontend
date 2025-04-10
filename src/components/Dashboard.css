@@ -1,0 +1,163 @@
+/*----------------------------------------
+  1) Theme Variables
+-----------------------------------------*/
+/* Light theme (default) */
+:root {
+    /* Global colors */
+    --primary-color:       #ffffff;  /* navbar & content bg */
+    --sidebar-color:       #ffffff;  /* sidebar bg */
+    --bg-color:            #f5f5f5;  /* page bg */
+    --text-color:          #1f1f1f;  /* main text & headings */
+    --heading-border-color:#1f1f1f;  /* under headings */
+    --accent-color:        #8b5cf6;  /* buttons & link hovers */
+    --hover-color:         #7c3aed;  /* button hover */
+    --sidebar-hover-bg:    rgba(0,0,0,0.05);
+    --transition-speed:    0.3s;
+  
+    /* Board / Column */
+    --board-bg-color:      #ffffff;
+    --column-bg:           #f4f5f7;
+    --task-list-bg:        #ebecf0;
+    --column-text:         #333333;
+    --column-shadow:       rgba(0,0,0,0.1);
+  
+    /* Add‑task button */
+    --add-task-bg:         linear-gradient(145deg, #6fcf97, #56ab2f);
+    --add-task-shadow:     rgba(0,0,0,0.15);
+  
+    /* TaskCard */
+    --task-card-bg:        #ffffff;
+    --task-card-hover:     #f9f9f9;
+    --task-card-drag:      #f0f0f0;
+    --task-card-text:      #1f1f1f;
+    --task-date-color:     #555555;
+  }
+  
+  /* Dark theme overrides */
+  [data-theme='dark'] {
+    --primary-color:       #1f1f1f;
+    --sidebar-color:       #1f1f1f;
+    --bg-color:            #121212;
+    --text-color:          #ffffff;
+    --heading-border-color:#ffffff;
+    --accent-color:        #8b5cf6;
+    --hover-color:         #7c3aed;
+    --sidebar-hover-bg:    rgba(255,255,255,0.1);
+  
+    --board-bg-color:      #1e1e1e;
+    --column-bg:           #2a2a2a;
+    --task-list-bg:        #333333;
+    --column-text:         #ffffff;
+    --column-shadow:       rgba(0,0,0,0.2);
+  
+    --add-task-bg:         linear-gradient(145deg, #56ab2f, #6fcf97);
+    --add-task-shadow:     rgba(0,0,0,0.3);
+  
+    --task-card-bg:        #3a3a3a;
+    --task-card-hover:     #4a4a4a;
+    --task-card-drag:      #2f2f2f;
+    --task-card-text:      #ffffff;
+    --task-date-color:     #cccccc;
+  }
+  
+  /*----------------------------------------
+    2) Base & Layout
+  -----------------------------------------*/
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed),
+                color var(--transition-speed);
+  }
+  
+  /* App layout */
+  .app-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .content-area {
+    flex: 1;
+    background-color: var(--primary-color);
+    padding: 1rem;
+    overflow-y: auto;
+    transition: background-color var(--transition-speed);
+  }
+  
+  
+  :root {
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-bg: #fff;
+    --text-primary: #333;
+    --input-bg: #f9f9f9;
+    --input-text: #000;
+    --border-color: #ccc;
+    --btn-confirm: #28a745;
+    --btn-cancel: #dc3545;
+  }
+  /* client/src/index.css */
+  
+  
+  
+  /* Global resets */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Page background (adjust as needed) */
+  .user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Sunset_and_Aircraft_%289620982704%29.jpg') no-repeat center;
+    background-size: cover;
+  }
+  
+  /* Login & Sign Up container */
+  .user_options-container {
+    position: relative;
+    width: 80%;
+  }
+  
+  /* Other styles from your login.css ... (include your original styles here) */
+  
+  /* Example animation classes */
+  @keyframes bounceLeft {
+    0% { transform: translate3d(100%, -50%, 0); }
+    50% { transform: translate3d(-30px, -50%, 0); }
+    100% { transform: translate3d(0, -50%, 0); }
+  }
+  
+  @keyframes bounceRight {
+    0% { transform: translate3d(0, -50%, 0); }
+    50% { transform: translate3d(calc(100% + 30px), -50%, 0); }
+    100% { transform: translate3d(100%, -50%, 0); }
+  }
+  
+  .bounceLeft {
+    animation: bounceLeft 1s forwards;
+  }
+  
+  .bounceRight {
+    animation: bounceRight 1s forwards;
+  }
+  
+  /* Additional form styling (copy from your login.css) ... */
+  

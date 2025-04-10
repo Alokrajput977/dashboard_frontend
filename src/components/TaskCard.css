@@ -4,8 +4,7 @@
   margin-bottom: 1rem;
   padding: 1.5rem 0.75rem 0.75rem;
   border-radius: 6px;
-  transition: background-color var(--transition-speed),
-              transform var(--transition-speed);
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
   cursor: pointer;
 }
 
@@ -50,23 +49,22 @@
 .priority.medium { background-color: #f1c40f; }
 .priority.low    { background-color: #2ecc71; }
 
-.remove-task-button {
+/* Updated styling for the remove (X) button */
+.remove-task-btn {
   position: absolute;
-  top: 4px; right: 4px;
+  top: 8px;
+  right: 8px;
   background: transparent;
   border: none;
-  font-size: 14px;
+  font-size: 1.2rem;
   color: #e74c3c;
   cursor: pointer;
   opacity: 0.8;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 1;
 }
 
-.remove-task-button:hover {
+.remove-task-btn:hover {
   opacity: 1;
-}
-
-.remove-task-btn{
-  margin-left: 150px;
+  transform: scale(1.1);
 }

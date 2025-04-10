@@ -109,3 +109,54 @@ body {
   --btn-confirm: #28a745;
   --btn-cancel: #dc3545;
 }
+/* client/src/index.css */
+
+
+
+/* Global resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page background (adjust as needed) */
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Sunset_and_Aircraft_%289620982704%29.jpg') no-repeat center;
+  background-size: cover;
+}
+
+/* Login & Sign Up container */
+.user_options-container {
+  position: relative;
+  width: 80%;
+}
+
+/* Other styles from your login.css ... (include your original styles here) */
+
+/* Example animation classes */
+@keyframes bounceLeft {
+  0% { transform: translate3d(100%, -50%, 0); }
+  50% { transform: translate3d(-30px, -50%, 0); }
+  100% { transform: translate3d(0, -50%, 0); }
+}
+
+@keyframes bounceRight {
+  0% { transform: translate3d(0, -50%, 0); }
+  50% { transform: translate3d(calc(100% + 30px), -50%, 0); }
+  100% { transform: translate3d(100%, -50%, 0); }
+}
+
+.bounceLeft {
+  animation: bounceLeft 1s forwards;
+}
+
+.bounceRight {
+  animation: bounceRight 1s forwards;
+}
+
+/* Additional form styling (copy from your login.css) ... */

@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
-import Navbar from './components/Navbar';
-import Board from './components/Board';
-import './index.css';
+// App.js
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/login.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
+  // Store the logged‑in user details: token, role, and username.
+  const [user, setUser] = useState(null);
 
   return (
-    <div className={`app-container ${theme}`}>
-      <Sidebar theme={theme} />
-      <div className="main-content">
-        <Navbar theme={theme} toggleTheme={toggleTheme} />
-        <div className="content-area">
-          <Board theme={theme} />
-        </div>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login setUser={setUser} />} />
+        <Route path="/dashboard" element={<Dashboard user={user} />} />
+      </Routes>
+    </Router>
   );
 }
 
