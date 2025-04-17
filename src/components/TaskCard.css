@@ -1,70 +1,111 @@
+/* frontend/src/components/TaskCard.css */
+:root {
+  --task-card-bg: #ffffff;
+  --task-card-drag: #f7f7f7;
+  --task-card-text: #333333;
+  --task-date-color: #555555;
+  --transition-speed: 0.3s;
+}
+
 .task-card {
-  position: relative;
   background-color: var(--task-card-bg);
-  margin-bottom: 1rem;
-  padding: 1.5rem 0.75rem 0.75rem;
-  border-radius: 6px;
-  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+  position: relative;
   cursor: pointer;
 }
 
 .task-card:hover {
-  background-color: var(--task-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .task-card.dragging {
   background-color: var(--task-card-drag);
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .task-label {
   display: flex;
-  justify-content: space-between;
   font-size: 0.85rem;
-  margin-bottom: 0.5rem;
   color: var(--task-card-text);
+  align-items: center;
 }
 
-.task-title {
-  margin: 0 0 0.5rem;
-  color: var(--task-card-text);
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.task-date {
-  font-size: 0.8rem;
-  color: var(--task-date-color);
+.task-label span:first-child {
+  margin-right: 8px;
 }
 
 .priority {
-  padding: 0.2rem 0.4rem;
+  padding: 2px 6px;
   border-radius: 4px;
   color: #fff;
   font-weight: bold;
 }
 
-.priority.high   { background-color: #e74c3c; }
-.priority.medium { background-color: #f1c40f; }
-.priority.low    { background-color: #2ecc71; }
+.priority.high {
+  background-color: #e74c3c;
+}
 
-/* Updated styling for the remove (X) button */
+.priority.medium {
+  background-color: #f1c40f;
+}
+
+.priority.low {
+  background-color: #2ecc71;
+}
+
 .remove-task-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: transparent;
   border: none;
-  font-size: 1.2rem;
+  font-size: 20px;
   color: #e74c3c;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 1;
+  transition: transform 0.2s ease;
 }
 
 .remove-task-btn:hover {
-  opacity: 1;
   transform: scale(1.1);
+}
+
+.card-body {
+  margin-top: 12px;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--task-card-text);
+  font-weight: 600;
+}
+
+.task-date {
+  font-size: 0.9rem;
+  color: var(--task-date-color);
+  margin-top: 4px;
+}
+
+.edit-btn {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
 }

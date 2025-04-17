@@ -1,3 +1,4 @@
+// frontend/src/components/Navbar.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +8,8 @@ function Navbar({ theme, toggleTheme }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-brand">
+        {/* You can add your logo or brand name here */}
+        <h2>My Project</h2>
       </div>
       <ul className="navbar-links">
         <li>Overview</li>
@@ -24,7 +27,7 @@ function Navbar({ theme, toggleTheme }) {
         >
           <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
         </button>
-        <button className="add-member-btn">
+        <button className="add-member-btn" onClick={() => ("add-member")}>
           <FontAwesomeIcon icon={faPlus} /> Add Member
         </button>
       </div>

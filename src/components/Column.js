@@ -1,18 +1,17 @@
-// frontend/src/components/Column.js
-import React, { useState } from 'react';
-import { Droppable } from '@hello-pangea/dnd';
-import TaskCard from './TaskCard';
-import NewTaskModal from './NewTaskModal';
-import './Column.css';
+import React, { useState } from "react";
+import { Droppable } from "@hello-pangea/dnd";
+import TaskCard from "./TaskCard";
+import NewTaskModal from "./NewTaskModal";
+import "./Column.css";
 
 const Column = ({
   column,
   tasks,
-  userRole = 'manager',
+  userRole = "manager",
   onEditTask,
   onRemoveTask,
   onAddTask,
-  theme
+  theme,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -28,7 +27,7 @@ const Column = ({
           {column.title} <span>({tasks.length})</span>
         </h3>
       </div>
-      {userRole === 'manager' && (
+      {userRole === "manager" && (
         <div className="add-task-header">
           <button
             className="custom-add-task-btn"
@@ -42,7 +41,7 @@ const Column = ({
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
-            className={`task-list ${snapshot.isDraggingOver ? 'dragging-over' : ''}`}
+            className={`task-list ${snapshot.isDraggingOver ? "dragging-over" : ""}`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

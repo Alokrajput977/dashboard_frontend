@@ -1,18 +1,21 @@
 // frontend/src/components/TaskCard.js
 import React, { useState } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
+import EditTaskModal from './EditTaskModal.jsx';
+import TaskInfoModal from './TaskInfoModal.jsx';
 import './TaskCard.css';
 
 const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(task.title);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const handleSaveEdit = () => {
-    onEdit(task.id, { ...task, title: editedTitle });
-    setIsEditing(false);
+  const handleSaveEdit = (updatedTask) => {
+    onEdit(task.id, updatedTask);
+    setShowEditModal(false);
   };
 
-  const handleRemove = () => {
+  const handleRemove = (e) => {
+    e.stopPropagation();
     if (typeof onRemoveTask === 'function') {
       onRemoveTask(task.id, columnId);
     } else {
@@ -20,52 +23,63 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
     }
   };
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    setShowEditModal(true);
+  };
+
+  const handleCardClick = () => {
+    setShowInfoModal(true);
+  };
+
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
-        <div
-          className={`task-card ${snapshot.isDragging ? 'dragging' : ''}`}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          {isEditing ? (
-            <div className="task-edit">
-              <input
-                type="text"
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-              />
-              <button onClick={handleSaveEdit}>Save</button>
-              <button onClick={() => setIsEditing(false)}>Cancel</button>
-            </div>
-          ) : (
-            <div className="task-view">
-              {userRole === 'manager' && (
-                <button
-                  className="remove-task-btn"
-                  onClick={handleRemove}
-                  title="Remove this task"
-                >
-                  X
-                </button>
-              )}
+        <>
+          <div
+            className={`task-card ${snapshot.isDragging ? 'dragging' : ''}`}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            onClick={handleCardClick}
+          >
+            <div className="card-header">
               <div className="task-label">
                 <span>{task.label}</span>
                 <span className={`priority ${task.priority.toLowerCase()}`}>
                   {task.priority}
                 </span>
               </div>
-              <h4 className="task-title">{task.title}</h4>
-              <p className="task-date">Due Date: {task.dueDate}</p>
               {userRole === 'manager' && (
-                <button className="edit-btn" onClick={() => setIsEditing(true)}>
-                  ✎ Edit
+                <button className="remove-task-btn" onClick={handleRemove} title="Remove this task">
+                  &times;
                 </button>
               )}
             </div>
+            <div className="card-body">
+              <h4 className="task-title">{task.title}</h4>
+              <p className="task-date">Due Date: {task.dueDate}</p>
+            </div>
+            {userRole === 'manager' && (
+              <button className="edit-btn" onClick={handleEditClick}>
+                Edit
+              </button>
+            )}
+          </div>
+          {showEditModal && (
+            <EditTaskModal
+              task={task}
+              onClose={() => setShowEditModal(false)}
+              onSave={handleSaveEdit}
+            />
           )}
-        </div>
+          {showInfoModal && (
+            <TaskInfoModal
+              task={task}
+              onClose={() => setShowInfoModal(false)}
+            />
+          )}
+        </>
       )}
     </Draggable>
   );

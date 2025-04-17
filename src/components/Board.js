@@ -1,23 +1,22 @@
-// frontend/src/components/Board.js
-import React, { useState, useEffect, useCallback } from 'react';
-import { DragDropContext } from '@hello-pangea/dnd';
-import initialData from '../data.js';
-import Column from './Column';
-import './Board.css';
+import React, { useState, useEffect, useCallback } from "react";
+import { DragDropContext } from "@hello-pangea/dnd";
+import initialData from "../data.js"; // Make sure you have a data.js file for initial board state.
+import Column from "./Column";
+import "./Board.css";
 
-const Board = ({ authToken, userRole, theme = 'light' }) => {
+const Board = ({ authToken, userRole, theme = "light" }) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(authToken ? true : false);
   const [error, setError] = useState(null);
 
-  // Fetch board data from the backend when authToken exists
+  // Fetch board data from backend if authenticated
   const fetchData = useCallback(async () => {
     if (authToken) {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:5000/api/boards', {
-          headers: { 'Authorization': `Bearer ${authToken}` },
+        const response = await fetch("http://localhost:5000/api/boards", {
+          headers: { Authorization: `Bearer ${authToken}` },
         });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,7 +25,7 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
         setData(jsonData);
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching data:', err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
@@ -37,8 +36,8 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
     if (authToken) {
       fetchData();
     } else {
-      // For local (non-authenticated) usage, load board from localStorage if available.
-      const savedData = localStorage.getItem('boardData');
+      // For local (non-authenticated) use, load board from localStorage
+      const savedData = localStorage.getItem("boardData");
       if (savedData) {
         setData(JSON.parse(savedData));
       } else {
@@ -47,102 +46,100 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
     }
   }, [authToken, fetchData]);
 
-  // Persist local board state when not using authToken.
+  // Persist board state locally when not authenticated.
   useEffect(() => {
     if (!authToken) {
-      localStorage.setItem('boardData', JSON.stringify(data));
+      localStorage.setItem("boardData", JSON.stringify(data));
     }
   }, [data, authToken]);
 
-  // Save board data to API (if in authenticated mode)
-  const saveBoardData = useCallback(async (boardData) => {
-    if (authToken) {
-      try {
-        const response = await fetch('http://localhost:5000/api/boards', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`,
-          },
-          body: JSON.stringify(boardData),
-        });
-        if (!response.ok) {
-          console.error('Failed to save data.');
+  // Save updated board state to API (if authenticated)
+  const saveBoardData = useCallback(
+    async (boardData) => {
+      if (authToken) {
+        try {
+          const response = await fetch("http://localhost:5000/api/boards", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify(boardData),
+          });
+          if (!response.ok) {
+            console.error("Failed to save data.");
+          }
+        } catch (err) {
+          console.error("Error saving data:", err);
         }
-      } catch (err) {
-        console.error('Error saving data:', err);
       }
-    }
-  }, [authToken]);
+    },
+    [authToken]
+  );
 
-  // Handler for adding a task from a column
+  // Handler to add a new task to a column
   const handleAddTask = async (columnId, taskData) => {
-    // Create a unique id for the task (for local mode)
     const newTask = {
       ...taskData,
       id: `task-${Date.now()}`,
-      dueDate: taskData.dueDate || new Date().toISOString().split('T')[0],
+      dueDate: taskData.dueDate || new Date().toISOString().split("T")[0],
     };
 
     if (authToken) {
       try {
-        const response = await fetch('http://localhost:5000/api/tasks', {
-          method: 'POST',
+        const response = await fetch("http://localhost:5000/api/tasks", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({ task: newTask, columnId }),
         });
         if (response.ok) {
           const createdTask = await response.json();
-          // Update state and then use updated state for saving to backend
-          setData(prevData => {
+          setData((prevData) => {
             const newColumns = { ...prevData.columns };
             newColumns[columnId].taskIds.push(createdTask.id);
-            const newTasks = { ...prevData.tasks, [createdTask.id]: createdTask };
+            const newTasks = {
+              ...prevData.tasks,
+              [createdTask.id]: createdTask,
+            };
             const updatedData = { ...prevData, tasks: newTasks, columns: newColumns };
             saveBoardData(updatedData);
             return updatedData;
           });
         } else {
-          console.error('Failed to create task on backend.');
+          console.error("Failed to create task on backend.");
         }
       } catch (err) {
-        console.error('Error creating task:', err);
+        console.error("Error creating task:", err);
       }
     } else {
-      // Local creation for non-authenticated usage.
-      setData(prevData => {
+      setData((prevData) => {
         const column = prevData.columns[columnId];
         const newTaskIds = [...column.taskIds, newTask.id];
         const newColumn = { ...column, taskIds: newTaskIds };
         const newTasks = { ...prevData.tasks, [newTask.id]: newTask };
-        const updatedData = {
-          ...prevData,
-          tasks: newTasks,
-          columns: { ...prevData.columns, [columnId]: newColumn }
-        };
-        return updatedData;
+        return { ...prevData, tasks: newTasks, columns: { ...prevData.columns, [columnId]: newColumn } };
       });
     }
   };
 
-  // Handler for editing a task (only available to managers)
+  // Handler to edit a task (for managers only)
   const handleEditTask = async (taskId, updatedTask) => {
-    if (userRole === 'manager') {
+    if (userRole === "manager") {
       if (authToken) {
         try {
           const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify(updatedTask),
           });
           if (response.ok) {
-            setData(prevData => {
+            setData((prevData) => {
               const updatedData = {
                 ...prevData,
                 tasks: { ...prevData.tasks, [taskId]: updatedTask },
@@ -151,39 +148,36 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
               return updatedData;
             });
           } else {
-            console.error('Failed to edit task.');
+            console.error("Failed to edit task.");
           }
         } catch (err) {
-          console.error('Error editing task:', err);
+          console.error("Error editing task:", err);
         }
       } else {
-        setData(prevData => ({
+        setData((prevData) => ({
           ...prevData,
           tasks: { ...prevData.tasks, [taskId]: updatedTask },
         }));
       }
     } else {
-      alert('Only managers can edit tasks.');
+      alert("Only managers can edit tasks.");
     }
   };
 
-  // --- Handler for removing a task (Manager Only) ---
+  // Handler to remove a task (managers only)
   const handleRemoveTask = async (taskId, columnId) => {
-    if (userRole !== 'manager') {
-      alert('Only managers can remove tasks.');
+    if (userRole !== "manager") {
+      alert("Only managers can remove tasks.");
       return;
     }
     if (authToken) {
       try {
         const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${authToken}`,
-          },
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${authToken}` },
         });
         if (response.ok) {
-          // Update state and then use updated state for saving to backend
-          setData(prevData => {
+          setData((prevData) => {
             const newTasks = { ...prevData.tasks };
             delete newTasks[taskId];
             const newColumns = { ...prevData.columns };
@@ -193,14 +187,13 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
             return updatedData;
           });
         } else {
-          console.error('Failed to delete task.');
+          console.error("Failed to delete task.");
         }
       } catch (err) {
-        console.error('Error deleting task:', err);
+        console.error("Error deleting task:", err);
       }
     } else {
-      // Local deletion for non-authenticated usage.
-      setData(prevData => {
+      setData((prevData) => {
         const newTasks = { ...prevData.tasks };
         delete newTasks[taskId];
         const newColumns = { ...prevData.columns };
@@ -214,11 +207,7 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    )
-      return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
     const startColumn = data.columns[source.droppableId];
     const endColumn = data.columns[destination.droppableId];
@@ -256,10 +245,9 @@ const Board = ({ authToken, userRole, theme = 'light' }) => {
         <div className="board-container">
           {data.columnOrder.map((columnId) => {
             const column = data.columns[columnId];
-            // Map over taskIds and filter out any undefined tasks
             const tasks = column.taskIds
-              .map(taskId => data.tasks[taskId])
-              .filter(task => task);
+              .map((taskId) => data.tasks[taskId])
+              .filter((task) => task);
             return (
               <Column
                 key={column.id}
