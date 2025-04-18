@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "../src/components/login"
 import Dashboard from "./components/Dashboard";
 import AddMember from "./components/AddMember";
-
+import './index.css';
 function App() {
   const [user, setUser] = useState(null);
 
