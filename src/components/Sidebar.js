@@ -15,7 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
-function Sidebar({ logout, theme }) {
+function Sidebar({ logout, onSelect }) {
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo">
@@ -27,12 +27,12 @@ function Sidebar({ logout, theme }) {
           <div className="sidebar-item">
             <FontAwesomeIcon icon={faCalendar} /><span>My Time</span>
           </div>
-          <div className="sidebar-item">
-            <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
-          </div>
-          <div className="sidebar-item">
-            <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
-          </div>
+          <div className="sidebar-item" onClick={() => onSelect('work')}>
+          <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
+        </div>
+        <div className="sidebar-item" onClick={() => onSelect('boards')}>
+          <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
+        </div>
           <div className="sidebar-item notification-item">
             <FontAwesomeIcon icon={faBell} /><span>Notification</span>
             <span className="notification-badge">4</span>

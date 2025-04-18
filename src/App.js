@@ -6,11 +6,10 @@ import AddMember from "./components/AddMember";
 
 function App() {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const stored = localStorage.getItem("user");
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
   return (
@@ -22,16 +21,24 @@ function App() {
         />
         <Route
           path="/dashboard"
-          element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />}
+          element={
+            user ? (
+              <Dashboard user={user} setUser={setUser} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
-         <Route
-        path="/add-member"
-        element={
-          user
-            ? <AddMember />
-            : <Navigate to="/" replace />
-        }
-      />
+        <Route
+          path="/add-member"
+          element={
+            user ? (
+              <AddMember />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
       </Routes>
     </Router>
   );
