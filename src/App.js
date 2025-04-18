@@ -6,8 +6,6 @@ import AddMember from "./components/AddMember";
 
 function App() {
   const [user, setUser] = useState(null);
-
-  // Check for stored user info in localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {

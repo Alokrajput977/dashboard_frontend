@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
-import initialData from "../data.js"; // Make sure you have a data.js file for initial board state.
+import initialData from "../data.js";
 import Column from "./Column";
 import "./Board.css";
 
@@ -8,8 +8,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(authToken ? true : false);
   const [error, setError] = useState(null);
-
-  // Fetch board data from backend if authenticated
   const fetchData = useCallback(async () => {
     if (authToken) {
       setLoading(true);
@@ -36,7 +34,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
     if (authToken) {
       fetchData();
     } else {
-      // For local (non-authenticated) use, load board from localStorage
       const savedData = localStorage.getItem("boardData");
       if (savedData) {
         setData(JSON.parse(savedData));
@@ -45,15 +42,11 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       }
     }
   }, [authToken, fetchData]);
-
-  // Persist board state locally when not authenticated.
   useEffect(() => {
     if (!authToken) {
       localStorage.setItem("boardData", JSON.stringify(data));
     }
   }, [data, authToken]);
-
-  // Save updated board state to API (if authenticated)
   const saveBoardData = useCallback(
     async (boardData) => {
       if (authToken) {
@@ -77,7 +70,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
     [authToken]
   );
 
-  // Handler to add a new task to a column
   const handleAddTask = async (columnId, taskData) => {
     const newTask = {
       ...taskData,
@@ -125,7 +117,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
     }
   };
 
-  // Handler to edit a task (for managers only)
   const handleEditTask = async (taskId, updatedTask) => {
     if (userRole === "manager") {
       if (authToken) {
@@ -163,8 +154,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       alert("Only managers can edit tasks.");
     }
   };
-
-  // Handler to remove a task (managers only)
   const handleRemoveTask = async (taskId, columnId) => {
     if (userRole !== "manager") {
       alert("Only managers can remove tasks.");
@@ -202,8 +191,6 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       });
     }
   };
-
-  // Drag and drop handler
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
