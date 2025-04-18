@@ -24,10 +24,14 @@ function App() {
           path="/dashboard"
           element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />}
         />
-        <Route
-          path="/add-member"
-          element={user ? <AddMember /> : <Navigate to="/add-member" />}
-        />
+         <Route
+        path="/add-member"
+        element={
+          user
+            ? <AddMember />
+            : <Navigate to="/" replace />
+        }
+      />
       </Routes>
     </Router>
   );

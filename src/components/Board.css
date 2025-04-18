@@ -1,16 +1,51 @@
+/* In Board.css */
 .board-container {
   display: flex;
   padding: 1rem;
   overflow-x: auto;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 70px); /* you already have this */
   background-color: var(--board-bg-color);
   transition: background-color var(--transition-speed);
+  align-items: flex-start;      /* so columns all start at top */
 }
 
-.board-container::-webkit-scrollbar {
-  height: 6px;
+/* In Column.css */
+.column-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  /* make it fill the parent’s height */
+  height: 100%;
+  background-color: var(--column-bg);
+  border-radius: 6px;
+  padding: 16px;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px var(--column-shadow);
+  transition: background-color var(--transition-speed),
+              box-shadow var(--transition-speed);
 }
-.board-container::-webkit-scrollbar-thumb {
+
+/* This is the key: limit height and allow scrolling */
+.task-list {
+  flex: 1;                     /* take all leftover height */
+  overflow-y: auto;            /* scroll when content overflows */
+  min-height: 0;               /* critical for flex overflow to work */
+  padding: 12px;
+  background-color: var(--task-list-bg);
+  border-radius: 6px;
+  transition: background-color var(--transition-speed);
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Optional: customize the scrollbar inside each column */
+.task-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 3px;
 }

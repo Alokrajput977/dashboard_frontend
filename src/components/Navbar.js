@@ -3,8 +3,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
-
+import { useNavigate } from 'react-router-dom';
 function Navbar({ theme, toggleTheme }) {
+    const navigate = useNavigate();
   return (
     <nav className="navbar-container">
       <div className="navbar-brand">
@@ -27,7 +28,7 @@ function Navbar({ theme, toggleTheme }) {
         >
           <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
         </button>
-        <button className="add-member-btn" onClick={() => ("add-member")}>
+        <button className="add-member-btn" onClick={() => ( navigate("/add-member"))}>
           <FontAwesomeIcon icon={faPlus} /> Add Member
         </button>
       </div>
