@@ -161,3 +161,46 @@ body {
 
 
 
+/* index.css */
+:root {
+  --bg-page: #f5f7fa;
+  --text-primary: #333;
+  --card-bg: #ffffff;
+  --input-bg: #fafbfc;
+  --input-border: #ddd;
+  --input-text: #333;
+  --btn-bg: #4e89ff;
+  --btn-text: #fff;
+  --toggle-bg: #ccc;
+  --toggle-knob: #fff;
+}
+
+[data-theme="dark"] {
+  --bg-page: #1e1e2f;
+  --text-primary: #ddd;
+  --card-bg: #2a2a3d;
+  --input-bg: #333;
+  --input-border: #444;
+  --input-text: #eee;
+  --btn-bg: #1e90ff;
+  --btn-text: #fff;
+  --toggle-bg: #555;
+  --toggle-knob: #222;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button, input {
+  font-family: inherit;
+}

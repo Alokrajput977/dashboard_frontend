@@ -23,7 +23,7 @@ function Sidebar({ logout, onSelect }) {
       </div>
       <div className="sidebar-sections">
         <div className="sidebar-section">
-          <h3 className="sidebar-heading">GENERAL</h3>
+          <h3 className="sidebar-heading">GENERAL</h3> 
           <div className="sidebar-item">
             <FontAwesomeIcon icon={faCalendar} /><span>My Time</span>
           </div>
@@ -55,7 +55,7 @@ function Sidebar({ logout, onSelect }) {
         </div>
         <div className="sidebar-section">
           <h3 className="sidebar-heading">OTHER</h3>
-          <div className="sidebar-item">
+          <div className="sidebar-item" onClick={() => onSelect('settings')}>
             <FontAwesomeIcon icon={faCog} /><span>Settings</span>
           </div>
           <div className="sidebar-item">
