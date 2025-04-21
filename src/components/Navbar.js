@@ -9,7 +9,6 @@ function Navbar({ theme, toggleTheme }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-brand">
-        {/* You can add your logo or brand name here */}
         <h2>My Project</h2>
       </div>
       <ul className="navbar-links">
