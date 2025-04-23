@@ -35,7 +35,7 @@ export default function Settings() {
   const [tabSize, setTabSize] = useState(4);
   const [wordWrap, setWordWrap] = useState('off');
   const [lineHeight, setLineHeight] = useState(1.5);
-  const [themeColor, setThemeColor] = useState('#007bff');
+  const [themeColor, setThemeColor] = useState('#8b5cf6');
 
   const handleSubmit = (e) => {
     e.preventDefault();

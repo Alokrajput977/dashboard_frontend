@@ -8,11 +8,9 @@
   }
   
   [data-theme='dark'] {
-    --primary: #ffb300;
     --bg: #1e1e23;
     --fg: #e0e0e0;
     --card-bg: #2a2a33;
-    --accent-shadow: rgba(255,179,0,0.2);
   }
   
   * {

@@ -22,6 +22,7 @@
   --btn-bg: #0056b3;
   --btn-text: #ffffff;
   --text-secondary: #bbbbbb;
+  --accent-color:#8b5cf6;
 }
 
 .settings-container {
@@ -36,7 +37,7 @@
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: var(--btn-bg);
+  color: var(--accent-color);
 }
 
 .settings-section {
@@ -111,7 +112,7 @@
 }
 
 .toggle-label input:checked + .toggle-slider {
-  background: var(--btn-bg);
+  background: var(--accent-color);
 }
 
 .toggle-label input:checked + .toggle-slider::before {
@@ -159,7 +160,7 @@
 
 /* Save button */
 .save-btn {
-  background: var(--btn-bg);
+  background: var(--accent-color);
   color: var(--btn-text);
   border: none;
   padding: 0.75rem 1rem;
