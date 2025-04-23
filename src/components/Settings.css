@@ -1,93 +1,176 @@
 /* components/Settings.css */
+:root {
+  --card-bg: #ffffff;
+  --input-bg: #f2f2f2;
+  --input-border: #cccccc;
+  --input-text: #333333;
+  --toggle-bg: #e0e0e0;
+  --toggle-knob: #ffffff;
+  --btn-bg: #007bff;
+  --btn-text: #ffffff;
+  --text-secondary: #666666;
+}
+
+/* Dark Mode Styles */
+[data-theme='dark'] {
+  --card-bg: #2C2C2C;
+  --input-bg: #444444;
+  --input-border: #666666;
+  --input-text: #ffffff;
+  --toggle-bg: #666666;
+  --toggle-knob: #ffffff;
+  --btn-bg: #0056b3;
+  --btn-text: #ffffff;
+  --text-secondary: #bbbbbb;
+}
+
 .settings-container {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 0.5rem;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-  
-  .settings-container h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    text-align: center;
-  }
-  
-  .settings-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  
-  .form-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .form-group span {
-    flex: 1;
-  }
-  
-  .form-group input[type="number"] {
-    width: 80px;
-    padding: 0.5rem;
-    border: 1px solid var(--input-border);
-    background: var(--input-bg);
-    color: var(--input-text);
-    border-radius: 0.25rem;
-  }
-  
-  .form-group input[type="checkbox"] {
-    /* hide native checkbox */
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
-  }
-  
-  .toggle-switch {
-    position: relative;
-    width: 50px;
-    height: 24px;
-    background: var(--toggle-bg);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .toggle-switch::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
-    background: var(--toggle-knob);
-    border-radius: 50%;
-    transition: transform 0.3s;
-  }
-  
-  input[type="checkbox"]:checked + .toggle-switch {
-    background: var(--btn-bg);
-  }
-  
-  input[type="checkbox"]:checked + .toggle-switch::after {
-    transform: translateX(26px);
-  }
-  
-  .save-btn {
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: none;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
-  
-  .save-btn:hover {
-    opacity: 0.9;
-  }
-  
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+.settings-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--btn-bg);
+}
+
+.settings-section {
+  margin-top: 2rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--input-border);
+  padding-bottom: 0.5rem;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--input-border);
+}
+
+.settings-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.item-info span {
+  font-weight: 500;
+  color: var(--input-text);
+}
+
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.toggle-label input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: var(--toggle-bg);
+  border-radius: 12px;
+  transition: background 0.25s;
+}
+
+.toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background: var(--toggle-knob);
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+
+.toggle-label input:checked + .toggle-slider {
+  background: var(--btn-bg);
+}
+
+.toggle-label input:checked + .toggle-slider::before {
+  transform: translateX(22px);
+}
+
+/* Styled select wrapper */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  flex: 1;
+}
+
+.select-wrapper select {
+  appearance: none;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.25rem;
+  background: var(--input-bg);
+  color: var(--input-text);
+  min-width: 160px;
+  font-size: 0.95rem;
+}
+
+.select-wrapper .chevron {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-secondary);
+}
+
+/* Inputs */
+.settings-item input[type="number"],
+.settings-item input[type="text"],
+.settings-item input[type="color"] {
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.25rem;
+  background: var(--input-bg);
+  color: var(--input-text);
+  flex: 1;
+}
+
+/* Save button */
+.save-btn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  width: 100%;
+  transition: opacity 0.25s;
+}
+
+.save-btn:hover {
+  opacity: 0.9;
+}

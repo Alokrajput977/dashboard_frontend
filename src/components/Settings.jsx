@@ -1,82 +1,181 @@
-// components/Settings.js
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMoon,
-  faEnvelope,
-  faListUl
+  faBell,
+  faCog,
+  faChevronDown,
+  faFont,
+  faTextWidth,
+  faListOl,
+  faParagraph,
+  faClock
 } from '@fortawesome/free-solid-svg-icons';
+
 import './Settings.css';
 
-const Settings = () => {
-  const [darkMode, setDarkMode] = useState(
-    () => document.documentElement.getAttribute('data-theme') === 'dark'
-  );
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+const autoSaveOptions = [
+  { value: 'off', label: 'Off' },
+  { value: 'afterDelay', label: 'After Delay' },
+  { value: 'onFocusChange', label: 'On Focus Change' },
+  { value: 'onWindowChange', label: 'On Window Change' }
+];
 
-  const handleSubmit = e => {
+const wordWrapOptions = [
+  { value: 'off', label: 'Off' },
+  { value: 'on', label: 'On' },
+  { value: 'wordWrapColumn', label: 'At Column' },
+  { value: 'bounded', label: 'Bounded' }
+];
+
+export default function Settings() {
+  const [emailNotif, setEmailNotif] = useState(true);
+  const [autoSave, setAutoSave] = useState('afterDelay');
+  const [fontSize, setFontSize] = useState(14);
+  const [fontFamily, setFontFamily] = useState('Consolas, Courier New, monospace');
+  const [tabSize, setTabSize] = useState(4);
+  const [wordWrap, setWordWrap] = useState('off');
+  const [lineHeight, setLineHeight] = useState(1.5);
+  const [themeColor, setThemeColor] = useState('#007bff');
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // you can lift this up or call an API...
     alert('Settings saved!');
-  };
-
-  const toggleLocalDark = () => {
-    setDarkMode(d => !d);
-    document.documentElement.setAttribute(
-      'data-theme',
-      darkMode ? 'light' : 'dark'
-    );
   };
 
   return (
     <div className="settings-container">
-      <h2>⚙️ Settings</h2>
-      <form className="settings-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <FontAwesomeIcon icon={faMoon} />
-          <span>Dark Mode</span>
-          <label>
+      <h2 className=''><FontAwesomeIcon icon={faCog} /> Settings</h2>
+      <form onSubmit={handleSubmit}>
+
+        {/* General Section */}
+        <div className="settings-section">
+          <div className="section-title">General</div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faBell} />
+              <span>Email Notifications</span>
+            </div>
+            <label className="toggle-label">
+              <input
+                type="checkbox"
+                checked={emailNotif}
+                onChange={(e) => setEmailNotif(e.target.checked)}
+              />
+              <span className="toggle-slider" />
+            </label>
+          </div>
+        </div>
+
+        {/* Editor Section */}
+        <div className="settings-section">
+          <div className="section-title">Editor</div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faClock} />
+              <span>Auto Save</span>
+            </div>
+            <div className="select-wrapper">
+              <select value={autoSave} onChange={(e) => setAutoSave(e.target.value)}>
+                {autoSaveOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+              <FontAwesomeIcon className="chevron" icon={faChevronDown} />
+            </div>
+          </div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faFont} />
+              <span>Font Size</span>
+            </div>
             <input
-              type="checkbox"
-              checked={darkMode}
-              onChange={toggleLocalDark}
+              type="number"
+              min="8"
+              max="72"
+              value={fontSize}
+              onChange={(e) => setFontSize(+e.target.value)}
             />
-            <div className="toggle-switch" />
-          </label>
-        </div>
+          </div>
 
-        <div className="form-group">
-          <FontAwesomeIcon icon={faEnvelope} />
-          <span>Email Notifications</span>
-          <label>
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faTextWidth} />
+              <span>Font Family</span>
+            </div>
             <input
-              type="checkbox"
-              checked={emailNotifications}
-              onChange={e => setEmailNotifications(e.target.checked)}
+              type="text"
+              value={fontFamily}
+              onChange={(e) => setFontFamily(e.target.value)}
             />
-            <div className="toggle-switch" />
-          </label>
+          </div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faListOl} />
+              <span>Tab Size</span>
+            </div>
+            <input
+              type="number"
+              min="1"
+              max="8"
+              value={tabSize}
+              onChange={(e) => setTabSize(+e.target.value)}
+            />
+          </div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faParagraph} />
+              <span>Word Wrap</span>
+            </div>
+            <div className="select-wrapper">
+              <select value={wordWrap} onChange={(e) => setWordWrap(e.target.value)}>
+                {wordWrapOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+              <FontAwesomeIcon className="chevron" icon={faChevronDown} />
+            </div>
+          </div>
+
+          {/* New Inputs */}
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faTextWidth} />
+              <span>Line Height</span>
+            </div>
+            <input
+              type="number"
+              step="0.1"
+              min="1.0"
+              max="2.0"
+              value={lineHeight}
+              onChange={(e) => setLineHeight(+e.target.value)}
+            />
+          </div>
+
+          <div className="settings-item">
+            <div className="item-info">
+              <FontAwesomeIcon icon={faTextWidth} />
+              <span>Theme Color</span>
+            </div>
+            <input
+              type="color"
+              value={themeColor}
+              onChange={(e) => setThemeColor(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <FontAwesomeIcon icon={faListUl} />
-          <span>Items per Page</span>
-          <input
-            type="number"
-            min="5"
-            max="50"
-            value={itemsPerPage}
-            onChange={e => setItemsPerPage(+e.target.value)}
-          />
-        </div>
-
-        <button className="save-btn" type="submit">
-          Save Settings
-        </button>
+        <button className="save-btn" type="submit">Save Settings</button>
       </form>
     </div>
   );
-};
-
-export default Settings;
+}
