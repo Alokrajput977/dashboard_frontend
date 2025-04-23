@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -24,15 +23,15 @@ function Sidebar({ logout, onSelect }) {
       <div className="sidebar-sections">
         <div className="sidebar-section">
           <h3 className="sidebar-heading">GENERAL</h3> 
-          <div className="sidebar-item">
+          <div className="sidebar-item" onClick={() => onSelect('time')}>
             <FontAwesomeIcon icon={faCalendar} /><span>My Time</span>
           </div>
           <div className="sidebar-item" onClick={() => onSelect('work')}>
-          <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
-        </div>
-        <div className="sidebar-item" onClick={() => onSelect('boards')}>
-          <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
-        </div>
+            <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
+          </div>
+          <div className="sidebar-item" onClick={() => onSelect('boards')}>
+            <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
+          </div>
           <div className="sidebar-item notification-item">
             <FontAwesomeIcon icon={faBell} /><span>Notification</span>
             <span className="notification-badge">4</span>
@@ -58,7 +57,8 @@ function Sidebar({ logout, onSelect }) {
           <div className="sidebar-item" onClick={() => onSelect('settings')}>
             <FontAwesomeIcon icon={faCog} /><span>Settings</span>
           </div>
-          <div className="sidebar-item">
+          {/* Help Center: select 'help' view */}
+          <div className="sidebar-item" onClick={() => onSelect('help')}>
             <FontAwesomeIcon icon={faQuestionCircle} /><span>Help Center</span>
           </div>
         </div>
