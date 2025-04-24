@@ -1,5 +1,4 @@
-// AddMember.js
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   FaUser,
   FaEnvelope,
@@ -12,233 +11,274 @@ import {
   FaCertificate,
   FaClock,
   FaUserCircle,
-} from "react-icons/fa";
-import "./AddMember.css";
+} from 'react-icons/fa';
+import './AddMember.css';
 
 function AddMember() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    username: "",
-    password: "",
-    dob: "",
-    gender: "",
-    phoneNumber: "",
-    email: "",
-    department: "",
-    experience: "",
-    qualification: "",
-    shiftTiming: "",
-    emergencyContact: "",
-    dateOfJoining: "",
+    fullName: '',
+    username: '',
+    password: '',
+    dob: '',
+    gender: '',
+    phoneNumber: '',
+    email: '',
+    department: '',
+    experience: '',
+    qualification: '',
+    shiftTiming: '',
+    emergencyContact: '',
+    dateOfJoining: '',
     employeeImage: null,
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value, files } = e.target;
-    if (name === "employeeImage") {
-      setFormData((prev) => ({
-        ...prev,
-        employeeImage: files[0] || null,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'employeeImage' ? files[0] || null : value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    alert("Employee profile created successfully!");
-    // Reset form optionally
+    console.log('Form Submitted:', formData);
+    alert('Employee profile created successfully!');
     setFormData({
-      fullName: "",
-      username: "",
-      password: "",
-      dob: "",
-      gender: "",
-      phoneNumber: "",
-      email: "",
-      department: "",
-      experience: "",
-      qualification: "",
-      shiftTiming: "",
-      emergencyContact: "",
-      dateOfJoining: "",
+      fullName: '',
+      username: '',
+      password: '',
+      dob: '',
+      gender: '',
+      phoneNumber: '',
+      email: '',
+      department: '',
+      experience: '',
+      qualification: '',
+      shiftTiming: '',
+      emergencyContact: '',
+      dateOfJoining: '',
       employeeImage: null,
     });
   };
 
-  const {
-    fullName,
-    username,
-    password,
-    dob,
-    gender,
-    phoneNumber,
-    email,
-    department,
-    experience,
-    qualification,
-    shiftTiming,
-    emergencyContact,
-    dateOfJoining,
-  } = formData;
-
   return (
-    <div className="container">
+    <div className="add-member-container">
       <div className="card">
         <div className="card-header">
           <FaUserCircle className="header-icon" />
-          <h2>Create Employee Profile</h2>
+          <h2 className="card-title">Create Employee Profile</h2>
         </div>
-        <form onSubmit={handleSubmit} className="form-body">
-          <div className="fields-grid">
-            <div className="input-group">
-              <FaUser className="icon" />
+        <form className="form-body" onSubmit={handleSubmit}>
+          {/* Personal Details */}
+          <div className="settings-section">
+            <h3 className="section-title">Personal Details</h3>
+            <div className="settings-item">
+              <div className="item-info">
+                <FaUser />
+                <span>Full Name</span>
+              </div>
               <input
                 type="text"
                 name="fullName"
-                value={fullName}
+                value={formData.fullName}
                 onChange={handleChange}
-                placeholder="Full Name"
+                placeholder="Enter full name"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaUser className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaUser />
+                <span>Username</span>
+              </div>
               <input
                 type="text"
                 name="username"
-                value={username}
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Username"
+                placeholder="Enter username"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaLock className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaLock />
+                <span>Password</span>
+              </div>
               <input
                 type="password"
                 name="password"
-                value={password}
+                value={formData.password}
                 onChange={handleChange}
-                placeholder="Password"
+                placeholder="Enter password"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaCalendarAlt className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaCalendarAlt />
+                <span>Date of Birth</span>
+              </div>
               <input
                 type="date"
                 name="dob"
-                value={dob}
+                value={formData.dob}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="input-group">
-              <FaTransgender className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaTransgender />
+                <span>Gender</span>
+              </div>
               <select
                 name="gender"
-                value={gender}
+                value={formData.gender}
                 onChange={handleChange}
                 required
               >
-                <option value="">Gender</option>
+                <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
             </div>
-            <div className="input-group">
-              <FaPhone className="icon" />
+          </div>
+
+          {/* Contact & Work */}
+          <div className="settings-section">
+            <h3 className="section-title">Contact & Work</h3>
+            <div className="settings-item">
+              <div className="item-info">
+                <FaPhone />
+                <span>Phone Number</span>
+              </div>
               <input
                 type="tel"
                 name="phoneNumber"
-                value={phoneNumber}
+                value={formData.phoneNumber}
                 onChange={handleChange}
-                placeholder="Phone Number"
+                placeholder="e.g. +1 555-1234"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaEnvelope className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaEnvelope />
+                <span>Email Address</span>
+              </div>
               <input
                 type="email"
                 name="email"
-                value={email}
+                value={formData.email}
                 onChange={handleChange}
-                placeholder="Email Address"
+                placeholder="e.g. name@example.com"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaBuilding className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaBuilding />
+                <span>Department</span>
+              </div>
               <select
                 name="department"
-                value={department}
+                value={formData.department}
                 onChange={handleChange}
                 required
               >
-                <option value="">Department</option>
+                <option value="">Select Department</option>
                 <option value="hr">HR</option>
                 <option value="sales">Sales</option>
                 <option value="marketing">Marketing</option>
               </select>
             </div>
-            <div className="input-group">
-              <FaBriefcase className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaBriefcase />
+                <span>Experience (years)</span>
+              </div>
               <select
                 name="experience"
-                value={experience}
+                value={formData.experience}
                 onChange={handleChange}
                 required
               >
-                <option value="">Experience</option>
+                <option value="">Select Experience</option>
                 {[...Array(10)].map((_, i) => (
                   <option key={i} value={i + 1}>
-                    {i + 1} year{ i > 0 ? "s" : "" }
+                    {i + 1}
                   </option>
                 ))}
               </select>
             </div>
-            <div className="input-group">
-              <FaCertificate className="icon" />
+          </div>
+
+          {/* Additional Info */}
+          <div className="settings-section">
+            <h3 className="section-title">Additional Info</h3>
+            <div className="settings-item">
+              <div className="item-info">
+                <FaCertificate />
+                <span>Qualification</span>
+              </div>
               <input
                 type="text"
                 name="qualification"
-                value={qualification}
+                value={formData.qualification}
                 onChange={handleChange}
-                placeholder="Qualification"
+                placeholder="e.g. B.Com, M.Sc"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaClock className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaClock />
+                <span>Shift Timing</span>
+              </div>
               <input
                 type="text"
                 name="shiftTiming"
-                value={shiftTiming}
+                value={formData.shiftTiming}
                 onChange={handleChange}
-                placeholder="Shift Timing"
+                placeholder="e.g. 9:00 AM - 5:00 PM"
                 required
               />
             </div>
-            <div className="input-group">
-              <FaPhone className="icon" />
+            <div className="settings-item">
+              <div className="item-info">
+                <FaPhone />
+                <span>Emergency Contact</span>
+              </div>
               <input
                 type="tel"
                 name="emergencyContact"
-                value={emergencyContact}
+                value={formData.emergencyContact}
                 onChange={handleChange}
-                placeholder="Emergency Contact"
+                placeholder="Emergency contact number"
                 required
               />
             </div>
-            <div className="input-group file-input">
+            <div className="settings-item">
+              <div className="item-info">
+                <FaCalendarAlt />
+                <span>Date of Joining</span>
+              </div>
+              <input
+                type="date"
+                name="dateOfJoining"
+                value={formData.dateOfJoining}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="settings-item">
+              <div className="item-info">
+                <FaUser />
+                <span>Employee Image</span>
+              </div>
               <input
                 type="file"
                 name="employeeImage"
@@ -246,20 +286,9 @@ function AddMember() {
                 onChange={handleChange}
               />
             </div>
-            <div className="input-group">
-              <FaCalendarAlt className="icon" />
-              <input
-                type="date"
-                name="dateOfJoining"
-                value={dateOfJoining}
-                onChange={handleChange}
-                required
-              />
-            </div>
           </div>
-          <button type="submit" className="submit-btn">
-            Create Profile
-          </button>
+
+          <button type="submit" className="save-btn">Create Profile</button>
         </form>
       </div>
     </div>
@@ -267,4 +296,3 @@ function AddMember() {
 }
 
 export default AddMember;
-
