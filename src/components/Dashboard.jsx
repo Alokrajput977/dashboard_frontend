@@ -1,3 +1,5 @@
+
+// Dashboard.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
@@ -7,22 +9,24 @@ import ChartView from './ChartView';
 import Settings from './Settings';
 import HelpCenter from './Help';
 import AddMember from './AddMember';
+import Loader from './Loader';
 import './Dashboard.css';
-
-// Simple loader spinner component
-function Loader() {
-  return (
-    <div className="loader-overlay">
-      <div className="spinner" />
-    </div>
-  );
-}
 
 function Dashboard({ user, setUser }) {
   const [theme, setTheme] = useState('light');
-  const [view, setView] = useState('boards'); // current view key
-  const [isLoading, setIsLoading] = useState(false);
+  const [view, setView] = useState('boards');
+  // Start with loader visible on initial mount
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Hide loader after 1 second on first load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Apply theme
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
@@ -36,14 +40,11 @@ function Dashboard({ user, setUser }) {
     navigate('/');
   };
 
-  // Wrap view changes to show loader + transition
   const handleViewChange = (newView) => {
     if (newView === view) return;
     setIsLoading(true);
-    // 1 second loader, then switch view
     setTimeout(() => {
       setView(newView);
-      // give another second for content fade-in
       setTimeout(() => setIsLoading(false), 800);
     }, 800);
   };
@@ -58,36 +59,20 @@ function Dashboard({ user, setUser }) {
 
   let content;
   switch (view) {
-    case 'time':
-      content = <ChartView />;
-      break;
-    case 'work':
-      content = <ChartView />; // <MyWork /> when ready
-      break;
-    case 'settings':
-      content = <Settings />;
-      break;
-    case 'help':
-      content = <HelpCenter />;
-      break;
-    case 'add-member':
-      content = <AddMember />;
-      break;
+    case 'time':      content = <ChartView />;      break;
+    case 'work':      content = <ChartView />;      break;
+    case 'settings':  content = <Settings />;     break;
+    case 'help':      content = <HelpCenter />;   break;
+    case 'add-member':content = <AddMember />;    break;
     case 'boards':
-    default:
-      content = <Board authToken={user.token} userRole={user.role} theme={theme} />;
-      break;
+    default:          content = <Board authToken={user.token} userRole={user.role} theme={theme} />;
   }
 
   return (
     <div className={`app-container ${theme}`}>      
       <Sidebar logout={handleLogout} onSelect={handleViewChange} />
       <div className="main-content">
-        <Navbar
-          theme={theme}
-          toggleTheme={toggleTheme}
-          onAddMember={() => handleViewChange('add-member')}
-        />
+        <Navbar theme={theme} toggleTheme={toggleTheme} onAddMember={() => handleViewChange('add-member')} />
         <div className="content-area">
           {isLoading ? <Loader /> : <div className="fade-in">{content}</div>}
         </div>

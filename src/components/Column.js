@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Droppable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
 import NewTaskModal from "./NewTaskModal";
+import Loader from "./Loader";
 import "./Column.css";
 
 const Column = ({
@@ -14,6 +15,16 @@ const Column = ({
   theme,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAddClick = () => {
+    // show loader for 1s, then open modal
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowModal(true);
+    }, 1000);
+  };
 
   const handleModalSubmit = (columnId, taskData) => {
     onAddTask && onAddTask(columnId, taskData);
@@ -27,21 +38,26 @@ const Column = ({
           {column.title} <span>({tasks.length})</span>
         </h3>
       </div>
+
       {userRole === "manager" && (
         <div className="add-task-header">
           <button
             className="custom-add-task-btn"
-            onClick={() => setShowModal(true)}
+            onClick={handleAddClick}
             title="Add a new task"
+            disabled={isLoading}
           >
-            + Add Task
+            {isLoading ? "Loading…" : "+ Add Task"}
           </button>
         </div>
       )}
+
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
-            className={`task-list ${snapshot.isDraggingOver ? "dragging-over" : ""}`}
+            className={`task-list ${
+              snapshot.isDraggingOver ? "dragging-over" : ""
+            }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -60,6 +76,9 @@ const Column = ({
           </div>
         )}
       </Droppable>
+
+      {isLoading && <Loader />}
+
       {showModal && (
         <NewTaskModal
           columnId={column.id}
