@@ -15,7 +15,7 @@ function Login({ setUser }) {
   const [signupUsername, setSignupUsername] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
-  const [signupRole, setSignupRole] = useState("employee"); // default role
+  const [signupRole, setSignupRole] = useState("employee");
 
   // Toggle between sign‑up and login forms
   const handleSignupClick = () => {

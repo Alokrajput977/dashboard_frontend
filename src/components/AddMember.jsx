@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaLock,
-  FaCalendarAlt,
-  FaTransgender,
-  FaBuilding,
-  FaBriefcase,
-  FaCertificate,
-  FaClock,
-  FaUserCircle,
+  FaUser, FaEnvelope, FaPhone, FaLock, FaCalendarAlt, FaTransgender,
+  FaBuilding, FaBriefcase, FaCertificate, FaClock, FaUserCircle
 } from 'react-icons/fa';
 import './AddMember.css';
 
 function AddMember() {
+  const [employeeImage, setEmployeeImage] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -40,26 +33,26 @@ function AddMember() {
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
-    alert('Employee profile created successfully!');
-    setFormData({
-      fullName: '',
-      username: '',
-      password: '',
-      dob: '',
-      gender: '',
-      phoneNumber: '',
-      email: '',
-      department: '',
-      experience: '',
-      qualification: '',
-      shiftTiming: '',
-      emergencyContact: '',
-      dateOfJoining: '',
-      employeeImage: null,
-    });
+    try {
+      const fd = new FormData();
+      Object.entries(formData).forEach(([key, val]) => fd.append(key, val));
+      if (employeeImage) fd.append('employeeImage', employeeImage);
+
+      const token = localStorage.getItem('token');
+      const res = await axios.post('/api/members', fd, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      alert(res.data.message);
+      // reset state
+      setFormData({ /* empty fields */ });
+      setEmployeeImage(null);
+    } catch (err) {
+      console.error(err);
+      alert('Error creating member');
+    }
   };
 
   return (
