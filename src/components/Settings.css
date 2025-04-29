@@ -73,7 +73,7 @@
 
 .item-info span {
   font-weight: 500;
-  color: var(--input-text);
+  color: var(--accent-color);
 }
 
 .toggle-label {

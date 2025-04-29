@@ -26,6 +26,7 @@
   position: relative;
   cursor: pointer;
   transition: color var(--transition-speed);
+  font-size: 14px;
 }
 
 .navbar-links li::after {

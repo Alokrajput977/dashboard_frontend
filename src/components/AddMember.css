@@ -22,22 +22,21 @@
 
 .add-member-container {
   padding: 2rem;
-  background: var(--secondary-bg);
   display: flex;
   justify-content: center;
 }
 
 .card {
-  background: var(--card-bg);
+  background: var();
   max-width: 1200px;
   width: 100%;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
   overflow: hidden;
 }
 
 .card-header {
-  background: var(--accent-color);
+  background: var();
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -45,13 +44,13 @@
 
 .header-icon {
   font-size: 1.75rem;
-  color: var(--btn-text);
+  color: var(--accent-color);
   margin-right: 0.5rem;
 }
 
 .card-title {
   font-size: 1.5rem;
-  color: var(--btn-text);
+  color: var(--accent-color);
   margin: 0;
 }
 
