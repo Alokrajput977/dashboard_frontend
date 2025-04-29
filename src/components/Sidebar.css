@@ -19,6 +19,7 @@
   transition: width var(--transition-speed);
   overflow-y: auto;
   height: 100vh;
+  cursor: pointer;
 }
 .sidebar-container.collapsed {
   width: 80px;
