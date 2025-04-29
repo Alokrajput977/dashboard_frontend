@@ -1,16 +1,30 @@
+/* Sidebar.css */
+:root {
+  --sidebar-color: #1f1f1f;
+  --text-color: #ffffff;
+  --accent-color: #6e5ae6;
+  --sidebar-hover-bg: rgba(255,255,255,0.1);
+  --heading-border-color: rgba(255,255,255,0.2);
+  --transition-speed: 0.3s;
+}
+
+/* Container */
 .sidebar-container {
   width: 240px;
   background-color: var(--sidebar-color);
   color: var(--text-color);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 1rem;
-  transition: background-color var(--transition-speed),
-              color var(--transition-speed);
+  transition: width var(--transition-speed);
   overflow-y: auto;
+  height: 100vh;
+}
+.sidebar-container.collapsed {
+  width: 80px;
 }
 
+/* Custom Scrollbar */
 .sidebar-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -26,71 +40,131 @@
   scrollbar-color: var(--accent-color) var(--sidebar-color);
 }
 
+/* Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--heading-border-color);
+}
+.sidebar-container.collapsed .sidebar-header {
+  justify-content: center;
+}
+
 .sidebar-logo {
+  cursor: pointer;
+}
+.sidebar-logo span {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-bottom: 2rem;
 }
 
+.toggle-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  transition: background var(--transition-speed), font-size var(--transition-speed);
+}
+.sidebar-container.collapsed .toggle-btn {
+  font-size: 1.8rem;
+}
+.toggle-btn:hover {
+  background: var(--sidebar-hover-bg);
+}
+
+/* Sections */
 .sidebar-sections {
-  flex-grow: 1;
+  flex: 1;
+  margin-top: 1rem;
 }
-
 .sidebar-section {
   margin-bottom: 1.5rem;
 }
-
 .sidebar-heading {
   font-size: 0.9rem;
   text-transform: uppercase;
   margin-bottom: 1rem;
+  opacity: 0.8;
   border-bottom: 1px solid var(--heading-border-color);
   padding-bottom: 0.5rem;
-  letter-spacing: 1px;
-  opacity: 0.8;
-  transition: border-color var(--transition-speed),
-              color var(--transition-speed);
+}
+.sidebar-container.collapsed .sidebar-heading {
+  display: none;
 }
 
+/* Items */
 .sidebar-item {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
-  padding: 0.4rem 0.2rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color var(--transition-speed),
-              color var(--transition-speed);
-}
-
-.sidebar-item span {
-  margin-left: 0.8rem;
-}
-
-.sidebar-item:hover {
-  background-color: var(--sidebar-hover-bg);
-  color: var(--accent-color);
-}
-
-.notification-item {
+  padding: 0.6rem 0.4rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  transition: background var(--transition-speed), color var(--transition-speed);
   position: relative;
 }
+.sidebar-item svg {
+  font-size: 1.2rem;
+  transition: color var(--transition-speed);
+}
+.sidebar-item span {
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+.sidebar-container.collapsed .sidebar-item span {
+  display: none;
+}
+.sidebar-container.collapsed .sidebar-item svg {
+  font-size: 1.4rem;
+}
 
-.notification-badge {
+/* Hover (only apply when not active) */
+.sidebar-item:not(.active):hover {
+  background: var(--sidebar-hover-bg);
+}
+
+/* Active State */
+.sidebar-item.active {
+  background: var(--accent-color);
+  color: var(--text-color);
+}
+.sidebar-item.active svg {
+  color: var(--text-color);
+}
+
+/* Notification Badge */
+.notification-item .notification-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
   background-color: #ff4141;
   color: #ffffff;
   border-radius: 50%;
   padding: 0.2rem 0.5rem;
   font-size: 0.75rem;
-  margin-left: auto;
+}
+.sidebar-container.collapsed .notification-badge {
+  display: none;
 }
 
+/* Footer */
 .sidebar-footer {
-  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--heading-border-color);
+}
+.sidebar-footer .sidebar-item {
+  margin-bottom: 0;
 }
 
+/* Responsive (mobile) */
 @media (max-width: 768px) {
-  /* same responsive rules as before */
+  .sidebar-container {
+    position: absolute;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
 }
-
-
