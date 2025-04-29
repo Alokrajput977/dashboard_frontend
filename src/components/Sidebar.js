@@ -10,7 +10,7 @@ import {
   faStar,
   faCog,
   faQuestionCircle,
-  faSignOutAlt
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
@@ -18,7 +18,7 @@ function Sidebar({ logout, onSelect }) {
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo">
-        <span>Dashboard</span>
+        <span >Dashboard</span>
       </div>
       <div className="sidebar-sections">
         <div className="sidebar-section">

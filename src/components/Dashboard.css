@@ -177,9 +177,9 @@
   
   /* Spinner */
   .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid var(--task-card-bg);
+    width: 100px;
+    height: 100px;
+    border: 10px solid var(--task-card-bg);
     border-top-color: var(--accent-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;

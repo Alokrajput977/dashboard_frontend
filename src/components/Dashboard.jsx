@@ -45,7 +45,7 @@ function Dashboard({ user, setUser }) {
       setView(newView);
       // give another second for content fade-in
       setTimeout(() => setIsLoading(false), 800);
-    }, 1000);
+    }, 800);
   };
 
   if (!user) {
