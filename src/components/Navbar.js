@@ -15,7 +15,7 @@ function Navbar({ theme, toggleTheme, onAddMember }) {
         <li>Timeline</li>
         <li>Notes</li>
         <li>Files</li>
-        <li>Members</li>
+        <li onClick={onAddMember} className="clickable">Members</li>
       </ul>
       <div className="navbar-right">
         <button

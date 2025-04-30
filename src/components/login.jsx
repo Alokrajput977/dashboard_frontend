@@ -7,6 +7,8 @@ import "./login.css";
 
 function Login({ setUser }) {
   const navigate = useNavigate();
+
+  // Panel animation
   const [animationClass, setAnimationClass] = useState("");
 
   // Login form state
@@ -14,51 +16,73 @@ function Login({ setUser }) {
   const [loginPassword, setLoginPassword] = useState("");
 
   // Signup form state
-  const [signupFullName,   setSignupFullName]   = useState("");
-  const [signupUsername,   setSignupUsername]   = useState("");
-  const [signupEmail,      setSignupEmail]      = useState("");
-  const [signupPassword,   setSignupPassword]   = useState("");
-  const [signupRole,       setSignupRole]       = useState("employee");
+  const [signupFullName, setSignupFullName] = useState("");
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [signupRole, setSignupRole] = useState("employee");
   const [signupDepartment, setSignupDepartment] = useState("");
 
-  // Toggle between sign-up and login forms
-  const handleSignupClick = () => setAnimationClass("bounceLeft");
-  const handleLoginClick  = () => setAnimationClass("bounceRight");
+  // Manager-auth modal state
+  const [showManagerAuth, setShowManagerAuth] = useState(false);
+  const [managerPassInput, setManagerPassInput] = useState("");
 
-  // Sign-up handler
+  // Handlers to show each panel
+  const handleLoginClick = () => {
+    setAnimationClass("bounceRight");
+  };
+  const handleSignupClick = () => {
+    setShowManagerAuth(true);
+  };
+
+  // Modal confirm
+  const handleManagerConfirm = () => {
+    if (managerPassInput === "password") {
+      setShowManagerAuth(false);
+      setManagerPassInput("");
+      setAnimationClass("bounceLeft");
+    } else {
+      toast.error("Incorrect manager password", { position: "top-center" });
+    }
+  };
+  const handleManagerCancel = () => {
+    setShowManagerAuth(false);
+    setManagerPassInput("");
+  };
+
+  // Signup submit
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post("http://localhost:5000/api/signup", {
-        fullName:   signupFullName,
-        username:   signupUsername,
-        email:      signupEmail,
-        password:   signupPassword,
-        role:       signupRole,
-        department: signupDepartment
+        fullName: signupFullName,
+        username: signupUsername,
+        email: signupEmail,
+        password: signupPassword,
+        role: signupRole,
+        department: signupDepartment,
       });
       toast.success(data.message, { position: "top-center" });
-      // Optionally switch back to login form:
       setAnimationClass("bounceRight");
     } catch (err) {
       toast.error(err.response?.data?.message || "Sign up failed", {
-        position: "top-center"
+        position: "top-center",
       });
     }
   };
 
-  // Login handler
+  // Login submit
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post("http://localhost:5000/api/login", {
         username: loginUsername,
-        password: loginPassword
+        password: loginPassword,
       });
       const userData = {
-        token:    data.token,
-        role:     data.role,
-        username: data.username
+        token: data.token,
+        role: data.role,
+        username: data.username,
       };
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
@@ -66,7 +90,7 @@ function Login({ setUser }) {
       setTimeout(() => navigate("/dashboard"), 2000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed", {
-        position: "top-center"
+        position: "top-center",
       });
     }
   };
@@ -74,14 +98,19 @@ function Login({ setUser }) {
   return (
     <section className="user">
       <div className="user_options-container">
+        {/* Left side: prompts */}
         <div className="user_options-text">
           <div className="user_options-unregistered">
             <h2 className="user_unregistered-title">Don't have an account?</h2>
-            <p className="user_unregistered-text">Create an account now!</p>
+            <p className="user_unregistered-text">
+              Create an account now!
+            </p>
             <button
               className="user_unregistered-signup"
               onClick={handleSignupClick}
-            >Sign up</button>
+            >
+              Sign up
+            </button>
           </div>
           <div className="user_options-registered">
             <h2 className="user_registered-title">Have an account?</h2>
@@ -89,10 +118,13 @@ function Login({ setUser }) {
             <button
               className="user_registered-login"
               onClick={handleLoginClick}
-            >Login</button>
+            >
+              Login
+            </button>
           </div>
         </div>
 
+        {/* Right side: forms */}
         <div className={`user_options-forms ${animationClass}`}>
           {/* —— Login Form —— */}
           <div className="user_forms-login">
@@ -104,9 +136,10 @@ function Login({ setUser }) {
                     type="text"
                     placeholder="Username"
                     className="forms_field-input"
-                    required autoFocus
+                    required
+                    autoFocus
                     value={loginUsername}
-                    onChange={e => setLoginUsername(e.target.value)}
+                    onChange={(e) => setLoginUsername(e.target.value)}
                   />
                 </div>
                 <div className="forms_field">
@@ -116,7 +149,7 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={loginPassword}
-                    onChange={e => setLoginPassword(e.target.value)}
+                    onChange={(e) => setLoginPassword(e.target.value)}
                   />
                 </div>
               </fieldset>
@@ -145,7 +178,7 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={signupFullName}
-                    onChange={e => setSignupFullName(e.target.value)}
+                    onChange={(e) => setSignupFullName(e.target.value)}
                   />
                 </div>
                 <div className="forms_field">
@@ -155,7 +188,7 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={signupUsername}
-                    onChange={e => setSignupUsername(e.target.value)}
+                    onChange={(e) => setSignupUsername(e.target.value)}
                   />
                 </div>
                 <div className="forms_field">
@@ -165,7 +198,7 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={signupEmail}
-                    onChange={e => setSignupEmail(e.target.value)}
+                    onChange={(e) => setSignupEmail(e.target.value)}
                   />
                 </div>
                 <div className="forms_field">
@@ -175,18 +208,20 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={signupPassword}
-                    onChange={e => setSignupPassword(e.target.value)}
+                    onChange={(e) => setSignupPassword(e.target.value)}
                   />
                 </div>
                 <div className="forms_field">
                   <select
                     value={signupRole}
-                    onChange={e => setSignupRole(e.target.value)}
+                    onChange={(e) => setSignupRole(e.target.value)}
                     className="forms_field-input"
                     required
                     style={{ borderTop: "none", borderRight: "none", borderLeft: "none" }}
                   >
-                    <option value="" disabled>Select Role</option>
+                    <option value="" disabled>
+                      Select Role
+                    </option>
                     <option value="employee">Employee</option>
                     <option value="manager">Manager</option>
                     <option value="sales">Sales</option>
@@ -206,7 +241,7 @@ function Login({ setUser }) {
                     className="forms_field-input"
                     required
                     value={signupDepartment}
-                    onChange={e => setSignupDepartment(e.target.value)}
+                    onChange={(e) => setSignupDepartment(e.target.value)}
                   />
                 </div>
               </fieldset>
@@ -221,9 +256,32 @@ function Login({ setUser }) {
           </div>
         </div>
       </div>
+
+      {/* Manager-auth Modal */}
+      {showManagerAuth && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Manager Authorization</h3>
+            <p>Enter manager password to proceed:</p>
+            <input
+              type="password"
+              className="modal-input"
+              placeholder="Manager Password"
+              value={managerPassInput}
+              onChange={(e) => setManagerPassInput(e.target.value)}
+            />
+            <div className="modal-buttons">
+              <button onClick={handleManagerCancel}>Cancel</button>
+              <button onClick={handleManagerConfirm}>Confirm</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <ToastContainer />
     </section>
-  );
+);
+
 }
 
 export default Login;

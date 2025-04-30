@@ -332,6 +332,7 @@ input::placeholder {
   letter-spacing: 0.1rem;
   -webkit-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
+  margin-top: -30px;
 }
 
 .user_options-forms .forms_buttons-action:hover {
@@ -394,4 +395,101 @@ input::placeholder {
 
 .forms_form {
   margin-top: -20px;
+}
+
+
+.forms_title {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+.forms_fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+.forms_field {
+  margin-bottom: 15px;
+}
+rms_buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.forms_buttons-action {
+  background: #667eea;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: -20px;
+}
+.forms_buttons-action:hover {
+  background: #5a67d8;
+}
+.forms_buttons-forgot {
+  background: transparent;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal box */
+.modal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+.modal h3 {
+  margin-top: 0;
+  color: #333;
+}
+.modal-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+.modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modal-buttons button:first-child {
+  background: #eee;
+}
+.modal-buttons button:last-child {
+  background: #667eea;
+  color: #fff;
 }
