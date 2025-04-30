@@ -5,7 +5,7 @@ import './Navbar.css';
 
 function Navbar({ theme, toggleTheme, onAddMember }) {
   return (
-    <nav className="navbar-container">
+    <nav className={`navbar-container ${theme}`}>
       <div className="navbar-brand">
         <h2>My Project</h2>
       </div>

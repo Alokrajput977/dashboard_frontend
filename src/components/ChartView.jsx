@@ -60,9 +60,7 @@ const baseLiveOptions = {
   xAxis: { type: 'datetime', tickPixelInterval: 150 },
   yAxis: { title: { text: 'Value' }, plotLines: [{ value: 0, width: 1, color: '#808080' }] },
   tooltip: {
-    formatter() {
-      return `<b>${this.series.name}</b><br/>${Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x)}<br/>${Highcharts.numberFormat(this.y,2)}`;
-    }
+    
   },
   legend: { enabled: false },
   exporting: { enabled: false },
@@ -108,7 +106,6 @@ export default function ChartView({ theme }) {
         }
       });
     } else {
-      // reset to Highcharts default (white background, dark text)
       Highcharts.setOptions({
         chart: { backgroundColor: '#ffffff', style: { color: '#000000' } },
         title: { style: { color: '#000000' } },
@@ -133,22 +130,21 @@ export default function ChartView({ theme }) {
     }
   }, [theme]);
 
-  // live‐chart needs its own containerProps id for us to update points:
+
   return (
-    <div className="chart-view" style={{ padding: '1rem' }}>
-      <HighchartsReact highcharts={Highcharts} options={baseLineOptions} />
-      <HighchartsReact highcharts={Highcharts} options={baseColumnOptions} />
-      <HighchartsReact highcharts={Highcharts} options={basePieOptions} />
-      <div id="live-chart">
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={baseLiveOptions}
-          containerProps={{ id: 'live-chart' }}
-        />
-      </div>
-      {/* live‐data updater */}
-      <LiveUpdater />
+    <div className="chart-view">
+    <HighchartsReact highcharts={Highcharts} options={baseLineOptions} />
+    <HighchartsReact highcharts={Highcharts} options={baseColumnOptions} />
+    <HighchartsReact highcharts={Highcharts} options={basePieOptions} />
+    <div id="live-chart" style={{ marginTop: '2rem' }}>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={baseLiveOptions}
+        containerProps={{ id: 'live-chart' }}
+      />
     </div>
+    <LiveUpdater />
+  </div>
   );
 }
 
@@ -156,7 +152,9 @@ export default function ChartView({ theme }) {
 function LiveUpdater() {
   useEffect(() => {
     const interval = setInterval(() => {
-      const chart = Highcharts.charts.find(c => c && c.renderTo.id === 'live-chart');
+      const chart = Highcharts.charts.find(
+        c => c && c.renderTo.id === 'live-chart'
+      );
       if (chart) {
         chart.series[0].addPoint([Date.now(), Math.random()], true, true);
       }

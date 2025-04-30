@@ -1,35 +1,45 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  FaUser, FaEnvelope, FaPhone, FaLock, FaCalendarAlt, FaTransgender,
-  FaBuilding, FaBriefcase, FaCertificate, FaClock, FaUserCircle
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaLock,
+  FaCalendarAlt,
+  FaTransgender,
+  FaBuilding,
+  FaBriefcase,
+  FaCertificate,
+  FaClock,
+  FaUserCircle
 } from 'react-icons/fa';
 import './AddMember.css';
 
+const INITIAL_STATE = {
+  fullName: '',
+  username: '',
+  password: '',
+  dob: '',
+  gender: '',
+  phoneNumber: '',
+  email: '',
+  department: '',
+  experience: '',
+  qualification: '',
+  shiftTiming: '',
+  emergencyContact: '',
+  dateOfJoining: '',
+  employeeImage: null,
+};
+
 function AddMember() {
-  const [employeeImage, setEmployeeImage] = useState(null);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    password: '',
-    dob: '',
-    gender: '',
-    phoneNumber: '',
-    email: '',
-    department: '',
-    experience: '',
-    qualification: '',
-    shiftTiming: '',
-    emergencyContact: '',
-    dateOfJoining: '',
-    employeeImage: null,
-  });
+  const [formData, setFormData] = useState({ ...INITIAL_STATE });
 
   const handleChange = e => {
     const { name, value, files } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'employeeImage' ? files[0] || null : value,
+      [name]: name === 'employeeImage' ? files[0] : value,
     }));
   };
 
@@ -37,21 +47,28 @@ function AddMember() {
     e.preventDefault();
     try {
       const fd = new FormData();
-      Object.entries(formData).forEach(([key, val]) => fd.append(key, val));
-      if (employeeImage) fd.append('employeeImage', employeeImage);
-
-      const token = localStorage.getItem('token');
-      const res = await axios.post('/api/members', fd, {
-        headers: { Authorization: `Bearer ${token}` }
+      Object.entries(formData).forEach(([key, val]) => {
+        if (val !== null && val !== '') {
+          fd.append(key, val);
+        }
       });
 
+      const token = localStorage.getItem('token');
+      const res = await axios.post(
+        '/api/members',
+        fd,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       alert(res.data.message);
-      // reset state
-      setFormData({ /* empty fields */ });
-      setEmployeeImage(null);
+      setFormData({ ...INITIAL_STATE });
     } catch (err) {
-      console.error(err);
-      alert('Error creating member');
+      console.error('Error creating member:', err);
+      alert(err.response?.data?.message || 'Error creating member');
     }
   };
 
@@ -66,10 +83,10 @@ function AddMember() {
           {/* Personal Details */}
           <div className="settings-section">
             <h3 className="section-title">Personal Details</h3>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaUser />
-                <span>Full Name</span>
+                <FaUser /> <span>Full Name</span>
               </div>
               <input
                 type="text"
@@ -80,10 +97,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaUser />
-                <span>Username</span>
+                <FaUser /> <span>Username</span>
               </div>
               <input
                 type="text"
@@ -94,10 +111,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaLock />
-                <span>Password</span>
+                <FaLock /> <span>Password</span>
               </div>
               <input
                 type="password"
@@ -108,10 +125,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaCalendarAlt />
-                <span>Date of Birth</span>
+                <FaCalendarAlt /> <span>Date of Birth</span>
               </div>
               <input
                 type="date"
@@ -121,10 +138,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaTransgender />
-                <span>Gender</span>
+                <FaTransgender /> <span>Gender</span>
               </div>
               <select
                 name="gender"
@@ -143,10 +160,10 @@ function AddMember() {
           {/* Contact & Work */}
           <div className="settings-section">
             <h3 className="section-title">Contact & Work</h3>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaPhone />
-                <span>Phone Number</span>
+                <FaPhone /> <span>Phone Number</span>
               </div>
               <input
                 type="tel"
@@ -157,10 +174,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaEnvelope />
-                <span>Email Address</span>
+                <FaEnvelope /> <span>Email Address</span>
               </div>
               <input
                 type="email"
@@ -171,10 +188,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaBuilding />
-                <span>Department</span>
+                <FaBuilding /> <span>Department</span>
               </div>
               <select
                 name="department"
@@ -188,10 +205,10 @@ function AddMember() {
                 <option value="marketing">Marketing</option>
               </select>
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaBriefcase />
-                <span>Experience (years)</span>
+                <FaBriefcase /> <span>Experience (years)</span>
               </div>
               <select
                 name="experience"
@@ -201,9 +218,7 @@ function AddMember() {
               >
                 <option value="">Select Experience</option>
                 {[...Array(10)].map((_, i) => (
-                  <option key={i} value={i + 1}>
-                    {i + 1}
-                  </option>
+                  <option key={i} value={i + 1}>{i + 1}</option>
                 ))}
               </select>
             </div>
@@ -212,10 +227,10 @@ function AddMember() {
           {/* Additional Info */}
           <div className="settings-section">
             <h3 className="section-title">Additional Info</h3>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaCertificate />
-                <span>Qualification</span>
+                <FaCertificate /> <span>Qualification</span>
               </div>
               <input
                 type="text"
@@ -226,10 +241,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaClock />
-                <span>Shift Timing</span>
+                <FaClock /> <span>Shift Timing</span>
               </div>
               <input
                 type="text"
@@ -240,10 +255,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaPhone />
-                <span>Emergency Contact</span>
+                <FaPhone /> <span>Emergency Contact</span>
               </div>
               <input
                 type="tel"
@@ -254,10 +269,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaCalendarAlt />
-                <span>Date of Joining</span>
+                <FaCalendarAlt /> <span>Date of Joining</span>
               </div>
               <input
                 type="date"
@@ -267,10 +282,10 @@ function AddMember() {
                 required
               />
             </div>
+
             <div className="settings-item">
               <div className="item-info">
-                <FaUser />
-                <span>Employee Image</span>
+                <FaUser /> <span>Employee Image</span>
               </div>
               <input
                 type="file"

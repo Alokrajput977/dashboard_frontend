@@ -1,4 +1,4 @@
-// frontend/src/components/NewTaskModal.js
+// frontend/src/components/NewTaskModal.jsx
 import React, { useState } from 'react';
 import { FaUser, FaTag, FaFlag, FaCalendarAlt } from 'react-icons/fa';
 import './NewTaskModal.css';
@@ -12,8 +12,11 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // build task object including assignee
     const taskData = { title, label, priority, dueDate, assignee };
     onSubmit(columnId, taskData);
+
+    // reset form
     setTitle('');
     setLabel('');
     setPriority('Medium');
@@ -23,14 +26,16 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
   };
 
   return (
-    <div className={`modal-overlay ${theme}`}>  
-      <div className={`modal-content animated ${theme}`}>  
+    <div className={`modal-overlay ${theme}`} onClick={onClose}>
+      <div
+        className={`modal-content animated ${theme}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="modal-title">
           <FaFlag className="title-icon" />
           Add New Task
         </h2>
         <form onSubmit={handleSubmit}>
-
           <div className="form-group icon-input">
             <label htmlFor="title">
               <FaFlag /> Title

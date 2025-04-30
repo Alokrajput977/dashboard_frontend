@@ -1,5 +1,6 @@
 // frontend/src/components/TaskInfoModal.jsx
 import React from 'react';
+import { FaFlag, FaTag, FaCalendarAlt, FaUser } from 'react-icons/fa';
 import './TaskInfoModal.css';
 
 const TaskInfoModal = ({ task, onClose }) => {
@@ -12,18 +13,22 @@ const TaskInfoModal = ({ task, onClose }) => {
         <h2 className="info-modal-title">Task Details</h2>
         <div className="info-modal-body">
           <p>
-            <strong>Title:</strong> {task.title}
+            <FaFlag /> <strong>Title:</strong> {task.title}
           </p>
           <p>
-            <strong>Label:</strong> {task.label}
+            <FaTag /> <strong>Label:</strong> {task.label || '—'}
           </p>
           <p>
-            <strong>Priority:</strong> {task.priority}
+            <FaUser /> <strong>Assignee:</strong> {task.assignee || '—'}
           </p>
           <p>
-            <strong>Due Date:</strong> {task.dueDate}
+            <FaFlag /> <strong>Priority:</strong> {task.priority}
           </p>
-          {/* You can add more fields as needed */}
+          <p>
+            <FaCalendarAlt /> <strong>Due Date:</strong>{' '}
+            {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : '—'}
+          </p>
+          {/* add more fields here if you like */}
         </div>
       </div>
     </div>
