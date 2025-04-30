@@ -126,8 +126,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Sunset_and_Aircraft_%289620982704%29.jpg') no-repeat center;
+  background: url('https://cdn.pixabay.com/photo/2016/11/29/09/16/architecture-1868667_1280.jpg') no-repeat center center;
   background-size: cover;
+  z-index: 1000;
 }
 
 /* Login & Sign Up container */
