@@ -15,7 +15,7 @@ function Navbar({ theme, toggleTheme, onAddMember }) {
         <li>Timeline</li>
         <li>Notes</li>
         <li>Files</li>
-        <li onClick={onAddMember} className="clickable">Members</li>
+        <li onClick={onAddMember} className="clickable">Table</li>
       </ul>
       <div className="navbar-right">
         <button
@@ -29,6 +29,7 @@ function Navbar({ theme, toggleTheme, onAddMember }) {
           className="add-member-btn"
           onClick={onAddMember}
           title="Add a new member"
+          style={{color:"white"}}
         >
           <FontAwesomeIcon icon={faPlus} /> Add Member
         </button>

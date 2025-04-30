@@ -1,4 +1,3 @@
-// src/components/UsersTable.jsx
 import React, { useState, useEffect } from 'react';
 import './table.css';
 
@@ -7,10 +6,7 @@ export default function UsersTable() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    fetch('/api/users', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    fetch('http://localhost:5000/api/users')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch users');
         return res.json();
@@ -21,7 +17,7 @@ export default function UsersTable() {
   }, []);
 
   return (
-    <div className="card">
+    <div className="users-card">
       <h2 className="card-title">All Users</h2>
       <div className="card-content">
         {loading ? (
@@ -30,7 +26,7 @@ export default function UsersTable() {
           <p className="table-empty">No users found.</p>
         ) : (
           <div className="table-responsive">
-            <table>
+            <table className="users-table">
               <thead>
                 <tr>
                   <th>Full Name</th>
@@ -42,14 +38,20 @@ export default function UsersTable() {
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => (
-                  <tr key={user._id}>
-                    <td>{user.fullName}</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td className="capitalize">{user.role}</td>
-                    <td>{user.department}</td>
-                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                {users.map(u => (
+                  <tr key={u._id}>
+                    <td>{u.fullName}</td>
+                    <td>{u.username}</td>
+                    <td>{u.email}</td>
+                    <td className="capitalize">{u.role}</td>
+                    <td>{u.department}</td>
+                    <td>
+                      {new Date(u.createdAt).toLocaleDateString('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -15,16 +15,11 @@ import Loader from './Loader';
 import './Dashboard.css';
 
 function MembersPanel() {
-  const [visible, setVisible] = useState(true);
+  const [visible] = useState(true);
 
   return (
     <div className="members-panel">
-      <button
-        className="btn-toggle"
-        onClick={() => setVisible((v) => !v)}
-      >
-        {visible ? 'Hide Members Table' : 'Show Members Table'}
-      </button>
+      
       {visible && <Table />}
     </div>
   );
