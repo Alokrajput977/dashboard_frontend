@@ -57,6 +57,7 @@ input::placeholder {
   100% {
     -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
+    
   }
 }
 
@@ -77,9 +78,7 @@ input::placeholder {
   }
 }
 
-/**
- * Bounce to the right side
- */
+
 @-webkit-keyframes bounceRight {
   0% {
     -webkit-transform: translate3d(0, -50%, 0);
@@ -142,11 +141,14 @@ input::placeholder {
   height: 100vh;
   background: url('https://cdn.pixabay.com/photo/2016/11/29/09/16/architecture-1868667_1280.jpg') no-repeat center center;
   background-size: cover;
+  z-index: 1000;
+ 
 }
 
 .user_options-container {
   position: relative;
   width: 80%;
+  
 }
 
 .user_options-text {
@@ -196,6 +198,7 @@ input::placeholder {
     color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out,
     color 0.2s ease-in-out;
+    
 }
 
 .user_registered-login:hover,
@@ -227,7 +230,7 @@ input::placeholder {
 .user_options-forms .user_forms-login,
 .user_options-forms .user_forms-signup {
   position: absolute;
-  top: 70px;
+  top: 20px;
   left: 40px;
   width: calc(100% - 80px);
   opacity: 0;
