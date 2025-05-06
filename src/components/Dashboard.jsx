@@ -11,6 +11,8 @@ import HelpCenter from './Help';
 import AddMember from './AddMember';
 import Table from "../components/table"
 import Loader from './Loader';
+import EmployeeTable from "../components/Manageteam"
+import EmployeeForm from './Addemployee';
 
 import './Dashboard.css';
 
@@ -86,6 +88,12 @@ export default function Dashboard({ user, setUser }) {
     case 'add-member':
       content = <AddMember />;
       break;
+    case 'manageTeam':
+      content = <EmployeeTable />;
+      break;
+    case 'addEmployee':
+        content = <EmployeeForm />;
+        break;
     case 'members':
       content = <MembersPanel />;
       break;

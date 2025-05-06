@@ -1,0 +1,118 @@
+:root {
+    --secondary-bg: #f2f2f2;
+    --card-bg: #ffffff;
+    --table-header-bg: #6c63ff;
+    --btn-bg: #6c63ff;
+    --btn-hover: #574fd6;
+    --delete-hover: #ff5c5c;
+    --text-color: #574fd6;
+    --text-secondary: #777;
+    --border-color: #e0e0e0;
+  }
+  
+  .employee-card-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.3s ease-in-out;
+    margin-top: -10px;
+  }
+  
+  .employee-card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .header-icon {
+    font-size: 2rem;
+    color: var(--table-header-bg);
+    margin-right: 0.75rem;
+  }
+  
+  .employee-card-title {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    font-weight: 700;
+  }
+  
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .employee-table th,
+  .employee-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .employee-table thead {
+    background-color: var(--table-header-bg);
+    color: white;
+  }
+  
+  .employee-table tbody tr {
+    transition: background 0.3s ease;
+  }
+  
+  .employee-table tbody tr:hover {
+    background-color: var(--secondary-bg);
+    color: #6c63ff;  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    background-color: var(--btn-bg);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .edit-btn:hover {
+    background-color: var(--btn-hover);
+  }
+  
+  .delete-btn:hover {
+    background-color: var(--delete-hover);
+  }
+  
+  @media (max-width: 768px) {
+    .employee-card-container {
+      padding: 1rem;
+    }
+  
+    .employee-table th,
+    .employee-table td {
+      padding: 0.8rem;
+    }
+  
+    .employee-card-title {
+      font-size: 1.3rem;
+    }
+  
+    .header-icon {
+      font-size: 1.5rem;
+    }
+  }
+  
