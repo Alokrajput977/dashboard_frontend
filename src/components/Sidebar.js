@@ -5,7 +5,6 @@ import { FaUsersCog, FaCircle, FaUserTie, FaBullhorn, FaChartLine } from 'react-
 import {
   faBars,
   faTimes,
-  faCalendar,
   faCheckSquare,
   faClipboardList,
   faBell,
@@ -18,7 +17,6 @@ import './Sidebar.css';
 function Sidebar({ logout, onSelect }) {
   const [hrOpen, setHrOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const [utilitiesOpen, setUtilitiesOpen] = useState(false);
 
   const toggleCollapse = () => setCollapsed(prev => !prev);
 
@@ -39,14 +37,11 @@ function Sidebar({ logout, onSelect }) {
         {/* GENERAL */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">GENERAL</h3>
-          <div className="sidebar-item" onClick={() => onSelect('time')}>
-            <FontAwesomeIcon icon={faCalendar} /><span>My Time</span>
-          </div>
           <div className="sidebar-item" onClick={() => onSelect('work')}>
             <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
           </div>
           <div className="sidebar-item" onClick={() => onSelect('boards')}>
-            <FontAwesomeIcon icon={faClipboardList} /><span>Boards</span>
+            <FontAwesomeIcon icon={faClipboardList} /><span>Tasks</span>
           </div>
           <div className="sidebar-item notification-item" onClick={() => onSelect('notifications')}>
             <FontAwesomeIcon icon={faBell} /><span>Notifications</span>
@@ -56,7 +51,7 @@ function Sidebar({ logout, onSelect }) {
 
         {/* PROJECTS */}
         <div className="sidebar-section">
-          <h3 className="sidebar-heading">PROJECTS</h3>
+          <h3 className="sidebar-heading">ERP</h3>
           <div className="sidebar-item" onClick={() => setHrOpen(!hrOpen)}>
             <FaUsersCog /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>HR</span>
           </div>
@@ -79,28 +74,17 @@ function Sidebar({ logout, onSelect }) {
               </div>
             </div>
           )}
+          <div className="sidebar-item" onClick={() => onSelect('management')}>
+            <FaUserTie /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Management</span>
+          </div>
+          <div className="sidebar-item" onClick={() => onSelect('management')}>
+            <FaBullhorn /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Marketing</span>
+          </div>
+          <div className="sidebar-item" onClick={() => onSelect('management')}>
+            <FaChartLine /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Sales</span>
+          </div>
         </div>
 
-        {/* UTILITIES */}
-        <div className="sidebar-section">
-          <h3 className="sidebar-heading">UTILITIES</h3>
-          <div className="sidebar-item" onClick={() => setUtilitiesOpen(!utilitiesOpen)}>
-            <FaUserTie /><span style={{ marginLeft: '8px' }}>Utilities</span>
-          </div>
-          {utilitiesOpen && (
-            <div className="dropdown-container open">
-              <div className="dropdown-item" onClick={() => onSelect('management')}>
-                <FaUserTie className="dropdown-icon" /><span>Management</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('marketing')}>
-                <FaBullhorn className="dropdown-icon" /><span>Marketing</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('sales')}>
-                <FaChartLine className="dropdown-icon" /><span>Sales</span>
-              </div>
-            </div>
-          )}
-        </div>
 
         {/* OTHER */}
         <div className="sidebar-section">

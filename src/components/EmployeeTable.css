@@ -2,7 +2,7 @@
     --secondary-bg: #f2f2f2;
     --card-bg: #ffffff;
     --table-header-bg: #6c63ff;
-    --btn-bg: #6c63ff;
+    --btn-bg: #574fd6;
     --btn-hover: #574fd6;
     --delete-hover: #ff5c5c;
     --text-color: #574fd6;
@@ -25,14 +25,14 @@
   .employee-card-header {
     display: flex;
     align-items: center;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--accent-color);
     padding-bottom: 1rem;
     margin-bottom: 1.5rem;
   }
   
   .header-icon {
     font-size: 2rem;
-    color: var(--table-header-bg);
+    color: var(--accent-color);
     margin-right: 0.75rem;
   }
   
@@ -55,7 +55,7 @@
   }
   
   .employee-table thead {
-    background-color: var(--table-header-bg);
+    background-color: var(--accent-color);
     color: white;
   }
   
@@ -79,7 +79,7 @@
   
   .edit-btn,
   .delete-btn {
-    background-color: var(--btn-bg);
+    background-color: var(--accent-color);
     color: white;
     border: none;
     padding: 0.4rem 0.6rem;
