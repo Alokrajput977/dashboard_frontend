@@ -1,6 +1,7 @@
 // Sidebar.jsx
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaUsersCog, FaCircle } from 'react-icons/fa'
 import {
   faBars,
   faTimes,
@@ -8,9 +9,6 @@ import {
   faCheckSquare,
   faClipboardList,
   faBell,
-  faProjectDiagram,
-  faPaintBrush,
-  faStar,
   faCog,
   faQuestionCircle,
   faSignOutAlt,
@@ -18,6 +16,7 @@ import {
 import './Sidebar.css';
 
 function Sidebar({ logout, onSelect }) {
+  const [hrOpen, setHrOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapse = () => setCollapsed(prev => !prev);
 
@@ -53,20 +52,32 @@ function Sidebar({ logout, onSelect }) {
         </div>
 
         <div className="sidebar-section">
-          <h3 className="sidebar-heading">PROJECTS</h3>
-          <div className="sidebar-item" onClick={() => onSelect('hologram')}>
-            <FontAwesomeIcon icon={faProjectDiagram} /><span>Hologram</span>
+      <h3 className="sidebar-heading">PROJECTS</h3>
+      
+      <div className="sidebar-item" onClick={() => setHrOpen(!hrOpen)}>
+        <FaUsersCog /><span style={{ marginLeft: '8px' }}>HR</span>
+      </div>
+      
+      {hrOpen && (
+        <div className="dropdown-container">
+          <div className="dropdown-item" onClick={() => onSelect('addEmployee')}>
+            <FaCircle className="dropdown-icon" /><span>Add Employee</span>
           </div>
-          <div className="sidebar-item" onClick={() => onSelect('dailyart')}>
-            <FontAwesomeIcon icon={faPaintBrush} /><span>DailyArt App</span>
+          <div className="dropdown-item" onClick={() => onSelect('manageTeam')}>
+            <FaCircle className="dropdown-icon" /><span>Manage Team</span>
           </div>
-          <div className="sidebar-item" onClick={() => onSelect('weszio')}>
-            <FontAwesomeIcon icon={faStar} /><span>Weszio.com</span>
+          <div className="dropdown-item" onClick={() => onSelect('attendance')}>
+            <FaCircle className="dropdown-icon" /><span>Attendance</span>
           </div>
-          <div className="sidebar-item" onClick={() => onSelect('starlight')}>
-            <FontAwesomeIcon icon={faStar} /><span>Starlight Team</span>
+          <div className="dropdown-item" onClick={() => onSelect('payroll')}>
+            <FaCircle className="dropdown-icon" /><span>Payroll</span>
+          </div>
+          <div className="dropdown-item" onClick={() => onSelect('performance')}>
+            <FaCircle className="dropdown-icon" /><span>Performance Management</span>
           </div>
         </div>
+      )}
+    </div>
 
         <div className="sidebar-section">
           <h3 className="sidebar-heading">OTHER</h3>
