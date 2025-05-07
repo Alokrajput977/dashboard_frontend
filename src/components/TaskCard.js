@@ -4,6 +4,7 @@ import { Draggable } from '@hello-pangea/dnd';
 import EditTaskModal from './EditTaskModal.jsx';
 import TaskInfoModal from './TaskInfoModal.jsx';
 import './TaskCard.css';
+import { FaTrashAlt, FaEdit, FaInfoCircle } from 'react-icons/fa';
 
 const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -18,8 +19,6 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
     e.stopPropagation();
     if (typeof onRemoveTask === 'function') {
       onRemoveTask(task.id, columnId);
-    } else {
-      console.error('onRemoveTask is not a function');
     }
   };
 
@@ -37,35 +36,39 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
       {(provided, snapshot) => (
         <>
           <div
-            className={`task-card ${snapshot.isDragging ? 'dragging' : ''}`}
+            className={`task-card-container ${snapshot.isDragging ? 'dragging' : ''}`}
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             onClick={handleCardClick}
           >
-            <div className="card-header">
-              <div className="task-label">
-                <span>{task.label}</span>
-                <span className={`priority ${task.priority.toLowerCase()}`}>
-                  {task.priority}
-                </span>
+            <div className="task-header">
+              <div className={`priority-badge ${task.priority.toLowerCase()}`}>
+                {task.priority}
               </div>
               {userRole === 'manager' && (
-                <button className="remove-task-btn" onClick={handleRemove} title="Remove this task">
-                  &times;
+                <button className="icon-button" onClick={handleRemove} title="Delete Task">
+                  <FaTrashAlt />
                 </button>
               )}
             </div>
-            <div className="card-body">
-              <h4 className="task-title">{task.title}</h4>
-              <p className="task-date">Due Date: {task.dueDate}</p>
+            <div className="task-content">
+              <h3 className="task-title">{task.title}</h3>
+              <p className="task-desc">{task.label}</p>
+              <p className="task-date">📅 {task.dueDate}</p>
             </div>
-            {userRole === 'manager' && (
-              <button className="edit-btn" onClick={handleEditClick}>
-                Edit
+            <div className="task-footer">
+              <button className="icon-button info-btn" onClick={handleCardClick}>
+                <FaInfoCircle />
               </button>
-            )}
+              {userRole === 'manager' && (
+                <button className="icon-button edit-btn" onClick={handleEditClick}>
+                  <FaEdit />
+                </button>
+              )}
+            </div>
           </div>
+
           {showEditModal && (
             <EditTaskModal
               task={task}
