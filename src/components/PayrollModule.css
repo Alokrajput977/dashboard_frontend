@@ -1,0 +1,194 @@
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .payroll-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .module-title {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .tab-btn {
+    padding: 12px 30px;
+    margin-right: 15px;
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
+  }
+  
+  .tab-btn:hover {
+    background-color: #e0e0e0;
+    color: #8b5cf6;
+  }
+  
+  .tab-btn.active {
+    background-color: #8b5cf6;
+    color: #ffffff;
+  }
+  
+  .tab-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .card table th, .card table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card table th {
+    background-color: #f7f7f7;
+    color: #8b5cf6;
+    font-weight: bold;
+  }
+  
+  .card table td {
+    color: #333;
+  }
+  
+  .card table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .action-btn {
+    padding: 8px 16px;
+    border: none;
+    background-color: #8b5cf6;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-btn:hover {
+    background-color: #8b5cf6;
+  }
+  
+  .action-btn.danger {
+    background-color: #e74c3c;
+  }
+  
+  .action-btn.danger:hover {
+    background-color: #c0392b;
+  }
+  
+  .two-sections {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .two-sections > div {
+    flex: 1;
+  }
+  
+  .two-sections ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .two-sections ul li {
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .two-sections ul li:hover {
+    background-color: #e0e0e0;
+  }
+  
+  select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  select:focus {
+    outline: none;
+    border-color: #8b5cf6;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #8b5cf6;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+
+  
+  @media (max-width: 768px) {
+    .payroll-container {
+      padding: 15px;
+    }
+  
+    .tabs {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .tab-btn {
+      margin: 5px 0;
+    }
+  
+    .two-sections {
+      flex-direction: column;
+    }
+  }
+  

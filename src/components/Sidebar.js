@@ -53,7 +53,7 @@ function Sidebar({ logout, onSelect }) {
         <div className="sidebar-section">
           <h3 className="sidebar-heading">ERP</h3>
           <div className="sidebar-item" onClick={() => setHrOpen(!hrOpen)}>
-            <FaUsersCog /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>HR</span>
+            <FaUsersCog  /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>HR</span>
           </div>
           {hrOpen && (
             <div className="dropdown-container open">

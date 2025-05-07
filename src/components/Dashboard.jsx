@@ -13,6 +13,8 @@ import Table from "../components/table"
 import Loader from './Loader';
 import EmployeeTable from "../components/Manageteam"
 import EmployeeForm from './Addemployee';
+import AttendanceApp from './Attendance';
+import PayrollModule from "../components/Payroll"
 
 import './Dashboard.css';
 
@@ -91,12 +93,18 @@ export default function Dashboard({ user, setUser }) {
     case 'manageTeam':
       content = <EmployeeTable />;
       break;
+    case 'attendance':
+        content = <AttendanceApp />;
+        break;
     case 'addEmployee':
         content = <EmployeeForm />;
         break;
     case 'members':
       content = <MembersPanel />;
       break;
+    case 'payroll':
+        content = <PayrollModule />;
+        break;
     case 'boards':
     default:
       content = (

@@ -219,7 +219,7 @@ function Login({ setUser }) {
                     required
                     style={{ borderTop: "none", borderRight: "none", borderLeft: "none" }}
                   >
-                    <option value="" disabled>
+                    <option value="" disabled >
                       Select Role
                     </option>
                     <option value="employee">Employee</option>
