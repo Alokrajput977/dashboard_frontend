@@ -1,0 +1,46 @@
+/* Existing styles for table remain the same */
+
+.employee-select {
+  margin-bottom: 20px;
+}
+
+.employee-select label {
+  font-size: 16px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.employee-select select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.payroll-table {
+  margin-top: 30px;
+}
+
+.payroll-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payroll-table th, .payroll-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.payroll-table th {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.payroll-table td {
+  background-color: #f9f9f9;
+}
+
+.payroll-table tr:hover {
+  background-color: #f0f0f0;
+}
