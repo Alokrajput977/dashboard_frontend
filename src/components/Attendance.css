@@ -233,3 +233,20 @@ body {
   }
   
   
+  .clickable-table tbody tr:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .salary-slip {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 8px;
+  }
+  
+  .salary-slip table td {
+    padding: 6px 12px;
+  }
+  

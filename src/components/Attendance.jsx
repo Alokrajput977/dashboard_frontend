@@ -1,8 +1,11 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback , useEffect} from "react";
 import Webcam from "react-webcam";
 import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import "./Attendance.css";
+import "./Employees.css";
 
 const AttendanceApp = ({theme }) => {
   const [page, setPage] = useState("attendance");
@@ -216,43 +219,117 @@ const Overtime = () => (
     </table>
   </div>
 );
-const Employees = () => (
-  <div className="page">
-    <h1>Employee Details</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Employee ID</th>
-          <th>Name</th>
-          <th>Department</th>
-          <th>Role</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>EMP101</td>
-          <td>Amit Sharma</td>
-          <td>HR</td>
-          <td>Manager</td>
-          <td>Active</td>
-        </tr>
-        <tr>
-          <td>EMP102</td>
-          <td>Priya Verma</td>
-          <td>IT</td>
-          <td>Developer</td>
-          <td>On Leave</td>
-        </tr>
-        <tr>
-          <td>EMP103</td>
-          <td>Ravi Kumar</td>
-          <td>Operations</td>
-          <td>Supervisor</td>
-          <td>Active</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-);
+const Employees = () => {
+  const [employees, setEmployees] = useState([useEffect]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/users")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch users");
+        return res.json();
+      })
+      .then((data) => setEmployees(data))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleSelect = (emp) => setSelectedEmployee(emp);
+
+  const calculateGST = (salary) => {
+    const gst = salary * 0.18;
+    return {
+      gst,
+      netSalary: salary - gst,
+    };
+  };
+
+  return (
+    <div className="employee-page">
+      <h1 className="section-title">Employee List</h1>
+      <div className="employee-table-container">
+        {loading ? (
+          <p className="loading-text">Loading employees...</p>
+        ) : employees.length === 0 ? (
+          <p className="loading-text">No employees found.</p>
+        ) : (
+          <table className="employee-table">
+            <thead>
+              <tr>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((emp) => (
+                <tr key={emp._id} onClick={() => handleSelect(emp)}>
+                  <td>{emp.fullName}</td>
+                  <td>{emp.username}</td>
+                  <td>{emp.email}</td>
+                  <td>{emp.role}</td>
+                  <td>{emp.department}</td>
+                  <td>
+                    {new Date(emp.createdAt).toLocaleDateString("en-IN", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {selectedEmployee && (
+        <div className="salary-slip">
+          <h2>Salary Slip</h2>
+          <table>
+            <tbody>
+              <tr>
+                <td><strong>Employee ID:</strong></td>
+                <td>{selectedEmployee._id}</td>
+              </tr>
+              <tr>
+                <td><strong>Name:</strong></td>
+                <td>{selectedEmployee.fullName}</td>
+              </tr>
+              <tr>
+                <td><strong>Department:</strong></td>
+                <td>{selectedEmployee.department}</td>
+              </tr>
+              <tr>
+                <td><strong>Role:</strong></td>
+                <td>{selectedEmployee.role}</td>
+              </tr>
+              <tr>
+                <td><strong>Gross Salary:</strong></td>
+                <td>₹{selectedEmployee.salary?.toLocaleString() || '0'}</td>
+              </tr>
+              <tr>
+                <td><strong>GST (18%):</strong></td>
+                <td>
+                  ₹{calculateGST(selectedEmployee.salary || 0).gst.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Net Salary:</strong></td>
+                <td>
+                  ₹{calculateGST(selectedEmployee.salary || 0).netSalary.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default AttendanceApp;
