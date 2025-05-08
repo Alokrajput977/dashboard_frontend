@@ -1,11 +1,12 @@
 :root {
   --card-bg: #ffffff;
   --card-border: #dcdcdc;
-  --card-hover: #f0f4ff;
-  --text-color: #2d2d2d;
-  --date-color: #666;
-  --btn-color: #007bff;
-  --btn-hover: #0056b3;
+  --card-hover: #f5f7fb;
+  --text-color: #1f2937;
+  --desc-color: #6b7280;
+  --date-color: #9ca3af;
+  --btn-color: #6366f1;
+  --btn-hover: #4338ca;
 }
 
 .task-card-container {
@@ -21,8 +22,13 @@
 
 .task-card-container:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   background-color: var(--card-hover);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dragging {
+  transform: scale(1.02);
+  border: 2px dashed var(--btn-color);
 }
 
 .task-header {
@@ -32,8 +38,8 @@
 }
 
 .priority-badge {
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 4px 12px;
+  border-radius: 12px;
   font-size: 0.75rem;
   font-weight: bold;
   color: white;
@@ -41,15 +47,15 @@
 }
 
 .priority-badge.low {
-  background-color: #2ecc71;
+  background-color: #10b981; /* green */
 }
 
 .priority-badge.medium {
-  background-color: #f1c40f;
+  background-color: #f59e0b; /* yellow */
 }
 
 .priority-badge.high {
-  background-color: #e74c3c;
+  background-color: #ef4444; /* red */
 }
 
 .task-content {
@@ -58,28 +64,35 @@
 
 .task-title {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: var(--text-color);
   font-weight: 600;
 }
 
 .task-desc {
-  margin-top: 4px;
-  color: #777;
-  font-size: 0.95rem;
+  margin-top: 6px;
+  color: var(--desc-color);
+  font-size: 0.9rem;
 }
 
 .task-date {
-  margin-top: 6px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
   color: var(--date-color);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+}
+
+.calendar-icon {
+  margin-right: 6px;
+  color: #9ca3af;
 }
 
 .task-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 12px;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .icon-button {
@@ -91,13 +104,3 @@
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.icon-button:hover {
-  color: var(--btn-hover);
-  transform: scale(1.1);
-}
-
-.dragging {
-  transform: scale(1.02);
-  border-color: #007bff;
-}
- 

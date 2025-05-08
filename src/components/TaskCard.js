@@ -4,7 +4,7 @@ import { Draggable } from '@hello-pangea/dnd';
 import EditTaskModal from './EditTaskModal.jsx';
 import TaskInfoModal from './TaskInfoModal.jsx';
 import './TaskCard.css';
-import { FaTrashAlt, FaEdit, FaInfoCircle } from 'react-icons/fa';
+import { FaTrashAlt, FaEdit, FaInfoCircle, FaCalendarAlt } from 'react-icons/fa';
 
 const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -55,7 +55,9 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
             <div className="task-content">
               <h3 className="task-title">{task.title}</h3>
               <p className="task-desc">{task.label}</p>
-              <p className="task-date">📅 {task.dueDate}</p>
+              <p className="task-date">
+                <FaCalendarAlt className="calendar-icon" /> {task.dueDate}
+              </p>
             </div>
             <div className="task-footer">
               <button className="icon-button info-btn" onClick={handleCardClick}>
