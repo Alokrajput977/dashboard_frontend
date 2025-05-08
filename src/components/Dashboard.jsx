@@ -15,6 +15,7 @@ import EmployeeTable from "../components/Manageteam"
 import EmployeeForm from './Addemployee';
 import AttendanceApp from './Attendance';
 import PayrollModule from "../components/Payroll"
+import PerformanceDashboard from './Management';
 
 import './Dashboard.css';
 
@@ -102,6 +103,10 @@ export default function Dashboard({ user, setUser }) {
     case 'members':
       content = <MembersPanel />;
       break;
+
+      case 'performance':
+        content = <PerformanceDashboard />;
+        break;
     case 'payroll':
         content = <PayrollModule />;
         break;
