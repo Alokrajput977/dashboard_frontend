@@ -1,23 +1,27 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMoon, faSun, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 function Navbar({ theme, toggleTheme, onAddMember }) {
   return (
     <nav className={`navbar-container ${theme}`}>
-      <div className="navbar-brand">
-        <h2>My Project</h2>
+      <div className="navbar-title">
+        <h2></h2>
       </div>
-      <ul className="navbar-links">
-        <li>Overview</li>
-        <li>Tasks</li>
-        <li>Timeline</li>
-        <li>Notes</li>
-        <li>Files</li>
-        <li onClick={onAddMember} className="clickable">Table</li>
-      </ul>
+
       <div className="navbar-right">
+        <div className="search-container">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search..."
+          />
+          <button className="search-btn" aria-label="Search">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
+
         <button
           className="theme-toggle-btn"
           onClick={toggleTheme}
@@ -25,13 +29,13 @@ function Navbar({ theme, toggleTheme, onAddMember }) {
         >
           <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
         </button>
+
         <button
           className="add-member-btn"
           onClick={onAddMember}
           title="Add a new member"
-          style={{color:"white"}}
         >
-          <FontAwesomeIcon icon={faPlus} /> Add Member
+          <FontAwesomeIcon icon={faPlus} /> Employee Table
         </button>
       </div>
     </nav>
