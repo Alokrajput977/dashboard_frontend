@@ -1,6 +1,14 @@
 // frontend/src/components/NewTaskModal.jsx
 import React, { useState } from 'react';
-import { FaUser, FaTag, FaFlag, FaCalendarAlt } from 'react-icons/fa';
+import {
+  faUser,
+  faTag,
+  faFlag,
+  faCalendarAlt,
+  faCheckCircle,
+  faTimesCircle
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NewTaskModal.css';
 
 const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
@@ -12,11 +20,10 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // build task object including assignee
     const taskData = { title, label, priority, dueDate, assignee };
     onSubmit(columnId, taskData);
 
-    // reset form
+    // Reset form
     setTitle('');
     setLabel('');
     setPriority('Medium');
@@ -31,14 +38,11 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
         className={`modal-content animated ${theme}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="modal-title">
-          <FaFlag className="title-icon" />
-          Add New Task
-        </h2>
+        <h2 className="modal-title">Add New Task</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group icon-input">
             <label htmlFor="title">
-              <FaFlag /> Title
+              <FontAwesomeIcon icon={faFlag} /> Title
             </label>
             <input
               id="title"
@@ -52,7 +56,7 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
           <div className="form-group icon-input">
             <label htmlFor="label">
-              <FaTag /> Label
+              <FontAwesomeIcon icon={faTag} /> Label
             </label>
             <input
               id="label"
@@ -65,7 +69,7 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
           <div className="form-group icon-input">
             <label htmlFor="assignee">
-              <FaUser /> Assign To
+              <FontAwesomeIcon icon={faUser} /> Assign To
             </label>
             <input
               id="assignee"
@@ -79,22 +83,22 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
           <div className="form-group icon-input">
             <label htmlFor="priority">
-              <FaFlag /> Priority
+              <FontAwesomeIcon icon={faFlag} /> Priority
             </label>
             <select
               id="priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
-              <option value="High">🔥 High</option>
-              <option value="Medium">⚖️ Medium</option>
-              <option value="Low">🌱 Low</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
             </select>
           </div>
 
           <div className="form-group icon-input">
             <label htmlFor="dueDate">
-              <FaCalendarAlt /> Due Date
+              <FontAwesomeIcon icon={faCalendarAlt} /> Due Date
             </label>
             <input
               id="dueDate"
@@ -106,10 +110,10 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
 
           <div className="modal-actions">
             <button type="submit" className="btn primary">
-              ✅ Add Task
+              <FontAwesomeIcon icon={faCheckCircle} /> Add Task
             </button>
             <button type="button" className="btn secondary" onClick={onClose}>
-              ❌ Cancel
+              <FontAwesomeIcon icon={faTimesCircle} /> Cancel
             </button>
           </div>
         </form>
