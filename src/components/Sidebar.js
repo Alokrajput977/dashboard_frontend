@@ -1,7 +1,6 @@
 // Sidebar.jsx
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaUsersCog, FaCircle, FaUserTie, FaBullhorn, FaChartLine } from 'react-icons/fa';
 import {
   faBars,
   faTimes,
@@ -11,7 +10,16 @@ import {
   faCog,
   faQuestionCircle,
   faSignOutAlt,
+  faUserPlus,
+  faUsers,
+  faCalendarCheck,
+  faMoneyCheckAlt,
+  faChartBar,
+  faUserTie,
+  faBullhorn,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
+import { FaUsersCog } from 'react-icons/fa';
 import './Sidebar.css';
 
 function Sidebar({ logout, onSelect }) {
@@ -21,7 +29,7 @@ function Sidebar({ logout, onSelect }) {
   const toggleCollapse = () => setCollapsed(prev => !prev);
 
   return (
-    <div className={`sidebar-container${collapsed ? ' collapsed' : ''}`}>      
+    <div className={`sidebar-container${collapsed ? ' collapsed' : ''}`}>
       <div className="sidebar-header">
         {!collapsed && (
           <div className="sidebar-logo" onClick={toggleCollapse}>
@@ -45,46 +53,44 @@ function Sidebar({ logout, onSelect }) {
           </div>
           <div className="sidebar-item notification-item" onClick={() => onSelect('notifications')}>
             <FontAwesomeIcon icon={faBell} /><span>Notifications</span>
-           
           </div>
         </div>
 
-        {/* PROJECTS */}
+        {/* ERP */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">ERP</h3>
           <div className="sidebar-item" onClick={() => setHrOpen(!hrOpen)}>
-            <FaUsersCog  /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>HR</span>
+            <FaUsersCog /><span style={{ marginLeft: '8px', fontSize: "14px" }}>HR</span>
           </div>
           {hrOpen && (
             <div className="dropdown-container open">
               <div className="dropdown-item" onClick={() => onSelect('addEmployee')}>
-                <FaCircle className="dropdown-icon" /><span>Add Employee</span>
+                <FontAwesomeIcon icon={faUserPlus} className="dropdown-icon" /><span>Add Employee</span>
               </div>
               <div className="dropdown-item" onClick={() => onSelect('manageTeam')}>
-                <FaCircle className="dropdown-icon" /><span>Manage Team</span>
+                <FontAwesomeIcon icon={faUsers} className="dropdown-icon" /><span>Manage Team</span>
               </div>
               <div className="dropdown-item" onClick={() => onSelect('attendance')}>
-                <FaCircle className="dropdown-icon" /><span>Attendance</span>
+                <FontAwesomeIcon icon={faCalendarCheck} className="dropdown-icon" /><span>Attendance</span>
               </div>
               <div className="dropdown-item" onClick={() => onSelect('payroll')}>
-                <FaCircle className="dropdown-icon" /><span>Payroll</span>
+                <FontAwesomeIcon icon={faMoneyCheckAlt} className="dropdown-icon" /><span>Payroll</span>
               </div>
               <div className="dropdown-item" onClick={() => onSelect('performance')}>
-                <FaCircle className="dropdown-icon" /><span>Performance Management</span>
+                <FontAwesomeIcon icon={faChartBar} className="dropdown-icon" /><span>Performance Management</span>
               </div>
             </div>
           )}
           <div className="sidebar-item" onClick={() => onSelect('management')}>
-            <FaUserTie /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Management</span>
+            <FontAwesomeIcon icon={faUserTie} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Management</span>
           </div>
-          <div className="sidebar-item" onClick={() => onSelect('management')}>
-            <FaBullhorn /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Marketing</span>
+          <div className="sidebar-item" onClick={() => onSelect('marketing')}>
+            <FontAwesomeIcon icon={faBullhorn} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Marketing</span>
           </div>
-          <div className="sidebar-item" onClick={() => onSelect('management')}>
-            <FaChartLine /><span style={{ marginLeft: '8px' ,fontSize:"14px"}}>Sales</span>
+          <div className="sidebar-item" onClick={() => onSelect('sales')}>
+            <FontAwesomeIcon icon={faChartLine} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Sales</span>
           </div>
         </div>
-
 
         {/* OTHER */}
         <div className="sidebar-section">

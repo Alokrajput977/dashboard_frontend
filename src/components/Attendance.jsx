@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback , useEffect} from "react";
 import Webcam from "react-webcam";
 import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./Attendance.css";
 import "./Employees.css";
