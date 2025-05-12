@@ -5,7 +5,7 @@ import { FaUserShield, FaUsersCog, FaBuilding, FaUserFriends } from 'react-icons
 const AdminControls = () => {
   return (
     <div className="admin-ui-container">
-      <h1 className="admin-ui-title" style={{}}>Admin Control Panel</h1>
+      <h1 className="admin-ui-title" style={{color:"#7e3af2"}}>Admin Control Panel</h1>
       <p className="admin-ui-subtitle">Effortlessly manage employees and clients with enhanced access control</p>
 
       <div className="admin-ui-grid">
