@@ -16,6 +16,8 @@ import EmployeeForm from './Addemployee';
 import AttendanceApp from './Attendance';
 import PayrollModule from "../components/Payroll"
 import PerformanceDashboard from './Management';
+import AdminControls from "../components/Admincontrol"
+import ShiftScheduling from './ShiftScheduling';
 
 import './Dashboard.css';
 
@@ -24,7 +26,7 @@ function MembersPanel() {
 
   return (
     <div className="members-panel">
-      
+
       {visible && <Table />}
     </div>
   );
@@ -95,21 +97,27 @@ export default function Dashboard({ user, setUser }) {
       content = <EmployeeTable />;
       break;
     case 'attendance':
-        content = <AttendanceApp />;
-        break;
+      content = <AttendanceApp />;
+      break;
     case 'addEmployee':
-        content = <EmployeeForm />;
-        break;
+      content = <EmployeeForm />;
+      break;
+        case 'AdminControls':
+      content = <AdminControls />;
+      break;
+        case 'ShiftScheduling':
+      content = <ShiftScheduling />;
+      break;
     case 'members':
       content = <MembersPanel />;
       break;
 
-      case 'performance':
-        content = <PerformanceDashboard />;
-        break;
+    case 'performance':
+      content = <PerformanceDashboard />;
+      break;
     case 'payroll':
-        content = <PayrollModule />;
-        break;
+      content = <PayrollModule />;
+      break;
     case 'boards':
     default:
       content = (

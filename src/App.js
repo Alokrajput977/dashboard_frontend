@@ -4,6 +4,7 @@ import Login from "../src/components/login"
 import Dashboard from "./components/Dashboard";
 import AddMember from "./components/AddMember";
 import './index.css';
+import AdminControls from "./components/Admincontrol";
 function App() {
   const [user, setUser] = useState(null);
 
@@ -19,6 +20,7 @@ function App() {
           path="/"
           element={!user ? <Login setUser={setUser} /> : <Navigate to="/dashboard" />}
         />
+        
         <Route
           path="/dashboard"
           element={
@@ -28,6 +30,9 @@ function App() {
               <Navigate to="/" />
             )
           }
+        />
+        <Route
+          path="/admin" element={<AdminControls/>}
         />
         <Route
           path="/add-member"
@@ -45,3 +50,4 @@ function App() {
 }
 
 export default App;
+

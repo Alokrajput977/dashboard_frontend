@@ -1,0 +1,148 @@
+.shift-container {
+    padding: 40px;
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.shift-container h2 {
+    text-align: center;
+    color: #8b5cf6;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.icon-title {
+    margin-right: 10px;
+}
+
+.shift-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.shift-form .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shift-form .form-group i {
+    color: #8b5cf6;
+    font-size: 18px;
+}
+
+.shift-form input,
+.shift-form select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    min-width: 200px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.shift-form input:focus,
+.shift-form select:focus {
+    border-color: #8b5cf6;
+    outline: none;
+}
+
+.shift-form button {
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.shift-form button:hover {
+    background-color: #6f42c1;
+    transform: translateY(-2px);
+}
+
+.shift-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fdfdfd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.shift-table th,
+.shift-table td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+.shift-table th {
+    background-color: #8b5cf6;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.shift-table tr:hover {
+    background-color: #f4f0ff;
+}
+
+.present {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.absent {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.compliant {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.non-compliant {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .shift-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .shift-form .form-group {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .shift-table th,
+    .shift-table td {
+        font-size: 14px;
+        padding: 12px;
+    }
+}

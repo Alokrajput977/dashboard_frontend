@@ -1,0 +1,78 @@
+.admin-ui-container {
+  padding: 60px 30px;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.admin-ui-title {
+  font-size: 30px;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  margin-top: -40px;
+  padding-bottom: 10px;
+}
+
+.admin-ui-subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #6c757d;
+  margin-bottom: 40px;
+}
+
+.admin-ui-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-ui-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-ui-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+}
+
+.admin-ui-icon {
+  font-size: 55px;
+  color: #7e3af2;
+  margin-bottom: 20px;
+}
+
+.admin-ui-card h2 {
+  font-size: 22px;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.admin-ui-card p {
+  font-size: 15px;
+  color: #4b5563;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.admin-ui-button {
+  background-color: #7e3af2;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-ui-button:hover {
+  background-color: #5b21b6;
+}

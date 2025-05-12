@@ -18,6 +18,8 @@ import {
   faUserTie,
   faBullhorn,
   faChartLine,
+  faUserShield,
+  faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaUsersCog } from 'react-icons/fa';
 import './Sidebar.css';
@@ -78,6 +80,12 @@ function Sidebar({ logout, onSelect }) {
               </div>
               <div className="dropdown-item" onClick={() => onSelect('performance')}>
                 <FontAwesomeIcon icon={faChartBar} className="dropdown-icon" /><span>Performance Management</span>
+              </div>
+             <div className="dropdown-item" onClick={() => onSelect('AdminControls')}>
+                <FontAwesomeIcon icon={faUserShield} className="dropdown-icon" /><span>AdminControls</span>
+              </div>
+             <div className="dropdown-item" onClick={() => onSelect('ShiftScheduling')}>
+                <FontAwesomeIcon icon={faCalendarAlt } className="dropdown-icon" /><span>ShiftScheduling</span>
               </div>
             </div>
           )}
