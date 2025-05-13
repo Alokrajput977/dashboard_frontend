@@ -2,24 +2,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBars,
-  faTimes,
-  faCheckSquare,
-  faClipboardList,
-  faBell,
-  faCog,
-  faQuestionCircle,
-  faSignOutAlt,
-  faUserPlus,
-  faUsers,
-  faCalendarCheck,
-  faMoneyCheckAlt,
-  faChartBar,
-  faUserTie,
-  faBullhorn,
-  faChartLine,
-  faUserShield,
-  faCalendarAlt,
+  faBars, faTimes, faCheckSquare, faClipboardList, faBell, faCog, faQuestionCircle,
+  faSignOutAlt, faUserPlus, faUsers, faCalendarCheck, faMoneyCheckAlt, faChartBar,
+  faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { FaUsersCog } from 'react-icons/fa';
 import './Sidebar.css';
@@ -29,6 +14,7 @@ function Sidebar({ logout, onSelect }) {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapse = () => setCollapsed(prev => !prev);
+  const toggleHR = () => setHrOpen(prev => !prev);
 
   return (
     <div className={`sidebar-container${collapsed ? ' collapsed' : ''}`}>
@@ -61,42 +47,42 @@ function Sidebar({ logout, onSelect }) {
         {/* ERP */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">ERP</h3>
-          <div className="sidebar-item" onClick={() => setHrOpen(!hrOpen)}>
-            <FaUsersCog /><span style={{ marginLeft: '8px', fontSize: "14px" }}>HR</span>
+          <div className="sidebar-item" onClick={toggleHR}>
+            <FaUsersCog />
+            <span style={{ marginLeft: '8px', fontSize: "14px" }}>HR</span>
+            <span className={`arrow ${hrOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          {hrOpen && (
-            <div className="dropdown-container open">
-              <div className="dropdown-item" onClick={() => onSelect('addEmployee')}>
-                <FontAwesomeIcon icon={faUserPlus} className="dropdown-icon" /><span>Add Employee</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('manageTeam')}>
-                <FontAwesomeIcon icon={faUsers} className="dropdown-icon" /><span>Manage Team</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('attendance')}>
-                <FontAwesomeIcon icon={faCalendarCheck} className="dropdown-icon" /><span>Attendance</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('payroll')}>
-                <FontAwesomeIcon icon={faMoneyCheckAlt} className="dropdown-icon" /><span>Payroll</span>
-              </div>
-              <div className="dropdown-item" onClick={() => onSelect('performance')}>
-                <FontAwesomeIcon icon={faChartBar} className="dropdown-icon" /><span>Performance Management</span>
-              </div>
-             <div className="dropdown-item" onClick={() => onSelect('AdminControls')}>
-                <FontAwesomeIcon icon={faUserShield} className="dropdown-icon" /><span>AdminControls</span>
-              </div>
-             <div className="dropdown-item" onClick={() => onSelect('ShiftScheduling')}>
-                <FontAwesomeIcon icon={faCalendarAlt } className="dropdown-icon" /><span>ShiftScheduling</span>
-              </div>
+          <div className={`dropdown-container ${hrOpen ? 'open' : ''}`}>
+            <div className="dropdown-item" onClick={() => onSelect('addEmployee')}>
+              <FontAwesomeIcon icon={faUserPlus} className="dropdown-icon" /><span>Add Employee</span>
             </div>
-          )}
+            <div className="dropdown-item" onClick={() => onSelect('manageTeam')}>
+              <FontAwesomeIcon icon={faUsers} className="dropdown-icon" /><span>Manage Team</span>
+            </div>
+            <div className="dropdown-item" onClick={() => onSelect('attendance')}>
+              <FontAwesomeIcon icon={faCalendarCheck} className="dropdown-icon" /><span>Attendance</span>
+            </div>
+            <div className="dropdown-item" onClick={() => onSelect('payroll')}>
+              <FontAwesomeIcon icon={faMoneyCheckAlt} className="dropdown-icon" /><span>Payroll</span>
+            </div>
+            <div className="dropdown-item" onClick={() => onSelect('performance')}>
+              <FontAwesomeIcon icon={faChartBar} className="dropdown-icon" /><span>Performance Management</span>
+            </div>
+            <div className="dropdown-item" onClick={() => onSelect('AdminControls')}>
+              <FontAwesomeIcon icon={faUserShield} className="dropdown-icon" /><span>Admin Controls</span>
+            </div>
+            <div className="dropdown-item" onClick={() => onSelect('ShiftScheduling')}>
+              <FontAwesomeIcon icon={faCalendarAlt} className="dropdown-icon" /><span>Shift Scheduling</span>
+            </div>
+          </div>
           <div className="sidebar-item" onClick={() => onSelect('management')}>
-            <FontAwesomeIcon icon={faUserTie} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Management</span>
+            <FontAwesomeIcon icon={faUserTie} /><span>Management</span>
           </div>
           <div className="sidebar-item" onClick={() => onSelect('marketing')}>
-            <FontAwesomeIcon icon={faBullhorn} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Marketing</span>
+            <FontAwesomeIcon icon={faBullhorn} /><span>Marketing</span>
           </div>
           <div className="sidebar-item" onClick={() => onSelect('sales')}>
-            <FontAwesomeIcon icon={faChartLine} /><span style={{ marginLeft: '8px', fontSize: "14px" }}>Sales</span>
+            <FontAwesomeIcon icon={faChartLine} /><span>Sales</span>
           </div>
         </div>
 
