@@ -18,6 +18,9 @@ import PayrollModule from "../components/Payroll"
 import PerformanceDashboard from './Management';
 import AdminControls from "../components/Admincontrol"
 import ShiftScheduling from './ShiftScheduling';
+import TaskManager from "../components/Management/Task_Creation"
+import AssignmentOwnership from './Management/Assignment';
+import TrackingReporting from './Management/Tracking';
 
 import './Dashboard.css';
 
@@ -114,6 +117,15 @@ export default function Dashboard({ user, setUser }) {
 
     case 'performance':
       content = <PerformanceDashboard />;
+      break;
+       case 'TaskManager':
+      content = <TaskManager />;
+      break;
+       case 'Assignment':
+      content = <AssignmentOwnership />;
+      break;
+       case 'Tracking':
+      content = <TrackingReporting />;
       break;
     case 'payroll':
       content = <PayrollModule />;

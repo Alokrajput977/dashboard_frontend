@@ -1,0 +1,232 @@
+.task-manager {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Title */
+h1 {
+  color: #8b5cf6;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.2rem;
+  
+}
+
+/* Project Creator Section */
+.project-creator {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.project-creator input {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 280px;
+  background-color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.project-creator input:focus {
+  border-color: #8b5cf6;
+  outline: none;
+}
+
+.project-creator button {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.project-creator button:hover {
+  background-color: #6a3ccc;
+}
+
+/* Project Block */
+.project-block {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.project-block:hover {
+  transform: translateY(-3px);
+}
+
+.project-block h2 {
+  color: #8b5cf6;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Task Form Grid (2 inputs in one row) */
+.task-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-form input {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color 0.3s;
+}
+
+.task-form input:focus {
+  border-color: #8b5cf6;
+  outline: none;
+}
+
+/* Subtask Section */
+.subtasks {
+  margin-top: 1rem;
+}
+
+.subtasks label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.subtasks input {
+  display: block;
+  margin-bottom: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background: white;
+}
+
+.subtasks button {
+  background-color: transparent;
+  color: #8b5cf6;
+  border: 1px dashed #8b5cf6;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.3rem;
+  transition: background-color 0.2s ease;
+}
+
+.subtasks button:hover {
+  background-color: #f1eaff;
+}
+
+/* Add Task Button */
+.add-task-btn {
+  background-color: #8b5cf6;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-task-btn:hover {
+  background-color: #6a3ccc;
+}
+
+/* Task List */
+.task-list {
+  margin-top: 2rem;
+}
+
+
+.task-card {
+  background: #ffffff;
+  border-left: 6px solid #8b5cf6;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(139, 92, 246, 0.2);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.milestone-badge {
+  background-color: #8b5cf6;
+  color: white;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task-details p {
+  margin: 0.5rem 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+
+
+.icon {
+  margin-right: 0.5rem;
+  color: #8b5cf6;
+}
+
+.subtasks-section {
+  margin-top: 1rem;
+}
+
+.subtasks-title {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.subtask-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.subtask-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  color: #555;
+}
+
+.check-icon {
+  color: #22c55e;
+  margin-right: 0.5rem;
+}
