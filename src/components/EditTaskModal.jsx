@@ -1,5 +1,4 @@
-// frontend/src/components/EditTaskModal.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EditTaskModal.css';
 
 const EditTaskModal = ({ task, onClose, onSave }) => {
@@ -7,6 +6,22 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   const [editedLabel, setEditedLabel] = useState(task.label);
   const [editedPriority, setEditedPriority] = useState(task.priority);
   const [editedDueDate, setEditedDueDate] = useState(task.dueDate);
+  const [editedAssignee, setEditedAssignee] = useState(task.assignee || '');
+
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
+
+  // Fetch users from backend
+  useEffect(() => {
+    fetch('http://localhost:5000/api/users')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch users');
+        return res.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((err) => console.error(err))
+      .finally(() => setLoadingUsers(false));
+  }, []);
 
   const handleSave = () => {
     const updatedTask = {
@@ -15,6 +30,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
       label: editedLabel,
       priority: editedPriority,
       dueDate: editedDueDate,
+      assignee: editedAssignee,
     };
     onSave(updatedTask);
   };
@@ -24,9 +40,11 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
       <div className="modal-content">
         <div className="modal-header">
           <h2>Edit Task</h2>
-          <button className="close-icon" onClick={onClose}>&times;</button>
+          <button className="close-icon" onClick={onClose}>
+            &times;
+          </button>
         </div>
-        
+
         <div className="form-group">
           <label>Title</label>
           <input
@@ -36,7 +54,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             className="input-field"
           />
         </div>
-        
+
         <div className="form-group">
           <label>Label</label>
           <input
@@ -46,7 +64,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             className="input-field"
           />
         </div>
-        
+
         <div className="form-group">
           <label>Priority</label>
           <select
@@ -59,7 +77,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             <option value="High">High</option>
           </select>
         </div>
-        
+
         <div className="form-group">
           <label>Due Date</label>
           <input
@@ -69,7 +87,27 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
             className="input-field"
           />
         </div>
-        
+
+        <div className="form-group">
+          <label>Assign To</label>
+          <select
+            value={editedAssignee}
+            onChange={(e) => setEditedAssignee(e.target.value)}
+            className="input-field"
+          >
+            <option value="">-- Select Assignee --</option>
+            {loadingUsers ? (
+              <option disabled>Loading users...</option>
+            ) : (
+              users.map((user) => (
+                <option key={user._id} value={user.username}>
+                  {user.username} ({user.role})
+                </option>
+              ))
+            )}
+          </select>
+        </div>
+
         <div className="modal-footer">
           <button className="btn secondary" onClick={onClose}>
             Cancel

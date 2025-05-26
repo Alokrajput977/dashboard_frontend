@@ -1,5 +1,4 @@
-// frontend/src/components/NewTaskModal.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   faUser,
   faTag,
@@ -17,6 +16,20 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
   const [priority, setPriority] = useState('Medium');
   const [dueDate, setDueDate] = useState('');
   const [assignee, setAssignee] = useState('');
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
+
+  // Fetch users on component mount
+  useEffect(() => {
+    fetch('http://localhost:5000/api/users')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch users');
+        return res.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((err) => console.error(err))
+      .finally(() => setLoadingUsers(false));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,14 +84,25 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
             <label htmlFor="assignee">
               <FontAwesomeIcon icon={faUser} /> Assign To
             </label>
-            <input
-              id="assignee"
-              type="text"
-              placeholder="Enter assignee name"
-              value={assignee}
-              onChange={(e) => setAssignee(e.target.value)}
-              required
-            />
+            {loadingUsers ? (
+              <select disabled>
+                <option>Loading users...</option>
+              </select>
+            ) : (
+              <select
+                id="assignee"
+                value={assignee}
+                onChange={(e) => setAssignee(e.target.value)}
+                required
+              >
+                <option value="">-- Select User --</option>
+                {users.map((user) => (
+                  <option key={user._id} value={user.username}>
+                    {user.username} ({user.role})
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           <div className="form-group icon-input">
