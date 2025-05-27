@@ -21,6 +21,8 @@ import ShiftScheduling from './ShiftScheduling';
 import TaskManager from "../components/Management/Task_Creation"
 import AssignmentOwnership from './Management/Assignment';
 import TrackingReporting from './Management/Tracking';
+import NotificationsPage from "../components/Management/Notifications"
+import NotificationsEscalations from "../components/Management/NotificationsEscalations"
 
 import './Dashboard.css';
 
@@ -129,6 +131,12 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'payroll':
       content = <PayrollModule />;
+      break;
+    case 'Notifications':
+      content = <NotificationsPage />;
+      break;
+    case 'NotificationsEscalation':
+      content = <NotificationsEscalations />;
       break;
     case 'boards':
     default:

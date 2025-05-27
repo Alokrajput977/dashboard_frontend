@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars, faTimes, faCheckSquare, faClipboardList, faBell, faCog, faQuestionCircle,
   faSignOutAlt, faUserPlus, faUsers, faCalendarCheck, faMoneyCheckAlt, faChartBar,
-  faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt, faTasks,faMapMarkerAlt
+  faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt, faTasks, faMapMarkerAlt, faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 import { FaUsersCog } from 'react-icons/fa';
 import './Sidebar.css';
@@ -40,9 +40,6 @@ function Sidebar({ logout, onSelect }) {
           </div>
           <div className="sidebar-item" onClick={() => onSelect('boards')}>
             <FontAwesomeIcon icon={faClipboardList} /><span>Tasks</span>
-          </div>
-          <div className="sidebar-item notification-item" onClick={() => onSelect('notifications')}>
-            <FontAwesomeIcon icon={faBell} /><span>Notifications</span>
           </div>
         </div>
 
@@ -99,7 +96,12 @@ function Sidebar({ logout, onSelect }) {
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
                 <span>Tracking & Reporting</span>
               </div>
-
+              <div className="sidebar-item notification-item" onClick={() => onSelect('Notifications')}>
+                <FontAwesomeIcon icon={faBell} /><span>Notifications</span>
+              </div>
+              <div className="sidebar-item notification-item" onClick={() => onSelect('NotificationsEscalation')}>
+                <FontAwesomeIcon icon={faExclamationTriangle} /><span>NotificationsEscalation</span>
+              </div>
             </div>
           )}
 
