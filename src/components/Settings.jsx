@@ -49,7 +49,6 @@ export default function Settings() {
 
         {/* General Section */}
         <div className="settings-section">
-          <div className="section-title">General</div>
 
           <div className="settings-item">
             <div className="item-info">
@@ -69,7 +68,6 @@ export default function Settings() {
 
         {/* Editor Section */}
         <div className="settings-section">
-          <div className="section-title">Editor</div>
 
           <div className="settings-item">
             <div className="item-info">

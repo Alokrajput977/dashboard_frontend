@@ -55,11 +55,9 @@ const ProjectManager = () => {
         <div className="project-management-wrapper">
             <div className="pm-header">
                 <h1><FaProjectDiagram /> Project Management</h1>
-                <p>Organize and track all your ongoing projects effectively</p>
             </div>
 
             <div className="pm-form-section">
-                <h2 className="pm-subtitle">Add New Project</h2>
                 <form className="pm-form" onSubmit={handleSubmit}>
                     {/* All form fields */}
                     <div className="pm-form-group">

@@ -50,7 +50,6 @@ export default function EmployeeForm() {
 
                 {/* Personal Info */}
                 <section>
-                    <h2 className="section-title">👤 Personal Information</h2>
                     <div className="form-grid">
                         {renderInput("First Name", <FaUser />, "firstName", "text", true)}
                         {renderInput("Middle Name", <FaUser />, "middleName")}
@@ -71,7 +70,7 @@ export default function EmployeeForm() {
 
                 {/* Contact & Professional */}
                 <section>
-                    <h2 className="section-title"> Contact & Job Info</h2>
+                    <h2 className="section-title" style={{paddingBottom:"20px"}}> Contact & Job Info</h2>
                     <div className="form-grid">
                         {renderInput("Email", <FaEnvelope />, "email", "email", true)}
                         {renderInput("Phone", <FaPhone />, "phone", "tel", true)}
@@ -132,7 +131,7 @@ export default function EmployeeForm() {
 
                 {/* Emergency Contact */}
                 <section>
-                    <h2 className="section-title"> Emergency Contact</h2>
+                    <h2 className="section-title" style={{paddingBottom:"20px"}}> Emergency Contact</h2>
                     <div className="form-grid">
                         {renderInput("Contact Name", <FaUser />, "emergencyName")}
                         {renderInput("Relationship", <FaIdCard />, "emergencyRelation")}
@@ -142,7 +141,7 @@ export default function EmployeeForm() {
 
                 {/* Financial */}
                 <section>
-                    <h2 className="section-title"> Financial Details</h2>
+                    <h2 className="section-title" style={{paddingBottom:"20px"}} > Financial Details</h2>
                     <div className="form-grid">
                         {renderInput("Salary", <FaMoneyBillWave />, "salary", "number")}
                         {renderInput("Tax Details", <FaAddressCard />, "taxDetails")}
@@ -217,7 +216,7 @@ export default function EmployeeForm() {
 
                 {/* History & Qualifications */}
                 <section>
-                    <h2 className="section-title"> History & Qualifications</h2>
+                    <h2 className="section-title"style={{paddingBottom:"20px"}}> History & Qualifications</h2>
                     <textarea name="employmentHistory" placeholder="Employment History" onChange={handleChange} />
                     <textarea name="qualifications" placeholder="Qualifications" onChange={handleChange} />
                     <textarea name="certifications" placeholder="Certifications" onChange={handleChange} />
