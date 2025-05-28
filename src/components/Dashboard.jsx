@@ -23,6 +23,7 @@ import AssignmentOwnership from './Management/Assignment';
 import TrackingReporting from './Management/Tracking';
 import NotificationsPage from "../components/Management/Notifications"
 import NotificationsEscalations from "../components/Management/NotificationsEscalations"
+import ProjectManagement from "../components/project_management/project-lifecycle"
 
 import './Dashboard.css';
 
@@ -137,6 +138,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'NotificationsEscalation':
       content = <NotificationsEscalations />;
+      break;
+    case 'Lifecycle':
+      content = <ProjectManagement />;
       break;
     case 'boards':
     default:

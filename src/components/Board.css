@@ -13,7 +13,7 @@
 .column-container {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 300px;
   /* make it fill the parent’s height */
   height: 100%;
   background-color: var(--column-bg);
