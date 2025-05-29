@@ -83,15 +83,16 @@ const HelpCenter = () => {
       {/* ——— Search + Category Filter ——— */}
       <form onSubmit={handleSearchSubmit} className="hc-search-form">
         <input
+        style={{color:"black" }}
           type="text"
           placeholder="Search help topics…"
           value={query}
           onChange={e => setQuery(e.target.value)}
         />
-        <select value={filter} onChange={e => setFilter(e.target.value)}>
-          <option value="all">All Categories</option>
+        <select style={{color:"gray"  }} value={filter} onChange={e => setFilter(e.target.value)}>
+          <option value="all" style={{color:"black"}}>All Categories</option>
           {topics.map(t => (
-            <option key={t.title} value={t.title.toLowerCase()}>
+            <option style={{color:"black"}} key={t.title} value={t.title.toLowerCase()}>
               {t.title}
             </option>
           ))}
