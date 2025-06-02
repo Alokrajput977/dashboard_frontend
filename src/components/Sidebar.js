@@ -37,11 +37,11 @@ function Sidebar({ logout, onSelect }) {
         {/* GENERAL */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">GENERAL</h3>
+           <div className="sidebar-item" onClick={() => onSelect('boards')}>
+            <FontAwesomeIcon icon={faClipboardList} /><span>Tasks</span>
+          </div>
           <div className="sidebar-item" onClick={() => onSelect('work')}>
             <FontAwesomeIcon icon={faCheckSquare} /><span>My Work</span>
-          </div>
-          <div className="sidebar-item" onClick={() => onSelect('boards')}>
-            <FontAwesomeIcon icon={faClipboardList} /><span>Tasks</span>
           </div>
         </div>
 
