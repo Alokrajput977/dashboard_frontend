@@ -69,7 +69,9 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+ font-family: 'Inter', 'Segoe UI', 'Roboto', 'Open Sans', sans-serif;
+
+
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color var(--transition-speed),
@@ -92,7 +94,7 @@ body {
 
 .content-area {
   flex: 1;
-  background-color: var(--primary-color);
+  background-color: #1b2145;
   padding: 1rem;
   overflow-y: auto;
   transition: background-color var(--transition-speed);

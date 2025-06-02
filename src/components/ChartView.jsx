@@ -101,7 +101,7 @@ export default function ChartView({ theme }) {
           itemHoverStyle: { color: '#FFFFFF' }
         },
         tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.85)',
+          backgroundColor: '#1b2145',
           style: { color: '#F0F0F0' }
         }
       });

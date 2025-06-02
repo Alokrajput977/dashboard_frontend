@@ -4,7 +4,7 @@
   padding: 1rem;
   overflow-x: auto;
   height: calc(100vh - 70px); /* you already have this */
-  background-color: var(--board-bg-color);
+  background-color: #1b2145;
   transition: background-color var(--transition-speed);
   align-items: flex-start;      /* so columns all start at top */
 }
@@ -14,7 +14,6 @@
   display: flex;
   flex-direction: column;
   width: 300px;
-  /* make it fill the parent’s height */
   height: 100%;
   background-color: var(--column-bg);
   border-radius: 6px;

@@ -3,7 +3,7 @@ import { Droppable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
 import NewTaskModal from "./NewTaskModal";
 import Loader from "./Loader";
-import "./Column.css";
+// import "./Column.css";
 
 const Column = ({
   column,

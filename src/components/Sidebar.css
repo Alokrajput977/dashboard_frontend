@@ -78,7 +78,7 @@ padding: 4px 0px !important;
 .dropdown-item svg {
   font-size: 1rem;
   color: white;
-  background-color: rgb(0, 117, 255);
+  background-color: #8b5cf6;
   padding: 6px;
   border-radius: 8px;
   gap: 5px;
@@ -113,8 +113,8 @@ padding: 4px 0px !important;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
-  margin-bottom: 0.7rem;
+  /* padding: 10px 14px; */
+  margin-bottom: 1.7rem;
   border-radius: 12px;
   color: white;
   text-decoration: none;
@@ -133,12 +133,17 @@ padding: 4px 0px !important;
 }
 
 .sidebar-item svg {
+  width: 25px;
+  height: 25px;
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
-  background-color: rgb(0, 117, 255);
-  /* Blue background */
+  background-color: rgb(0, 117, 255); 
   padding: 6px;
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
 
@@ -166,6 +171,14 @@ padding: 4px 0px !important;
 .sidebar-item.logout:hover {
   background-color: rgba(255, 77, 77, 0.1);
 }
+
+.sidebar-item.active {
+  background-color: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d !important;
+  font-weight: 500;
+
+}
+
 
 /* Dropdown */
 .dropdown-container {
@@ -200,3 +213,5 @@ padding: 4px 0px !important;
 .arrow.rotate {
   transform: rotate(180deg);
 }
+
+
