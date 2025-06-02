@@ -4,9 +4,9 @@ import {
   faBars, faTimes, faCheckSquare, faClipboardList, faBell, faCog, faQuestionCircle,
   faSignOutAlt, faUserPlus, faUsers, faCalendarCheck, faMoneyCheckAlt, faChartBar,
   faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt, faTasks,
-  faMapMarkerAlt, faExclamationTriangle, faProjectDiagram
+  faMapMarkerAlt, faExclamationTriangle, faProjectDiagram,faAddressCard,
 } from '@fortawesome/free-solid-svg-icons';
-import { FaUsersCog } from 'react-icons/fa';
+
 import './Sidebar.css';
 
 function Sidebar({ logout, onSelect }) {
@@ -28,7 +28,7 @@ function Sidebar({ logout, onSelect }) {
             <span>Dashboard</span>
           </div>
         )}
-        <div className="toggle-btn" onClick={toggleCollapse}>
+        <div className="toggle-btnn" onClick={toggleCollapse}>
           <FontAwesomeIcon icon={collapsed ? faBars : faTimes} />
         </div>
       </div>
@@ -50,31 +50,31 @@ function Sidebar({ logout, onSelect }) {
           <h3 className="sidebar-heading">ERP</h3>
 
           {/* HR Dropdown */}
-          <div className="sidebar-item" onClick={toggleHR}>
-            <FaUsersCog />
-            <span className="dropdown-label">HR</span>
+          <div className="sidebar-item sidebar-itemm" onClick={toggleHR}>
+            <FontAwesomeIcon icon={faAddressCard} />
+             <span className="dropdown-label">Human Resource</span>
             <span className={`arrow ${hrOpen ? 'rotate' : ''}`}>▼</span>
           </div>
           <div className={`dropdown-container ${hrOpen ? 'open' : ''}`}>
-            <div className="dropdown-item" onClick={() => onSelect('addEmployee')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('addEmployee')}>
               <FontAwesomeIcon icon={faUserPlus} /><span>Add Employee</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('manageTeam')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('manageTeam')}>
               <FontAwesomeIcon icon={faUsers} /><span>Manage Team</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('attendance')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('attendance')}>
               <FontAwesomeIcon icon={faCalendarCheck} /><span>Attendance</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('payroll')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('payroll')}>
               <FontAwesomeIcon icon={faMoneyCheckAlt} /><span>Payroll</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('performance')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('performance')}>
               <FontAwesomeIcon icon={faChartBar} /><span>Performance</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('AdminControls')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('AdminControls')}>
               <FontAwesomeIcon icon={faUserShield} /><span>Admin Controls</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('ShiftScheduling')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('ShiftScheduling')}>
               <FontAwesomeIcon icon={faCalendarAlt} /><span>Shift Scheduling</span>
             </div>
           </div>
@@ -86,19 +86,19 @@ function Sidebar({ logout, onSelect }) {
             <span className={`arrow ${managementOpen ? 'rotate' : ''}`}>▼</span>
           </div>
           <div className={`dropdown-container ${managementOpen ? 'open' : ''}`}>
-            <div className="dropdown-item" onClick={() => onSelect('TaskManager')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('TaskManager')}>
               <FontAwesomeIcon icon={faTasks} /><span>Task Manager</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('Assignment')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Assignment')}>
               <FontAwesomeIcon icon={faUserShield} /><span>Assignment</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('Tracking')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Tracking')}>
               <FontAwesomeIcon icon={faMapMarkerAlt} /><span>Tracking</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('Notifications')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Notifications')}>
               <FontAwesomeIcon icon={faBell} /><span>Notifications</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('NotificationsEscalation')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('NotificationsEscalation')}>
               <FontAwesomeIcon icon={faExclamationTriangle} /><span>Escalations</span>
             </div>
           </div>
@@ -110,14 +110,14 @@ function Sidebar({ logout, onSelect }) {
             <span className={`arrow ${projectOpen ? 'rotate' : ''}`}>▼</span>
           </div>
           <div className={`dropdown-container ${projectOpen ? 'open' : ''}`}>
-            <div className="dropdown-item" onClick={() => onSelect('Lifecycle')}>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Lifecycle')}>
               <FontAwesomeIcon icon={faChartLine} /><span>Project Lifecycle </span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('Milestones')}>
-              <FontAwesomeIcon icon={faBullhorn} /><span>Milestones</span>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Financial')}>
+              <FontAwesomeIcon icon={faBullhorn} /><span>Financial Tracking</span>
             </div>
-            <div className="dropdown-item" onClick={() => onSelect('GanttChart')}>
-              <FontAwesomeIcon icon={faTasks} /><span>Gantt Chart</span>
+            <div className="sidebar-item gap-item" onClick={() => onSelect('Resource')}>
+              <FontAwesomeIcon icon={faTasks} /><span>Resource </span>
             </div>
           </div>
         </div>
