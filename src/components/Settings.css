@@ -21,9 +21,7 @@
   --shadow: rgba(0, 0, 0, 0.4);     /* Subtle shadow on cards */
 }
 
-[data-theme='dark'] {
-  /* You can invert or adjust further if implementing a separate "dark" toggle. */
-}
+
 
 * {
   box-sizing: border-box;
@@ -36,7 +34,7 @@
 .settings-container {
   background: var(--theme-bg);
   padding: 2rem;
-
+  margin: 2rem auto;
   max-width: 1000px;
   border-radius: 12px;
   color: var(--text-main);
