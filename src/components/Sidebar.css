@@ -1,5 +1,8 @@
+/* Sidebar.css */
 :root {
   --sidebar-bg: #0f1535;
+  /* --sidebar-bg: rgba(15, 21, 53, 0.7); */
+  --sidebar-blur: blur(10px);
   --sidebar-accent: #5d5fef;
   --sidebar-hover: #1b2145;
   --sidebar-active: #2a2f5a;
@@ -11,8 +14,6 @@
   --transition: 0.3s ease;
 }
 
-
-
 /* Sidebar Base */
 .sidebar-container {
   width: 260px;
@@ -22,9 +23,10 @@
   flex-direction: column;
   overflow-y: auto;
   font-size: var(--font-size);
-  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.25);
-  transition: width var(--transition);
   color: white;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.25);
+  backdrop-filter: var(--sidebar-blur);
+  transition: width var(--transition), background-color var(--transition);
 }
 
 .sidebar-container.collapsed {
@@ -56,7 +58,6 @@
   color: white;
 }
 
-
 .toggle-btnn {
   font-size: 1.4rem;
   padding: 0.4rem;
@@ -66,14 +67,9 @@
   color: white;
 }
 
-/* .dropdown-item:hover {
- background-color: var(--sidebar-hover);
-} */
-
 .gap-item {
-padding: 4px 0px !important;
+  padding: 4px 0px !important;
 }
-
 
 .dropdown-item svg {
   font-size: 1rem;
@@ -113,8 +109,7 @@ padding: 4px 0px !important;
   display: flex;
   align-items: center;
   gap: 12px;
-  /* padding: 10px 14px; */
-  margin-bottom: 1.7rem;
+  margin-bottom: 1.4rem;
   border-radius: 12px;
   color: white;
   text-decoration: none;
@@ -129,7 +124,14 @@ padding: 4px 0px !important;
 .sidebar-item.active {
   background-color: var(--sidebar-active);
   color: white;
+}
 
+/* NEW: style the SVG icon inside an active .sidebar-item */
+.sidebar-item.active svg {
+  background-color: var(--sidebar-accent);
+  color: white;
+  border-radius: 8px;
+  padding: 6px;
 }
 
 .sidebar-item svg {
@@ -140,12 +142,11 @@ padding: 4px 0px !important;
   align-items: center;
   justify-content: center;
   color: white;
-  background-color: rgb(0, 117, 255); 
+  background-color: transparent !important;
   padding: 6px;
   border-radius: 8px;
   flex-shrink: 0;
 }
-
 
 
 .sidebar-item span {
@@ -173,12 +174,9 @@ padding: 4px 0px !important;
 }
 
 .sidebar-item.active {
-  background-color: rgba(255, 77, 77, 0.1);
   color: #ff4d4d !important;
   font-weight: 500;
-
 }
-
 
 /* Dropdown */
 .dropdown-container {
@@ -197,7 +195,6 @@ padding: 4px 0px !important;
     opacity: 0;
     transform: translateY(-8px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -213,5 +210,3 @@ padding: 4px 0px !important;
 .arrow.rotate {
   transform: rotate(180deg);
 }
-
-
