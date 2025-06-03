@@ -161,7 +161,7 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
     }
     if (authToken) {
       try {
-        const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+        const response = await fetch(`https://dashboard-frontenddd.onrender.com/api/tasks/${taskId}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${authToken}` },
         });

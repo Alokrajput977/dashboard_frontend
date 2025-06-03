@@ -54,7 +54,7 @@ function Login({ setUser }) {
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:5000/api/signup", {
+      const { data } = await axios.post("https://dashboard-frontenddd.onrender.com/api/signup", {
         fullName: signupFullName,
         username: signupUsername,
         email: signupEmail,
