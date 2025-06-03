@@ -1,3 +1,4 @@
+// Settings.jsx
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -44,15 +45,16 @@ export default function Settings() {
 
   return (
     <div className="settings-container">
-      <h2 className=''><FontAwesomeIcon icon={faCog} /> Settings</h2>
+      <h2>
+        <FontAwesomeIcon icon={faCog} className="settings-icon" /> Settings
+      </h2>
       <form onSubmit={handleSubmit}>
 
-        {/* General Section */}
+        {/* ——— General Section ——— */}
         <div className="settings-section">
-
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faBell} />
+              <FontAwesomeIcon icon={faBell} className="item-icon" />
               <span>Email Notifications</span>
             </div>
             <label className="toggle-label">
@@ -66,16 +68,19 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* Editor Section */}
+        {/* ——— Editor Section ——— */}
         <div className="settings-section">
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faClock} />
+              <FontAwesomeIcon icon={faClock} className="item-icon" />
               <span>Auto Save</span>
             </div>
             <div className="select-wrapper">
-              <select value={autoSave} onChange={(e) => setAutoSave(e.target.value)}>
+              <select
+                value={autoSave}
+                onChange={(e) => setAutoSave(e.target.value)}
+              >
                 {autoSaveOptions.map((o) => (
                   <option key={o.value} value={o.value}>
                     {o.label}
@@ -88,7 +93,7 @@ export default function Settings() {
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faFont} />
+              <FontAwesomeIcon icon={faFont} className="item-icon" />
               <span>Font Size</span>
             </div>
             <input
@@ -97,24 +102,26 @@ export default function Settings() {
               max="72"
               value={fontSize}
               onChange={(e) => setFontSize(+e.target.value)}
+              placeholder="e.g. 14"
             />
           </div>
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faTextWidth} />
+              <FontAwesomeIcon icon={faTextWidth} className="item-icon" />
               <span>Font Family</span>
             </div>
             <input
               type="text"
               value={fontFamily}
               onChange={(e) => setFontFamily(e.target.value)}
+              placeholder="e.g. Consolas, Courier New, monospace"
             />
           </div>
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faListOl} />
+              <FontAwesomeIcon icon={faListOl} className="item-icon" />
               <span>Tab Size</span>
             </div>
             <input
@@ -123,16 +130,20 @@ export default function Settings() {
               max="8"
               value={tabSize}
               onChange={(e) => setTabSize(+e.target.value)}
+              placeholder="e.g. 4"
             />
           </div>
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faParagraph} />
+              <FontAwesomeIcon icon={faParagraph} className="item-icon" />
               <span>Word Wrap</span>
             </div>
             <div className="select-wrapper">
-              <select value={wordWrap} onChange={(e) => setWordWrap(e.target.value)}>
+              <select
+                value={wordWrap}
+                onChange={(e) => setWordWrap(e.target.value)}
+              >
                 {wordWrapOptions.map((o) => (
                   <option key={o.value} value={o.value}>
                     {o.label}
@@ -143,10 +154,10 @@ export default function Settings() {
             </div>
           </div>
 
-          {/* New Inputs */}
+          {/* ——— New Inputs ——— */}
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faTextWidth} />
+              <FontAwesomeIcon icon={faTextWidth} className="item-icon" />
               <span>Line Height</span>
             </div>
             <input
@@ -156,12 +167,13 @@ export default function Settings() {
               max="2.0"
               value={lineHeight}
               onChange={(e) => setLineHeight(+e.target.value)}
+              placeholder="e.g. 1.5"
             />
           </div>
 
           <div className="settings-item">
             <div className="item-info">
-              <FontAwesomeIcon icon={faTextWidth} />
+              <FontAwesomeIcon icon={faTextWidth} className="item-icon" />
               <span>Theme Color</span>
             </div>
             <input
@@ -172,7 +184,9 @@ export default function Settings() {
           </div>
         </div>
 
-        <button className="save-btn" type="submit">Save Settings</button>
+        <button className="save-btn" type="submit">
+          Save Settings
+        </button>
       </form>
     </div>
   );

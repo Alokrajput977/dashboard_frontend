@@ -1,3 +1,4 @@
+// HelpCenter.jsx
 import React, { useState } from 'react';
 import {
   FaQuestionCircle,
@@ -61,7 +62,7 @@ const HelpCenter = () => {
 
   const handleSearchSubmit = e => {
     e.preventDefault();
-    // you could hook this into analytics or something
+    // You could integrate analytics, etc.
   };
 
   const handleTicketSubmit = e => {
@@ -82,22 +83,32 @@ const HelpCenter = () => {
 
       {/* ——— Search + Category Filter ——— */}
       <form onSubmit={handleSearchSubmit} className="hc-search-form">
-        <input
-        style={{color:"black" }}
-          type="text"
-          placeholder="Search help topics…"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-        />
-        <select style={{color:"gray"  }} value={filter} onChange={e => setFilter(e.target.value)}>
-          <option value="all" style={{color:"black"}}>All Categories</option>
-          {topics.map(t => (
-            <option style={{color:"black"}} key={t.title} value={t.title.toLowerCase()}>
-              {t.title}
-            </option>
-          ))}
-        </select>
-        <button type="submit">🔍</button>
+        <div className="hc-search-input-wrapper">
+          <input
+            type="text"
+            placeholder="Search help topics…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            className="hc-search-input"
+          />
+        </div>
+        <div className="hc-search-select-wrapper">
+          <select
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            className="hc-search-select"
+          >
+            <option value="all">All Categories</option>
+            {topics.map(t => (
+              <option key={t.title} value={t.title.toLowerCase()}>
+                {t.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="submit" className="hc-search-button">
+          🔍
+        </button>
       </form>
 
       {/* ——— Topics Grid ——— */}
@@ -105,37 +116,45 @@ const HelpCenter = () => {
         {filtered.map(t => (
           <div key={t.title} className="hc-card">
             <div className="hc-icon">{t.icon}</div>
-            <h3>{t.title}</h3>
-            <p>{t.desc}</p>
+            <h3 className="hc-card-title">{t.title}</h3>
+            <p className="hc-card-desc">{t.desc}</p>
           </div>
         ))}
+        {filtered.length === 0 && (
+          <p className="hc-no-results">No topics match your search.</p>
+        )}
       </div>
 
       {/* ——— Submit a Ticket ——— */}
       <section className="hc-ticket">
-        <h3>Can’t find what you need?</h3>
+        <h3 className="hc-ticket-title">Can’t find what you need?</h3>
         <form onSubmit={handleTicketSubmit} className="hc-ticket-form">
-          <div className="field-group">
-            <label>Name</label>
+          <div className="field-group half-width">
+            <label htmlFor="hc-name">Name</label>
             <input
+              id="hc-name"
               type="text"
+              placeholder="Your full name"
               required
               value={name}
               onChange={e => setName(e.target.value)}
             />
           </div>
-          <div className="field-group">
-            <label>Email</label>
+          <div className="field-group half-width">
+            <label htmlFor="hc-email">Email</label>
             <input
+              id="hc-email"
               type="email"
+              placeholder="you@example.com"
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
           </div>
-          <div className="field-group">
-            <label>Category</label>
+          <div className="field-group half-width">
+            <label htmlFor="hc-category">Category</label>
             <select
+              id="hc-category"
               value={ticketCategory}
               onChange={e => setTicketCategory(e.target.value)}
             >
@@ -144,9 +163,11 @@ const HelpCenter = () => {
               <option value="technical">Technical</option>
             </select>
           </div>
-          <div className="field-group">
-            <label>Message</label>
+          <div className="field-group half-width">
+            <label htmlFor="hc-message">Message</label>
             <textarea
+              id="hc-message"
+              placeholder="Type your message here…"
               rows="4"
               required
               value={message}
@@ -154,7 +175,7 @@ const HelpCenter = () => {
             />
           </div>
           <button type="submit" className="hc-submit-ticket">
-            Submit 
+            Submit
           </button>
         </form>
       </section>

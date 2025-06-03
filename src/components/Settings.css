@@ -1,86 +1,115 @@
-/* components/Settings.css */
+/* Settings.css */
+
+/* ——— Root Variables (Light + Dark) ——— */
 :root {
-  --card-bg: #ffffff;
-  --input-bg: #f2f2f2;
-  --input-border: #cccccc;
-  --input-text: #333333;
-  --toggle-bg: #e0e0e0;
-  --toggle-knob: #ffffff;
-  --btn-bg: #007bff;
-  --btn-text: #ffffff;
-  --text-secondary: #666666;
+  --theme-bg: #1b2145;             /* Deep navy for background */
+  --section-bg: #25294f;           /* Slightly lighter navy for sections */
+  --card-bg: #2e3360;              /* Even lighter shade for items */
+  --input-bg: #3a3f73;             /* Input backgrounds */
+  --input-border: #4a4f8c;         /* Input borders */
+  --input-text: #ffffff;           /* Input text (light on dark) */
+  --placeholder-color: #cccccc;    /* Placeholder text */
+  --accent-color: #8b5cf6;         /* Vibrant purple accent */
+  --toggle-bg: #4e5380;            /* Toggle background off-state */
+  --toggle-knob: #ffffff;          /* Toggle knob color */
+  --btn-bg: #8b5cf6;               /* Button background */
+  --btn-hover: #6f48c9;            /* Button hover */
+  --btn-text: #ffffff;             /* Button text */
+  --text-main: #ffffff;            /* Primary text color */
+  --text-secondary: #b0b3c8;       /* Secondary text (labels/icons) */
+  --border-light: #4a4f8c;         /* Light border lines */
+  --shadow: rgba(0, 0, 0, 0.4);     /* Subtle shadow on cards */
 }
 
-/* Dark Mode Styles */
 [data-theme='dark'] {
-  --card-bg: #2C2C2C;
-  --input-bg: #444444;
-  --input-border: #666666;
-  --input-text: #ffffff;
-  --toggle-bg: #666666;
-  --toggle-knob: #ffffff;
-  --btn-bg: #0056b3;
-  --btn-text: #ffffff;
-  --text-secondary: #bbbbbb;
-  --accent-color:#8b5cf6;
+  /* You can invert or adjust further if implementing a separate "dark" toggle. */
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ——— Container ——— */
 .settings-container {
+  background: var(--theme-bg);
   padding: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  margin: auto;
+
+  max-width: 1000px;
+  border-radius: 12px;
+  color: var(--text-main);
 }
 
+/* ——— Heading ——— */
 .settings-container h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
   text-align: center;
+  margin-bottom: 1.5rem;
   color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
+.settings-icon {
+  font-size: 1.4rem;
+}
+
+/* ——— Sections ——— */
 .settings-section {
+  background: var(--section-bg);
   margin-top: 2rem;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
 }
 
 .section-title {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--input-border);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--border-light);
   padding-bottom: 0.5rem;
 }
 
+/* ——— Individual Item Rows ——— */
 .settings-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 0;
-  border-bottom: 1px solid var(--input-border);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .settings-item:last-child {
   border-bottom: none;
 }
 
+/* — Item Info (Icon + Label) — */
 .item-info {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex: 1;
+}
+
+.item-icon {
+  color: var(--accent-color);
+  font-size: 1.2rem;
 }
 
 .item-info span {
-  font-weight: 500;
-  color: var(--accent-color);
+  font-size: 1rem;
+  color: var(--text-main);
 }
 
+/* — Toggle Switch — */
 .toggle-label {
   position: relative;
   display: inline-block;
-  width: 46px;
-  height: 24px;
+  width: 50px;
+  height: 26px;
 }
 
 .toggle-label input {
@@ -92,18 +121,17 @@
 .toggle-slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: var(--toggle-bg);
-  border-radius: 12px;
+  border-radius: 13px;
   transition: background 0.25s;
 }
 
 .toggle-slider::before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   left: 2px;
   bottom: 2px;
   background: var(--toggle-knob);
@@ -116,62 +144,96 @@
 }
 
 .toggle-label input:checked + .toggle-slider::before {
-  transform: translateX(22px);
+  transform: translateX(24px);
 }
 
-/* Styled select wrapper */
+/* — Select Dropdown with Chevron — */
 .select-wrapper {
   position: relative;
-  display: inline-block;
-  flex: 1;
+  width: 200px;
 }
 
 .select-wrapper select {
-  appearance: none;
-  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
-  border: 1px solid var(--input-border);
-  border-radius: 0.25rem;
+  width: 100%;
+  padding: 0.6rem 1.5rem 0.6rem 0.6rem;
   background: var(--input-bg);
   color: var(--input-text);
-  min-width: 160px;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
   font-size: 0.95rem;
+  appearance: none;
+  cursor: pointer;
 }
 
 .select-wrapper .chevron {
   position: absolute;
-  right: 0.5rem;
+  right: 0.6rem;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--text-secondary);
 }
 
-/* Inputs */
+/* — Numeric/Text/Color Inputs — */
 .settings-item input[type="number"],
 .settings-item input[type="text"],
 .settings-item input[type="color"] {
-  padding: 0.45rem 0.5rem;
-  border: 1px solid var(--input-border);
-  border-radius: 0.25rem;
+  padding: 0.5rem 0.6rem;
   background: var(--input-bg);
   color: var(--input-text);
-  flex: 1;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  text-align: right;
+  min-width: 80px;
 }
 
-/* Save button */
+.settings-item input::placeholder {
+  color: var(--placeholder-color);
+}
+
+/* — Save Button — */
 .save-btn {
-  background: var(--accent-color);
-  color: var(--btn-text);
-  border: none;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
   margin-top: 2rem;
   width: 100%;
-  transition: opacity 0.25s;
+  padding: 0.75rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.25s;
 }
 
 .save-btn:hover {
-  opacity: 0.9;
+  background: var(--btn-hover);
+}
+
+/* — Responsive (Adjust if window < 768px) — */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  .settings-section {
+    padding: 1rem;
+  }
+  .select-wrapper {
+    width: 100%;
+  }
+  .settings-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .settings-item input[type="number"],
+  .settings-item input[type="text"],
+  .settings-item input[type="color"] {
+    width: 100%;
+    text-align: left;
+  }
+  .save-btn {
+    font-size: 0.95rem;
+  }
 }
