@@ -1,0 +1,93 @@
+/* TeamResourceIntegration.css */
+
+.team-resource-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 40px;
+  background: linear-gradient(145deg, #1b2145, #222a5f);
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.team-resource-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 30px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.integration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d0d6f9;
+  font-size: 15px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  background-color: #283059;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  background-color: #303864;
+  box-shadow: 0 0 0 2px #8b5cf6;
+}
+
+
+.submit-btn {
+  grid-column: span 2;
+  padding: 14px;
+  background-color: #8b5cf6;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #a78bfa;
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 768px) {
+  .integration-form {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-btn {
+    grid-column: span 1;
+  }
+}
