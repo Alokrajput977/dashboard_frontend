@@ -24,6 +24,7 @@ import TrackingReporting from './Management/Tracking';
 import NotificationsPage from "../components/Management/Notifications"
 import NotificationsEscalations from "../components/Management/NotificationsEscalations"
 import ProjectManagement from "../components/project_management/project-lifecycle"
+import FinancialTracking from "../../src/components/project_management/Financial"
 
 import './Dashboard.css';
 
@@ -141,6 +142,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'Lifecycle':
       content = <ProjectManagement />;
+      break;
+    case 'Financial':
+      content = <FinancialTracking />;
       break;
     case 'boards':
     default:
