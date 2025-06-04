@@ -10,7 +10,7 @@
 }
 
 .pm-header h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #8b5cf6;
   display: flex;
   justify-content: center;
@@ -24,8 +24,9 @@
 }
 
 .pm-form-section {
-  background: #fff;
+  background: #1b2145;
   border-radius: 12px;
+  color: white;
   padding: 2rem;
   box-shadow: 0 4px 14px rgba(0,0,0,0.1);
   margin-bottom: 2rem;
@@ -51,7 +52,7 @@
 .pm-form-group label {
   font-weight: bold;
   margin-bottom: 0.3rem;
-  color: #333;
+  color: white;
 }
 
 .pm-form-group input,
@@ -91,7 +92,7 @@
 .pm-subtitle {
   font-size: 1.8rem;
   color: #6d42d8;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-weight: 600;
   text-align: center;
 }
