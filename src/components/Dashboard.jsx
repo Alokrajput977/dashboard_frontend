@@ -28,6 +28,7 @@ import FinancialTracking from "../../src/components/project_management/Financial
 import TeamResourceIntegration from "../../src/components/project_management/Resource_Integration"
 import ClientManagement from "../components/Client Management/Client_Onboarding"
 import ProjectRevenue from "../../src//components/Client Management/projectREV"
+import AdminControlss from "../components/Client Management/Admin_Controls"
 
 import './Dashboard.css';
 
@@ -157,6 +158,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'ClientRevenue':
       content = <ProjectRevenue />;
+      break;
+    case 'ClientAdminControls':
+      content = <AdminControlss />;
       break;
     case 'boards':
     default:

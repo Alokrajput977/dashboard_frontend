@@ -1,6 +1,6 @@
 // ProjectRevenue.js
 import React, { useState } from 'react';
-import './ProjectRevenue.css';
+import './ProjectRevenue.scoped.css';
 import { FaProjectDiagram, FaDollarSign, FaHistory, FaPlus } from 'react-icons/fa';
 
 const initialClients = [

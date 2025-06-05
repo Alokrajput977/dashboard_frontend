@@ -1,0 +1,368 @@
+/* ProjectRevenue.scoped.css */
+/* ============== SCOPE EVERYTHING under the .project‐revenue‐container parent ============== */
+
+.project-revenue-container {
+  background-color: #1b2145;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 2rem 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ------------------------ HEADER (scoped) ------------------------ */
+.project-revenue-container header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+.project-revenue-container header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #f39c12;
+  margin-bottom: 0.3rem;
+  text-shadow: 0 0 12px #f39c12cc;
+  letter-spacing: 1.3px;
+}
+
+.project-revenue-container header p {
+  font-size: 1.15rem;
+  color: #c1c1c1;
+  font-weight: 400;
+  margin-top: 0.8rem;
+  line-height: 1.4;
+}
+
+/* ------------------------ ADD BUTTON ------------------------ */
+.project-revenue-container .add-btn {
+  margin-top: 1.8rem;
+  background: linear-gradient(45deg, #f39c12, #e67e22);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px #f39c12bb;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.project-revenue-container .add-btn:hover {
+  background: linear-gradient(45deg, #e67e22, #d35400);
+  box-shadow: 0 6px 16px #f39c12dd;
+}
+
+/* ------------------------ CLIENTS GRID ------------------------ */
+.project-revenue-container .clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.8rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* ------------------------ CLIENT CARD ------------------------ */
+.project-revenue-container .client-card {
+  background-color: #2c315c;
+  padding: 2rem 2.2rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.project-revenue-container .client-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 38px #f39c12dd;
+}
+
+.project-revenue-container .avatar {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  border: 3.5px solid #f39c12;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 15px #f39c12cc;
+  transition: transform 0.3s ease;
+}
+
+.project-revenue-container .client-card:hover .avatar {
+  transform: scale(1.08);
+}
+
+.project-revenue-container .client-card h2 {
+  margin-bottom: 0.3rem;
+  font-size: 1.7rem;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+}
+
+.project-revenue-container .client-card h4 {
+  margin-bottom: 1.6rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #c6c6c6;
+  letter-spacing: 0.05rem;
+  font-style: italic;
+}
+
+/* ------------------------ PROJECTS SECTION ------------------------ */
+.project-revenue-container .projects-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  border-top: 1px solid #394a87;
+  padding-top: 1.2rem;
+  color: #d4d4d4;
+}
+
+.project-revenue-container .projects-section .icon {
+  font-size: 1.8rem;
+  margin-top: 4px;
+  color: #f39c12;
+  flex-shrink: 0;
+}
+
+.project-revenue-container .projects-section h5 {
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #f39c12;
+  text-transform: uppercase;
+  letter-spacing: 0.07rem;
+}
+
+.project-revenue-container .projects-section ul {
+  list-style-type: disc;
+  padding-left: 1.3rem;
+  font-size: 1rem;
+  max-height: 96px;
+  overflow-y: auto;
+  color: #e0e0e0;
+  user-select: none;
+  scrollbar-width: thin;
+  scrollbar-color: #f39c12 #2c315c;
+}
+
+.project-revenue-container .projects-section ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+/* Scrollbar styling for the projects list (WebKit) */
+.project-revenue-container .projects-section ul::-webkit-scrollbar {
+  width: 7px;
+}
+
+.project-revenue-container .projects-section ul::-webkit-scrollbar-track {
+  background: #2c315c;
+  border-radius: 12px;
+}
+
+.project-revenue-container .projects-section ul::-webkit-scrollbar-thumb {
+  background-color: #f39c12;
+  border-radius: 12px;
+  border: 2px solid #2c315c;
+}
+
+/* ------------------------ REVENUE & TRANSACTIONS ------------------------ */
+.project-revenue-container .revenue-transactions {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  user-select: none;
+}
+
+.project-revenue-container .revenue-transactions .icon {
+  margin-right: 8px;
+  color: #f39c12;
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+
+.project-revenue-container .revenue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.project-revenue-container .transactions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ------------------------ MODAL OVERLAY ------------------------ */
+
+/* ------------------------ MODAL CONTAINER ------------------------ */
+.project-revenue-container .modal {
+  background: linear-gradient(145deg, #2c315c, #1b2145);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  padding: 2.5rem 3rem;
+  max-width: 480px;
+  width: 100%;
+  color: #e0e0e0;
+  height: 80vh;
+  font-weight: 600;
+  position: relative;
+  user-select: none;
+  animation: slideDown 0.3s ease forwards;
+
+  overflow-y: auto;          /* Enable vertical scrolling */
+  scrollbar-width: thin;     /* Firefox */
+  scrollbar-color: #f39c12 #2c315c; /* Firefox */
+}
+
+/* WebKit scrollbar styling (modal) */
+.project-revenue-container .modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.project-revenue-container .modal::-webkit-scrollbar-track {
+  background: #2c315c;
+  border-radius: 20px;
+}
+
+.project-revenue-container .modal::-webkit-scrollbar-thumb {
+  background-color: #f39c12;
+  border-radius: 20px;
+  border: 2px solid #2c315c;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-revenue-container .modal h3 {
+  margin-bottom: 1.8rem;
+  font-size: 1.9rem;
+  color: #f39c12;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 0 10px #f39c12cc;
+  letter-spacing: 0.1rem;
+}
+
+/* ------------------------ MODAL INPUTS ------------------------ */
+.project-revenue-container .modal input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 1.4rem;
+  border-radius: 12px;
+  border: 2px solid #394a87;
+  background-color: #1b2145;
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-weight: 600;
+  outline-offset: 2px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  user-select: text;
+}
+
+.project-revenue-container .modal input::placeholder {
+  color: #7f8caa;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.project-revenue-container .modal input:focus {
+  border-color: #f39c12;
+  background-color: #242a5c;
+  box-shadow: 0 0 8px #f39c12aa;
+}
+
+/* ------------------------ MODAL BUTTONS ------------------------ */
+.project-revenue-container .modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+  margin-top: 1rem;
+}
+
+.project-revenue-container .modal-buttons button:first-child {
+  background: linear-gradient(45deg, #f39c12, #e67e22);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px #f39c12bb;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.project-revenue-container .modal-buttons button:first-child:hover {
+  background: linear-gradient(45deg, #e67e22, #d35400);
+  box-shadow: 0 6px 20px #f39c12dd;
+}
+
+.project-revenue-container .cancel-btn {
+  background-color: #444a8e;
+  color: #c6c6c6;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.project-revenue-container .cancel-btn:hover {
+  background-color: #2c315c;
+  color: #f39c12;
+  box-shadow: 0 0 12px #f39c12cc;
+}
+
+/* ------------------------ RESPONSIVE ------------------------ */
+@media (max-width: 480px) {
+  .project-revenue-container .clients-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .project-revenue-container {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .project-revenue-container header h1 {
+    font-size: 2.2rem;
+  }
+
+  .project-revenue-container .modal {
+    padding: 2rem 1.8rem;
+  }
+}

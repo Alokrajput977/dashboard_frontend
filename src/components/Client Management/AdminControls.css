@@ -1,0 +1,209 @@
+/* ─────────────────────────────────────────────────────────
+   GLOBAL THEME VARIABLES
+───────────────────────────────────────────────────────── */
+:root {
+  --primary-bg: #1b2145;        /* Dark navy background */
+  --card-bg: #2a2f4a;           /* Slightly lighter card */
+  --input-bg: #1f2438;          /* Inputs’ background */
+  --accent-purple: #8b5cf6;     /* Primary accent */
+  --accent-indigo: #6366f1;     /* Secondary accent */
+  --accent-cyan: #36cfc9;       /* “Active” slice */
+  --accent-red: #ff4d4f;        /* “Inactive” slice */
+  --text-light: #f5f5f5;        /* Off-white text */
+  --text-muted: #b0b0b0;        /* Muted gray text */
+  --border-radius: 8px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --transition: all 0.3s ease-in-out;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────
+   WRAPPER & BODY DEFAULTS
+───────────────────────────────────────────────────────── */
+.admin-wrapper {
+  background-color: var(--primary-bg);
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: var(--text-light);
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────
+   CHART GRID (Top Section)
+───────────────────────────────────────────────────────── */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Chart “card” style */
+.chart-card {
+  background-color: #1b2145;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+}
+
+.chart-card:hover {
+  transform: translateY(-4px);
+}
+
+.chart-heading {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--text-light);
+}
+
+/* Full-width line chart spans both columns */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* ─────────────────────────────────────────────────────────
+   FORM CARD (Below Charts)
+───────────────────────────────────────────────────────── */
+.form-card {
+  background-color: #1b2145;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 30px 25px;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ─────────────────────────────────────────────────────────
+   FORM GRID (Two Columns on Desktop, Single on Mobile)
+───────────────────────────────────────────────────────── */
+.admin-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.label-icon {
+  color: var(--accent-indigo);
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+  background-color: var(--input-bg);
+  color: var(--text-light);
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+}
+
+/* ─────────────────────────────────────────────────────────
+   STATUS TOGGLE (Checkbox + Label)
+───────────────────────────────────────────────────────── */
+.status-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-control input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent-cyan);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.status-control input[type='checkbox']:hover {
+  transform: scale(1.1);
+}
+
+.status-text {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+/* ─────────────────────────────────────────────────────────
+   SUBMIT BUTTON
+───────────────────────────────────────────────────────── */
+.submit-btn {
+  display: inline-block;
+  background-color: var(--accent-purple);
+  color: var(--text-light);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.submit-btn:hover {
+  background-color: var(--accent-indigo);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE ADJUSTMENTS
+───────────────────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .admin-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .header-title {
+    font-size: 1.8rem;
+  }
+  .submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

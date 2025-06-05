@@ -200,38 +200,15 @@ header p {
   vertical-align: middle;
 }
 
-.revenue,
-.transactions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* Modal Overlay */
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(27, 33, 69, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(5px);
-}
-
-/* Modal Window */
-
 .modal {
   background: linear-gradient(145deg, #2c315c, #1b2145);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   padding: 2.5rem 3rem;
-  max-width: 480px;
+  max-width: 460px;
   width: 100%;
   color: #e0e0e0;
-  height: 80vh;
+  height: 90vh;
   font-weight: 600;
   position: relative;
   user-select: none;
@@ -242,21 +219,7 @@ header p {
   scrollbar-color: #f39c12 #2c315c; /* Firefox */
 }
 
-/* Webkit scrollbar styles */
-.modal::-webkit-scrollbar {
-  width: 8px;
-}
 
-.modal::-webkit-scrollbar-track {
-  background: #2c315c;
-  border-radius: 20px;
-}
-
-.modal::-webkit-scrollbar-thumb {
-  background-color: #f39c12;
-  border-radius: 20px;
-  border: 2px solid #2c315c;
-}
 
 
 @keyframes slideDown {
@@ -283,100 +246,9 @@ header p {
 /* Modal Inputs */
 
 .modal input {
-  width: 100%;
-  padding: 12px 16px;
-  margin-bottom: 1.4rem;
-  border-radius: 12px;
-  border: 2px solid #394a87;
-  background-color: #1b2145;
-  color: #e0e0e0;
   font-size: 1rem;
   font-weight: 600;
   outline-offset: 2px;
   transition: border-color 0.3s ease, background-color 0.3s ease;
   user-select: text;
-}
-
-.modal input::placeholder {
-  color: #7f8caa;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.modal input:focus {
-  border-color: #f39c12;
-  background-color: #242a5c;
-  box-shadow: 0 0 8px #f39c12aa;
-}
-
-/* Modal Buttons Container */
-
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.8rem;
-  margin-top: 1rem;
-}
-
-/* Add Button */
-
-.modal-buttons button:first-child {
-  background: linear-gradient(45deg, #f39c12, #e67e22);
-  color: white;
-  border: none;
-  padding: 12px 32px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 14px #f39c12bb;
-  transition: background 0.3s ease;
-  user-select: none;
-}
-
-.modal-buttons button:first-child:hover {
-  background: linear-gradient(45deg, #e67e22, #d35400);
-  box-shadow: 0 6px 20px #f39c12dd;
-}
-
-/* Cancel Button */
-
-.cancel-btn {
-  background-color: #444a8e;
-  color: #c6c6c6;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
-}
-
-.cancel-btn:hover {
-  background-color: #2c315c;
-  color: #f39c12;
-  box-shadow: 0 0 12px #f39c12cc;
-}
-
-/* Responsive Tweak */
-
-@media (max-width: 480px) {
-  .clients-grid {
-    grid-template-columns: 1fr;
-    padding: 0 1rem;
-  }
-  
-  .project-revenue-container {
-    padding: 1.2rem 1.5rem;
-  }
-  
-  header h1 {
-    font-size: 2.2rem;
-  }
-  
-  .modal {
-    padding: 2rem 1.8rem;
-  }
 }
