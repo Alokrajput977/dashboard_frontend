@@ -21,6 +21,8 @@ function Sidebar({ logout, onSelect }) {
   const toggleHR = () => setHrOpen(prev => !prev);
   const toggleManagement = () => setManagementOpen(prev => !prev);
   const toggleProject = () => setProjectOpen(prev => !prev);
+  const [clientOpen, setClientOpen] = useState(false);
+
 
   const handleSelect = (key) => {
     setActiveItem(key);
@@ -124,7 +126,26 @@ function Sidebar({ logout, onSelect }) {
               <FontAwesomeIcon icon={faTasks} /><span>Resource</span>
             </div>
           </div>
+          <div className="sidebar-item" onClick={() => setClientOpen(prev => !prev)}>
+            <FontAwesomeIcon icon={faAddressCard} />
+            <span className="dropdown-label">Client Management</span>
+            <span className={`arrow ${clientOpen ? 'rotate' : ''}`}>▼</span>
+          </div>
+          <div className={`dropdown-container ${clientOpen ? 'open' : ''}`}>
+            <div className={`sidebar-item gap-item ${isActive('ClientOnboarding')}`} onClick={() => handleSelect('ClientOnboarding')}>
+              <FontAwesomeIcon icon={faUserPlus} /><span>Client Onboarding</span>
+            </div>
+            <div className={`sidebar-item gap-item ${isActive('ClientRevenue')}`} onClick={() => handleSelect('ClientRevenue')}>
+              <FontAwesomeIcon icon={faChartBar} /><span>Project & Revenue</span>
+            </div>
+            <div className={`sidebar-item gap-item ${isActive('ClientAdminControls')}`} onClick={() => handleSelect('ClientAdminControls')}>
+              <FontAwesomeIcon icon={faUserShield} /><span>Admin Controls</span>
+            </div>
+          </div>
+
         </div>
+
+
 
         <div className="sidebar-section">
           <h3 className="sidebar-heading">OTHER</h3>

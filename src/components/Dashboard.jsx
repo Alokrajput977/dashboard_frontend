@@ -26,6 +26,8 @@ import NotificationsEscalations from "../components/Management/NotificationsEsca
 import ProjectManagement from "../components/project_management/project-lifecycle"
 import FinancialTracking from "../../src/components/project_management/Financial"
 import TeamResourceIntegration from "../../src/components/project_management/Resource_Integration"
+import ClientManagement from "../components/Client Management/Client_Onboarding"
+import ProjectRevenue from "../../src//components/Client Management/projectREV"
 
 import './Dashboard.css';
 
@@ -149,6 +151,12 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'Resource':
       content = <TeamResourceIntegration />;
+      break;
+    case 'ClientOnboarding':
+      content = <ClientManagement />;
+      break;
+    case 'ClientRevenue':
+      content = <ProjectRevenue />;
       break;
     case 'boards':
     default:
