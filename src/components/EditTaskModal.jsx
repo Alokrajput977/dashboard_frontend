@@ -11,13 +11,9 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
 
-  // Fetch users from backend
   useEffect(() => {
     fetch('http://localhost:5000/api/users')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch users');
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error(err))
       .finally(() => setLoadingUsers(false));
@@ -38,15 +34,9 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div className="modal-header">
-          <h2>Edit Task</h2>
-          <button className="close-icon" onClick={onClose}>
-            &times;
-          </button>
-        </div>
 
         <div className="form-group">
-          <label>Title</label>
+          <label><i className="fas fa-heading"></i> Title</label>
           <input
             type="text"
             value={editedTitle}
@@ -56,7 +46,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         </div>
 
         <div className="form-group">
-          <label>Label</label>
+          <label><i className="fas fa-tags"></i> Label</label>
           <input
             type="text"
             value={editedLabel}
@@ -66,7 +56,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         </div>
 
         <div className="form-group">
-          <label>Priority</label>
+          <label><i className="fas fa-flag"></i> Priority</label>
           <select
             value={editedPriority}
             onChange={(e) => setEditedPriority(e.target.value)}
@@ -79,7 +69,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         </div>
 
         <div className="form-group">
-          <label>Due Date</label>
+          <label><i className="fas fa-calendar-alt"></i> Due Date</label>
           <input
             type="date"
             value={editedDueDate}
@@ -89,7 +79,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         </div>
 
         <div className="form-group">
-          <label>Assign To</label>
+          <label><i className="fas fa-user"></i> Assign To</label>
           <select
             value={editedAssignee}
             onChange={(e) => setEditedAssignee(e.target.value)}
@@ -110,10 +100,10 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
 
         <div className="modal-footer">
           <button className="btn secondary" onClick={onClose}>
-            Cancel
+            <i className="fas fa-times-circle"></i> Cancel
           </button>
           <button className="btn primary" onClick={handleSave}>
-            Save Changes
+            <i className="fas fa-save"></i> Save Changes
           </button>
         </div>
       </div>

@@ -1,6 +1,8 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
 :root {
   --primary-color: #4f46e5;
-  --secondary-color: #6366f1;
+  --secondary-color: #8b5cf6;
   --background-light: #ffffff;
   --background-dark: #1a202c;
   --input-bg-light: #f9fafb;
@@ -34,9 +36,26 @@
   border-radius: 1rem;
   width: 95%;
   max-width: 500px;
+  max-height: 600px;
+  overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
   animation: slideUp 0.4s ease-out;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) transparent;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @keyframes slideUp {
@@ -54,20 +73,15 @@
 .modal-header h2 {
   font-size: 1.6rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-light);
 }
 
 .close-icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   background: transparent;
   border: none;
-  color: #888;
+  color: #6b7280;
   cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.close-icon:hover {
-  color: #111;
 }
 
 .form-group {
@@ -75,10 +89,16 @@
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
   font-weight: 500;
+  margin-bottom: 0.4rem;
   color: #374151;
+}
+
+.form-group label i {
+  margin-right: 0.5rem;
+  color: var(--secondary-color);
 }
 
 .input-field {
@@ -88,7 +108,7 @@
   border-radius: 8px;
   background-color: var(--input-bg-light);
   font-size: 1rem;
-  color: #1f2937;
+  color: var(--text-light);
   transition: all 0.2s ease;
 }
 
@@ -130,7 +150,7 @@ select.input-field {
 
 .btn.primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3);
 }
 
 .btn.secondary {
@@ -144,7 +164,7 @@ select.input-field {
   color: #111827;
 }
 
-/* Dark mode */
+/* Dark Mode */
 .app-container.dark .modal-content {
   background: var(--background-dark);
   color: var(--text-dark);
@@ -158,10 +178,6 @@ select.input-field {
   color: #e5e7eb;
 }
 
-.app-container.dark .close-icon:hover {
-  color: #fff;
-}
-
 .app-container.dark .input-field {
   background-color: var(--input-bg-dark);
   color: #f9fafb;
@@ -170,7 +186,7 @@ select.input-field {
 
 .app-container.dark .input-field:focus {
   border-color: var(--secondary-color);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
 .app-container.dark .form-group label {

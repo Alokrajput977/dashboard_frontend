@@ -51,7 +51,6 @@ const NewTaskModal = ({ columnId, onClose, onSubmit, theme = 'light' }) => {
         className={`modal-content animated ${theme}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="modal-title"> New Task</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group icon-input">
             <label htmlFor="title">
