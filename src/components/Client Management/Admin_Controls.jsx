@@ -28,6 +28,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  BarChart,
+  Bar
 } from 'recharts';
 import './AdminControls.css';
 
@@ -88,6 +90,14 @@ const AdminPanel = () => {
     { month: 'May', Super: 50, Client: 50 },
     { month: 'Jun', Super: 45, Client: 55 },
   ];
+
+  const userGrowthData = [
+  { month: 'Jan', users: 120 },
+  { month: 'Feb', users: 200 },
+  { month: 'Mar', users: 300 },
+  { month: 'Apr', users: 250 },
+  { month: 'May', users: 350 },
+];
 
   return (
     <div className="admin-wrapper">
@@ -152,6 +162,25 @@ const AdminPanel = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
+
+        {/* Bar Chart: User Growth */}
+        <div className="chart-card">
+          <h3 className="chart-heading">User Growth</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={userGrowthData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+              <XAxis dataKey="month" stroke="#ffffff" tick={{ fill: '#ffffff', fontSize: 12 }} />
+              <YAxis stroke="#ffffff" tick={{ fill: '#ffffff', fontSize: 12 }} />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#2a2f4a', border: '1px solid #555', color: '#ffffff' }}
+                itemStyle={{ color: '#ffffff' }}
+                labelStyle={{ color: '#ffffff' }}
+              />
+              <Bar dataKey="users" fill="#8b5cf6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
 
         {/* Line Chart: Monthly Role Stats (spans full width) */}
         <div className="chart-card full-width">

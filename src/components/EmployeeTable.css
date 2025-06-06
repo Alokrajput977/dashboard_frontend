@@ -14,7 +14,6 @@
     max-width: 1200px;
     margin: 3rem auto;
     padding: 2rem;
-    background-color: var(--card-bg);
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', sans-serif;
@@ -38,8 +37,8 @@
   
   .employee-card-title {
     font-size: 1.6rem;
-    color: var(--text-color);
-    font-weight: 700;
+    color: #fff;
+    font-weight: 500;
   }
   
   .employee-table {

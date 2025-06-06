@@ -40,7 +40,7 @@
 
 /* Using your glassmorphic card style */
 .card {
-    background: rgba(255, 255, 255, 0.75);
+    background: #1b2145;
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 30px 20px;
@@ -49,6 +49,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    color: white;
     align-items: center;
 }
 

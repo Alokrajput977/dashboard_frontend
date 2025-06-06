@@ -17,6 +17,14 @@
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+
 /* ─────────────────────────────────────────────────────────
    WRAPPER & BODY DEFAULTS
 ───────────────────────────────────────────────────────── */
