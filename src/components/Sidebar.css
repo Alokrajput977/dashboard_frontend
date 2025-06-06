@@ -30,12 +30,13 @@
 }
 
 .sidebar-container.collapsed {
-  width: 80px;
+  width: 70px;
+  transition: 0.2s ease-in-out;
 }
 
 /* Scrollbar */
 .sidebar-container::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .sidebar-container::-webkit-scrollbar-thumb {

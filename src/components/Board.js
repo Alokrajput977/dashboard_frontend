@@ -1,3 +1,4 @@
+// frontend/src/components/Board.js
 import React, { useState, useEffect, useCallback } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 import initialData from "../data.js";
@@ -8,6 +9,8 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(authToken ? true : false);
   const [error, setError] = useState(null);
+
+  // Fetch board data from API if logged in
   const fetchData = useCallback(async () => {
     if (authToken) {
       setLoading(true);
@@ -16,9 +19,7 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
         const response = await fetch("http://localhost:5000/api/boards", {
           headers: { Authorization: `Bearer ${authToken}` },
         });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (err) {
@@ -35,40 +36,33 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       fetchData();
     } else {
       const savedData = localStorage.getItem("boardData");
-      if (savedData) {
-        setData(JSON.parse(savedData));
-      } else {
-        setData(initialData);
-      }
+      setData(savedData ? JSON.parse(savedData) : initialData);
     }
   }, [authToken, fetchData]);
+
   useEffect(() => {
     if (!authToken) {
       localStorage.setItem("boardData", JSON.stringify(data));
     }
   }, [data, authToken]);
-  const saveBoardData = useCallback(
-    async (boardData) => {
-      if (authToken) {
-        try {
-          const response = await fetch("http://localhost:5000/api/boards", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
-            },
-            body: JSON.stringify(boardData),
-          });
-          if (!response.ok) {
-            console.error("Failed to save data.");
-          }
-        } catch (err) {
-          console.error("Error saving data:", err);
-        }
+
+  const saveBoardData = useCallback(async (boardData) => {
+    if (authToken) {
+      try {
+        const response = await fetch("http://localhost:5000/api/boards", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(boardData),
+        });
+        if (!response.ok) console.error("Failed to save data.");
+      } catch (err) {
+        console.error("Error saving data:", err);
       }
-    },
-    [authToken]
-  );
+    }
+  }, [authToken]);
 
   const handleAddTask = async (columnId, taskData) => {
     const newTask = {
@@ -92,10 +86,7 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
           setData((prevData) => {
             const newColumns = { ...prevData.columns };
             newColumns[columnId].taskIds.push(createdTask.id);
-            const newTasks = {
-              ...prevData.tasks,
-              [createdTask.id]: createdTask,
-            };
+            const newTasks = { ...prevData.tasks, [createdTask.id]: createdTask };
             const updatedData = { ...prevData, tasks: newTasks, columns: newColumns };
             saveBoardData(updatedData);
             return updatedData;
@@ -154,14 +145,16 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       alert("Only managers can edit tasks.");
     }
   };
+
   const handleRemoveTask = async (taskId, columnId) => {
     if (userRole !== "manager") {
       alert("Only managers can remove tasks.");
       return;
     }
+
     if (authToken) {
       try {
-        const response = await fetch(`https://dashboard-frontenddd.onrender.com/api/tasks/${taskId}`, {
+        const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -191,6 +184,7 @@ const Board = ({ authToken, userRole, theme = "light" }) => {
       });
     }
   };
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;

@@ -1,3 +1,4 @@
+// frontend/src/components/Column.js
 import React, { useState } from "react";
 import { Droppable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
@@ -17,8 +18,8 @@ const Column = ({
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Open modal with simulated loading
   const handleAddClick = () => {
-    // show loader for 1s, then open modal
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -26,13 +27,16 @@ const Column = ({
     }, 1000);
   };
 
+  // When task is submitted from modal
   const handleModalSubmit = (columnId, taskData) => {
-    onAddTask && onAddTask(columnId, taskData);
+    if (typeof onAddTask === "function") {
+      onAddTask(columnId, taskData);
+    }
     setShowModal(false);
   };
 
   return (
-    <div className="column-container">
+    <div className={`column-container ${theme === "dark" ? "dark-mode" : ""}`}>
       <div className="column-header">
         <h3 className="column-title">
           {column.title} <span>({tasks.length})</span>

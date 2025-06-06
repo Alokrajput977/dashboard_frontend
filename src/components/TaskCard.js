@@ -16,10 +16,8 @@ const TaskCard = ({ task, index, userRole, onEdit, onRemoveTask, columnId }) => 
   };
 
   const handleRemove = (e) => {
-    e.stopPropagation();
-    if (typeof onRemoveTask === 'function') {
-      onRemoveTask(task.id, columnId);
-    }
+    e.stopPropagation(); // prevent modal from opening
+    onRemoveTask(task.id, columnId);
   };
 
   const handleEditClick = (e) => {
