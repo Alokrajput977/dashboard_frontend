@@ -184,7 +184,7 @@ const PerformanceDashboard = () => {
 
       {/* User Table */}
       <div className="users-section">
-        <h2 className="table-heading">📋 All Users</h2>
+        <h2 className="table-heading"> All Users</h2>
         {loading ? (
           <p className="table-empty">Loading users…</p>
         ) : users.length === 0 ? (

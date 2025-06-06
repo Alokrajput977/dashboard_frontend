@@ -198,7 +198,6 @@ body {
   
   .leave-form input:focus,
   .leave-form textarea:focus {
-    border-color: #64b5f6;
     outline: none;
   }
   
@@ -207,7 +206,6 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background: white;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -222,9 +220,9 @@ body {
   }
   
   .page th {
-    background-color: #e3f2fd;
     font-weight: 600;
     color: #0d47a1;
+    background-color: #1b2145;
   }
   
   .page tbody tr:hover {

@@ -2,7 +2,6 @@
     padding: 40px;
     max-width: 1100px;
     margin: 40px auto;
-    background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -78,7 +77,6 @@
 .shift-table {
     width: 100%;
     border-collapse: collapse;
-    background: #fdfdfd;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -88,7 +86,7 @@
 .shift-table td {
     padding: 16px;
     text-align: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #1b2145;
     font-size: 15px;
 }
 
@@ -97,7 +95,9 @@
     color: white;
     font-weight: 600;
     font-size: 16px;
+    border: 1px solid black;
 }
+
 
 .shift-table tr:hover {
     background-color: #f4f0ff;
@@ -114,15 +114,16 @@
 }
 
 .compliant {
-    background-color: #d1fae5;
     color: #065f46;
     padding: 6px 12px;
     border-radius: 8px;
     font-weight: bold;
 }
+.yes{
+    background-color: #1b2145;
+}
 
 .non-compliant {
-    background-color: #fee2e2;
     color: #991b1b;
     padding: 6px 12px;
     border-radius: 8px;

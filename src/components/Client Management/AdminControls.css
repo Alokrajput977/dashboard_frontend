@@ -120,7 +120,7 @@
 
 .form-group input,
 .form-group select {
-  background-color: var(--input-bg);
+  background-color: #1b2145;
   color: var(--text-light);
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);

@@ -57,7 +57,7 @@ const ShiftScheduling = () => {
 
         <div className="form-group">
           <i className="fas fa-user-check" />
-          <select name="attendance" value={newShift.attendance} onChange={handleChange}>
+          <select name="attendance" value={newShift.attendance} onChange={handleChange} className='yes'>
             <option value="Present">Present</option>
             <option value="Absent">Absent</option>
           </select>
