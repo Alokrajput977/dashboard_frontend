@@ -92,15 +92,15 @@
 
 /* Table Styles */
 .notif-table-section {
-  background: #ffffff;
+  background: #1b2145;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.05);
   overflow-x: auto;
 }
 
 .notif-table-section h3 {
-  color: #333;
+  color: white;
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
   font-weight: 600;
@@ -117,6 +117,7 @@
 .notif-table td {
   padding: 0.85rem 1.2rem;
   border-bottom: 1px solid #e3e3e3;
+  color: white;
 }
 
 .notif-table th {

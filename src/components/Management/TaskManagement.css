@@ -42,11 +42,12 @@ h3 {
   text-align: left;
   font-size: 15px;
   border-bottom: 1px solid #eee;
+  background-color: #1b2145;
 }
 
 .tasks-table th {
   font-weight: 600;
-  color: #555;
+  color: #999;
 }
 
 .tasks-table tbody tr:hover {
@@ -73,10 +74,10 @@ h3 {
 
 /* Container */
 .add-task-section {
-  background: #fff;
+  background: #1b2145;
   padding: 30px 40px;
   margin-top: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(20, 11, 11, 0.08);
   max-width: 1600px; /* Increased width */
 }
 
@@ -109,7 +110,7 @@ h3 {
 .form-row label {
   font-weight: 600;
   font-size: 16px;
-  color: #34495e;
+  color: white;
   margin-bottom: 10px;
 }
 

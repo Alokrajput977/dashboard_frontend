@@ -332,3 +332,63 @@ table tr:hover td {
     width: 100%;
   }
 }
+
+
+/* Employee Info Table Section */
+.employee-info-table {
+  background-color: #2e357a;
+  border-radius: 14px;
+  padding: 24px 30px;
+  box-shadow: 0 8px 20px rgba(50, 58, 120, 0.6);
+  margin-top: 24px;
+  transition: background-color 0.3s ease;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.employee-info-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  color: #e0e7ff;
+}
+
+.employee-info-table thead {
+  background-color: #423f8b;
+}
+
+.employee-info-table thead th {
+  padding: 14px 20px;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #d8b4fe;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #615cfc;
+  box-shadow: inset 0 -1px 3px rgba(255, 255, 255, 0.05);
+}
+
+.employee-info-table tbody td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #484f8a;
+  font-weight: 600;
+  color: #ede9fe;
+}
+
+.employee-info-table tbody tr:hover td {
+  background-color: #4f53a5;
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+/* Responsive Table */
+@media (max-width: 600px) {
+  .employee-info-table table {
+    font-size: 0.9rem;
+  }
+
+  .employee-info-table thead th,
+  .employee-info-table tbody td {
+    padding: 12px 14px;
+  }
+}

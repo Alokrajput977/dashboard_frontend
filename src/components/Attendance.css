@@ -191,7 +191,8 @@ body {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    background: #fff;
+    background:  #1b2145;
+    color: white;
     font-size: 15px;
     transition: border 0.2s ease;
   }
