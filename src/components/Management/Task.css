@@ -160,11 +160,12 @@ h1 {
 
 
 .task-card {
-  background: #ffffff;
+  background-color: #1b2145;
   border-left: 6px solid #8b5cf6;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
   padding: 1.5rem;
+  color: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -193,7 +194,7 @@ h1 {
 
 .task-details p {
   margin: 0.5rem 0;
-  color: #333;
+  color: white;
   font-size: 0.95rem;
 }
 
@@ -211,7 +212,7 @@ h1 {
 .subtasks-title {
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #444;
+  color: white;
 }
 
 .subtask-list {

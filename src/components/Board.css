@@ -30,7 +30,6 @@
   overflow-y: auto;            /* scroll when content overflows */
   min-height: 0;               /* critical for flex overflow to work */
   padding: 12px;
-  background-color: var(--task-list-bg);
   border-radius: 6px;
   transition: background-color var(--transition-speed);
   margin-bottom: 12px;

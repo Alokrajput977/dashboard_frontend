@@ -40,7 +40,6 @@
 
 /* Using your glassmorphic card style */
 .card {
-    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 30px 20px;
@@ -68,12 +67,12 @@
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     font-weight: 300;
-    color: #1e293b;
+    color: white;
 }
 
 .card-content p {
     font-size: 1rem;
-    color: #555;
+    color: white;
     line-height: 1.5;
     font-weight: 300;
     padding: 0 0.5rem;
