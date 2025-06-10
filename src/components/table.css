@@ -2,7 +2,6 @@
    Card & Table Container Reset
    ============================ */
    .users-card {
-    background: var(--bg);
     color: var(--text);
     border-radius: 12px;
     padding: 1.5rem;

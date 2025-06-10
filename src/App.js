@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import AddMember from "./components/AddMember";
 import './index.css';
 import AdminControls from "./components/Admincontrol";
+import RowDetails from "../src/components/Sales_Management/row"
 function App() {
   const [user, setUser] = useState(null);
 
@@ -44,6 +45,8 @@ function App() {
             )
           }
         />
+        <Route path="/details/:id" element={<RowDetails />} />
+
       </Routes>
     </Router>
   );

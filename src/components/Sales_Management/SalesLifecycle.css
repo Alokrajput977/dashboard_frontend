@@ -1,0 +1,90 @@
+.sales-lifecycle {
+  font-family: 'Segoe UI', sans-serif;
+  padding: 30px;
+  color: #fff;
+}
+
+/* Title */
+.sales-lifecycle .title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #1b2145;
+}
+
+.sales-lifecycle .subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 30px;
+}
+
+/* Table wrapper */
+.table-container {
+  overflow-x: auto;
+  background: #1b2145;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table */
+.sales-table {
+  width: 120%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Table head */
+.sales-table thead {
+  background-color: #1b2145;
+  color: #fff;
+}
+
+.sales-table th {
+  padding: 14px 20px;
+  font-size: 15px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+  background-color: #1b2145;
+}
+
+/* Table cells */
+.sales-table td {
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #fff;
+  background-color: #262d53;
+  border-bottom: 1px solid #444;
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.sales-table tbody tr:hover td {
+  background-color: #374070;
+  transition: background-color 0.3s;
+}
+
+/* Status cell with icon */
+.status-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-icon {
+  font-size: 16px;
+}
+
+.status-icon.approved {
+  color: #28a745;
+}
+
+.status-icon.pending {
+  color: #ffc107;
+}
+
+.status-icon.delivered {
+  color: #007bff;
+}

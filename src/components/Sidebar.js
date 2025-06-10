@@ -5,13 +5,16 @@ import {
   faBars, faTimes, faCheckSquare, faClipboardList, faBell, faCog, faQuestionCircle,
   faSignOutAlt, faUserPlus, faUsers, faCalendarCheck, faMoneyCheckAlt, faChartBar,
   faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt, faTasks,
-  faMapMarkerAlt, faExclamationTriangle, faProjectDiagram, faAddressCard,
+  faMapMarkerAlt, faExclamationTriangle, faProjectDiagram, faAddressCard, faHandshake,
+  faFileInvoiceDollar,
+  faFileSignature,
 } from '@fortawesome/free-solid-svg-icons';
 
 import './Sidebar.css';
 
 function Sidebar({ logout, onSelect }) {
   const [hrOpen, setHrOpen] = useState(false);
+  const [crmOpen, setCrmOpen] = useState(false);
   const [managementOpen, setManagementOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -140,6 +143,26 @@ function Sidebar({ logout, onSelect }) {
             </div>
             <div className={`sidebar-item gap-item ${isActive('ClientAdminControls')}`} onClick={() => handleSelect('ClientAdminControls')}>
               <FontAwesomeIcon icon={faUserShield} /><span>Admin Controls</span>
+            </div>
+          </div>
+
+          <div className="sidebar-item" onClick={() => setCrmOpen(prev => !prev)}>
+            <FontAwesomeIcon icon={faHandshake} />
+            <span className="dropdown-label">Sales Management</span>
+            <span className={`arrow ${crmOpen ? 'rotate' : ''}`}>▼</span>
+          </div>
+          <div className={`dropdown-container ${crmOpen ? 'open' : ''}`}>
+            <div className={`sidebar-item gap-item ${isActive('SalesLifecycle')}`} onClick={() => handleSelect('SalesLifecycle')}>
+              <FontAwesomeIcon icon={faFileSignature} />
+              <span>Sales Lifecycle</span>
+            </div>
+            <div className={`sidebar-item gap-item ${isActive('InvoiceTracking')}`} onClick={() => handleSelect('InvoiceTracking')}>
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              <span>Delivery  Tracking</span>
+            </div>
+            <div className={`sidebar-item gap-item ${isActive('CRMAdmin')}`} onClick={() => handleSelect('CRMAdmin')}>
+              <FontAwesomeIcon icon={faHandshake} />
+              <span>Sales Line Items</span>
             </div>
           </div>
 

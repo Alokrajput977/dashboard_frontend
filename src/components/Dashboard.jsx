@@ -29,6 +29,7 @@ import TeamResourceIntegration from "../../src/components/project_management/Res
 import ClientManagement from "../components/Client Management/Client_Onboarding"
 import ProjectRevenue from "../../src//components/Client Management/projectREV"
 import AdminControlss from "../components/Client Management/Admin_Controls"
+import SalesLifecycle from "../components/Sales_Management/Lifecycle"
 
 import './Dashboard.css';
 
@@ -161,6 +162,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'ClientAdminControls':
       content = <AdminControlss />;
+      break;
+    case 'SalesLifecycle':
+      content = <SalesLifecycle  />;
       break;
     case 'boards':
     default:
