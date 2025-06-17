@@ -123,7 +123,7 @@
 }
 
 .sidebar-item.active {
-  background-color: var(--sidebar-active);
+  background-color: #8b5cf6;
   color: white;
 }
 
@@ -160,7 +160,6 @@
   display: none;
 }
 
-/* Footer */
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid var(--border-color);

@@ -1,0 +1,275 @@
+/* DeliveryTracking.css */
+
+/* Color Variables */
+:root {
+  --primary-color: #0f172a;        /* dark navy */
+  --secondary-color: #1e293b;      /* dark slate */
+  --accent-color: #3b82f6;         /* vibrant blue */
+  --text-color: #f1f5f9;           /* light text */
+  --bg-color: #0f172a;             /* page background */
+  --card-bg: #1e293b;              /* panels/cards */
+  --card-text: #f1f5f9;            /* text on cards */
+  --nav-active-bg: #334155;        /* active nav bg */
+  --table-th-bg: #1e293b;          /* table header */
+  --table-th-text: #f1f5f9;
+  --table-td-bg: #ffffff;          /* white cells */
+  --table-td-text: #1e293b;        /* dark text */
+  --table-row-alt-bg: #f8fafc;     /* alternate row */
+  --border-color: #475569;
+  --placeholder-color: #94a3b8;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Container */
+.dt-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Main */
+.dt-main {
+  flex: 1;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+/* Header */
+.dt-header {
+  background-color: #242b57;
+  color: var(--text-color);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dt-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.dt-top-nav {
+  display: flex;
+  gap: 12px;
+  margin-left: 24px;
+}
+
+.dt-top-nav-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.dt-top-nav-btn:hover,
+.dt-top-nav-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* Add Button */
+.dt-add-btn {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.1s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dt-add-btn:hover {
+  background-color: #2563eb;
+}
+
+.dt-add-btn:active {
+  transform: scale(0.97);
+}
+
+/* Content */
+.dt-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Filters */
+.dt-filters {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background-color: var(--card-bg);
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dt-search-input,
+.dt-select {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  transition: border 0.3s;
+}
+
+.dt-search-input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.dt-search-input:focus,
+.dt-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+/* Table Section */
+.dt-table-section {
+  flex: 1;
+  padding: 20px 24px;
+  overflow: auto;
+}
+
+.dt-no-results {
+  text-align: center;
+  color: var(--placeholder-color);
+  margin-top: 40px;
+  font-size: 1.1rem;
+}
+
+/* Table */
+.dt-table-wrapper {
+  overflow-x: auto;
+}
+
+.dt-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.dt-table th,
+.dt-table td {
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  text-align: left;
+}
+
+.dt-table th {
+  background-color: #242b57;
+  color: var(--table-th-text);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.dt-table td {
+  background-color: var(--table-td-bg);
+  color: var(--table-td-text);
+  border-bottom: 1px solid #cbd5e1;
+}
+
+
+
+/* Status Select */
+.dt-status-select {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.dt-status-select option {
+  color: #000;
+}
+
+/* Action Button */
+.dt-action-btn {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.3s, transform 0.1s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dt-action-btn:hover {
+  background-color: #2563eb;
+}
+
+.dt-action-btn:active {
+  transform: scale(0.97);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dt-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dt-filters {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+  }
+
+  .dt-search-input,
+  .dt-select {
+    width: 100%;
+  }
+
+  .dt-table {
+    font-size: 0.82rem;
+    min-width: unset;
+  }
+
+  .dt-top-nav {
+    flex-wrap: wrap;
+  }
+
+  .dt-add-btn {
+    padding: 8px 14px;
+  }
+}

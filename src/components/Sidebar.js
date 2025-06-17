@@ -1,31 +1,38 @@
-// Sidebar.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars, faTimes, faCheckSquare, faClipboardList, faBell, faCog, faQuestionCircle,
   faSignOutAlt, faUserPlus, faUsers, faCalendarCheck, faMoneyCheckAlt, faChartBar,
   faUserTie, faBullhorn, faChartLine, faUserShield, faCalendarAlt, faTasks,
   faMapMarkerAlt, faExclamationTriangle, faProjectDiagram, faAddressCard, faHandshake,
-  faFileInvoiceDollar,
-  faFileSignature,
+  faFileInvoiceDollar, faFileSignature
 } from '@fortawesome/free-solid-svg-icons';
 
 import './Sidebar.css';
 
 function Sidebar({ logout, onSelect }) {
+  const [collapsed, setCollapsed] = useState(false);
+  const [activeItem, setActiveItem] = useState('');
   const [hrOpen, setHrOpen] = useState(false);
   const [crmOpen, setCrmOpen] = useState(false);
   const [managementOpen, setManagementOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-  const [activeItem, setActiveItem] = useState('');
-
-  const toggleCollapse = () => setCollapsed(prev => !prev);
-  const toggleHR = () => setHrOpen(prev => !prev);
-  const toggleManagement = () => setManagementOpen(prev => !prev);
-  const toggleProject = () => setProjectOpen(prev => !prev);
   const [clientOpen, setClientOpen] = useState(false);
 
+  // Close all dropdowns when sidebar collapses
+  useEffect(() => {
+    if (collapsed) {
+      setHrOpen(false);
+      setCrmOpen(false);
+      setManagementOpen(false);
+      setProjectOpen(false);
+      setClientOpen(false);
+    }
+  }, [collapsed]);
+
+  const toggleCollapse = () => {
+    setCollapsed(prev => !prev);
+  };
 
   const handleSelect = (key) => {
     setActiveItem(key);
@@ -48,6 +55,7 @@ function Sidebar({ logout, onSelect }) {
       </div>
 
       <div className="sidebar-sections">
+        {/* GENERAL */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">GENERAL</h3>
           <div className={`sidebar-item ${isActive('boards')}`} onClick={() => handleSelect('boards')}>
@@ -58,15 +66,16 @@ function Sidebar({ logout, onSelect }) {
           </div>
         </div>
 
+        {/* ERP */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">ERP</h3>
 
-          <div className="sidebar-item" onClick={toggleHR}>
+          <div className="sidebar-item" onClick={() => setHrOpen(prev => !prev)}>
             <FontAwesomeIcon icon={faAddressCard} />
             <span className="dropdown-label">Human Resource</span>
             <span className={`arrow ${hrOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          <div className={`dropdown-container ${hrOpen ? 'open' : ''}`}>
+          <div className={`dropdown-container ${hrOpen ? 'open' : ''}`}>            
             <div className={`sidebar-item gap-item ${isActive('addEmployee')}`} onClick={() => handleSelect('addEmployee')}>
               <FontAwesomeIcon icon={faUserPlus} /><span>Add Employee</span>
             </div>
@@ -90,12 +99,12 @@ function Sidebar({ logout, onSelect }) {
             </div>
           </div>
 
-          <div className="sidebar-item" onClick={toggleManagement}>
+          <div className="sidebar-item" onClick={() => setManagementOpen(prev => !prev)}>
             <FontAwesomeIcon icon={faUserTie} />
             <span className="dropdown-label">Management</span>
             <span className={`arrow ${managementOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          <div className={`dropdown-container ${managementOpen ? 'open' : ''}`}>
+          <div className={`dropdown-container ${managementOpen ? 'open' : ''}`}>            
             <div className={`sidebar-item gap-item ${isActive('TaskManager')}`} onClick={() => handleSelect('TaskManager')}>
               <FontAwesomeIcon icon={faTasks} /><span>Task Manager</span>
             </div>
@@ -113,12 +122,12 @@ function Sidebar({ logout, onSelect }) {
             </div>
           </div>
 
-          <div className="sidebar-item" onClick={toggleProject}>
+          <div className="sidebar-item" onClick={() => setProjectOpen(prev => !prev)}>
             <FontAwesomeIcon icon={faProjectDiagram} />
             <span className="dropdown-label">Project Management</span>
             <span className={`arrow ${projectOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          <div className={`dropdown-container ${projectOpen ? 'open' : ''}`}>
+          <div className={`dropdown-container ${projectOpen ? 'open' : ''}`}>            
             <div className={`sidebar-item gap-item ${isActive('Lifecycle')}`} onClick={() => handleSelect('Lifecycle')}>
               <FontAwesomeIcon icon={faChartLine} /><span>Project Lifecycle</span>
             </div>
@@ -129,12 +138,13 @@ function Sidebar({ logout, onSelect }) {
               <FontAwesomeIcon icon={faTasks} /><span>Resource</span>
             </div>
           </div>
+
           <div className="sidebar-item" onClick={() => setClientOpen(prev => !prev)}>
             <FontAwesomeIcon icon={faAddressCard} />
             <span className="dropdown-label">Client Management</span>
             <span className={`arrow ${clientOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          <div className={`dropdown-container ${clientOpen ? 'open' : ''}`}>
+          <div className={`dropdown-container ${clientOpen ? 'open' : ''}`}>            
             <div className={`sidebar-item gap-item ${isActive('ClientOnboarding')}`} onClick={() => handleSelect('ClientOnboarding')}>
               <FontAwesomeIcon icon={faUserPlus} /><span>Client Onboarding</span>
             </div>
@@ -151,25 +161,20 @@ function Sidebar({ logout, onSelect }) {
             <span className="dropdown-label">Sales Management</span>
             <span className={`arrow ${crmOpen ? 'rotate' : ''}`}>▼</span>
           </div>
-          <div className={`dropdown-container ${crmOpen ? 'open' : ''}`}>
+          <div className={`dropdown-container ${crmOpen ? 'open' : ''}`}>            
             <div className={`sidebar-item gap-item ${isActive('SalesLifecycle')}`} onClick={() => handleSelect('SalesLifecycle')}>
-              <FontAwesomeIcon icon={faFileSignature} />
-              <span>Sales Lifecycle</span>
+              <FontAwesomeIcon icon={faFileSignature} /><span>Sales Lifecycle</span>
             </div>
             <div className={`sidebar-item gap-item ${isActive('InvoiceTracking')}`} onClick={() => handleSelect('InvoiceTracking')}>
-              <FontAwesomeIcon icon={faFileInvoiceDollar} />
-              <span>Delivery  Tracking</span>
+              <FontAwesomeIcon icon={faFileInvoiceDollar} /><span>Delivery Tracking</span>
             </div>
-            <div className={`sidebar-item gap-item ${isActive('CRMAdmin')}`} onClick={() => handleSelect('CRMAdmin')}>
-              <FontAwesomeIcon icon={faHandshake} />
-              <span>Sales Line Items</span>
+            <div className={`sidebar-item gap-item ${isActive('SalesLineItems')}`} onClick={() => handleSelect('SalesLineItems')}>
+              <FontAwesomeIcon icon={faHandshake} /><span>Sales Line Items</span>
             </div>
           </div>
-
         </div>
 
-
-
+        {/* OTHER */}
         <div className="sidebar-section">
           <h3 className="sidebar-heading">OTHER</h3>
           <div className={`sidebar-item ${isActive('settings')}`} onClick={() => handleSelect('settings')}>

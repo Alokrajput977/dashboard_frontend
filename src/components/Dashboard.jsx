@@ -30,6 +30,8 @@ import ClientManagement from "../components/Client Management/Client_Onboarding"
 import ProjectRevenue from "../../src//components/Client Management/projectREV"
 import AdminControlss from "../components/Client Management/Admin_Controls"
 import SalesLifecycle from "../components/Sales_Management/Lifecycle"
+import DeliveryTracking from "../components/Sales_Management/Delivery"
+import SalesLineItems from "../components/Sales_Management/SalesItoms"
 
 import './Dashboard.css';
 
@@ -165,6 +167,12 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'SalesLifecycle':
       content = <SalesLifecycle  />;
+      break;
+    case 'InvoiceTracking':
+      content = <DeliveryTracking  />;
+      break;
+    case 'SalesLineItems':
+      content = <SalesLineItems  />;
       break;
     case 'boards':
     default:
