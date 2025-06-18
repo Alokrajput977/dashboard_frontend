@@ -15,6 +15,7 @@ function Sidebar({ logout, onSelect }) {
   const [activeItem, setActiveItem] = useState('');
   const [hrOpen, setHrOpen] = useState(false);
   const [crmOpen, setCrmOpen] = useState(false);
+  const [crmOpenn, setCrmOpenn] = useState(false);
   const [managementOpen, setManagementOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
   const [clientOpen, setClientOpen] = useState(false);
@@ -24,6 +25,7 @@ function Sidebar({ logout, onSelect }) {
     if (collapsed) {
       setHrOpen(false);
       setCrmOpen(false);
+      setCrmOpenn(false);
       setManagementOpen(false);
       setProjectOpen(false);
       setClientOpen(false);
@@ -170,6 +172,22 @@ function Sidebar({ logout, onSelect }) {
             </div>
             <div className={`sidebar-item gap-item ${isActive('SalesLineItems')}`} onClick={() => handleSelect('SalesLineItems')}>
               <FontAwesomeIcon icon={faHandshake} /><span>Sales Line Items</span>
+            </div>
+          </div>
+
+
+
+           <div className="sidebar-item" onClick={() => setCrmOpenn(prev => !prev)}>
+            <FontAwesomeIcon icon={faFileSignature} />
+            <span className="dropdown-label">Service Management</span>
+            <span className={`arrow ${crmOpenn ? 'rotate' : ''}`}>▼</span>
+          </div>
+          <div className={`dropdown-container ${crmOpenn ? 'open' : ''}`}>            
+            <div className={`sidebar-item gap-item ${isActive('Service')}`} onClick={() => handleSelect('Service')}>
+              <FontAwesomeIcon icon={faHandshake} /><span>Service Catalog</span>
+            </div>
+            <div className={`sidebar-item gap-item ${isActive('Inventory')}`} onClick={() => handleSelect('Inventory')}>
+              <FontAwesomeIcon icon={faFileInvoiceDollar} /><span>Service Inventory</span>
             </div>
           </div>
         </div>

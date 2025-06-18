@@ -32,6 +32,7 @@ import AdminControlss from "../components/Client Management/Admin_Controls"
 import SalesLifecycle from "../components/Sales_Management/Lifecycle"
 import DeliveryTracking from "../components/Sales_Management/Delivery"
 import SalesLineItems from "../components/Sales_Management/SalesItoms"
+import ServiceCatalog from "../components/Servise/catalog"
 
 import './Dashboard.css';
 
@@ -173,6 +174,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case 'SalesLineItems':
       content = <SalesLineItems  />;
+      break;
+    case 'Service':
+      content = <ServiceCatalog  />;
       break;
     case 'boards':
     default:
