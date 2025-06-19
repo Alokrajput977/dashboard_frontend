@@ -40,7 +40,7 @@ const ServiceCatalog = () => {
     <div className="catalog-wrapper">
       <div className="card">
         <h2 className="card-title">
-          <i className="fas fa-server"></i> Service Catalog
+          Service Catalog<i className="fas fa-server"></i> 
         </h2>
 
         <div className="info-grid">
