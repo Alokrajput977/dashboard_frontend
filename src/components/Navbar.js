@@ -24,6 +24,7 @@ function Navbar({ onAddMember, onViewCameraFeed }) {
           </button>
         </div>
 
+        {/* Camera Monitor System — CLICKABLE ICON */}
         <div className="camera-system" onClick={onViewCameraFeed} title="Add Camera">
           <FontAwesomeIcon icon={faVideo} className="camera-icon" />
           <button className="view-btn">

@@ -84,7 +84,7 @@ const CameraDashboard = () => {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <h2 className="h2">Camera Monitoring Dashboard</h2>
-        <button className="add-btn" onClick={() => navigate("/")}>
+        <button className="add-btn" onClick={() => navigate(-1)}>
           ➕ Add Camera
         </button>
       </header>
