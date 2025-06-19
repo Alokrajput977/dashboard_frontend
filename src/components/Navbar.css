@@ -1,3 +1,10 @@
+:root {
+  --text-color: #ffffff;
+  --sidebar-accent: #6e70f8;
+  --sidebar-hover: #5355e8;
+  --transition: 0.3s ease;
+}
+
 .navbar-container {
   display: flex;
   align-items: center;
@@ -23,6 +30,7 @@
   gap: 1.2rem;
 }
 
+/* Search */
 .search-container {
   display: flex;
   align-items: center;
@@ -63,22 +71,7 @@
   transform: scale(1.1);
 }
 
-.theme-toggle-btn {
-  background: #2a2f5a;
-  border: none;
-  color: white;
-  padding: 0.4rem 0.6rem;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-}
-
-.theme-toggle-btn:hover {
-  background: var(--sidebar-hover);
-  transform: scale(1.1);
-}
-
+/* Add Member */
 .add-member-btn {
   background-color: var(--sidebar-accent);
   color: white;
@@ -94,6 +87,44 @@
 }
 
 .add-member-btn:hover {
-  background-color: #6e70f8;
+  background-color: #5d5feb;
+  transform: scale(1.05);
+}
+
+/* Camera Monitor System */
+.camera-system {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.2rem 0.4rem;
+  background-color: #1b2145;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.camera-icon {
+  font-size: 1.2rem;
+  color: var(--sidebar-accent);
+}
+
+/* View Button - matched style */
+.view-btn {
+  background-color: var(--sidebar-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 10px rgba(93, 95, 239, 0.3);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.view-btn:hover {
+  background-color: #5d5feb;
   transform: scale(1.05);
 }

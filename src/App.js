@@ -17,18 +17,23 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
+       <Route
           path="/"
-          element={!user ? <Login setUser={setUser} /> : <Navigate to="/dashboard" />}
+          element={
+            !user ? (
+              <Login setUser={setUser} />
+            ) : (
+              <Navigate to="/dashboard" replace />
+            )
+          }
         />
-        
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={
             user ? (
               <Dashboard user={user} setUser={setUser} />
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/" replace />
             )
           }
         />

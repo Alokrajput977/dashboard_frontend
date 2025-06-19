@@ -1,191 +1,171 @@
-// Dashboard.jsx
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/components/DashboardLayout.jsx
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
-import Board from './Board';
-import ChartView from './ChartView';
-import Settings from './Settings';
-import HelpCenter from './Help';
-import AddMember from './AddMember';
-import Table from "../components/table"
-import Loader from './Loader';
-import EmployeeTable from "../components/Manageteam"
-import EmployeeForm from './Addemployee';
-import AttendanceApp from './Attendance';
-import PayrollModule from "../components/Payroll"
-import PerformanceDashboard from './Management';
-import AdminControls from "../components/Admincontrol"
-import ShiftScheduling from './ShiftScheduling';
-import TaskManager from "../components/Management/Task_Creation"
-import AssignmentOwnership from './Management/Assignment';
-import TrackingReporting from './Management/Tracking';
-import NotificationsPage from "../components/Management/Notifications"
-import NotificationsEscalations from "../components/Management/NotificationsEscalations"
-import ProjectManagement from "../components/project_management/project-lifecycle"
-import FinancialTracking from "../../src/components/project_management/Financial"
-import TeamResourceIntegration from "../../src/components/project_management/Resource_Integration"
-import ClientManagement from "../components/Client Management/Client_Onboarding"
-import ProjectRevenue from "../../src//components/Client Management/projectREV"
-import AdminControlss from "../components/Client Management/Admin_Controls"
-import SalesLifecycle from "../components/Sales_Management/Lifecycle"
-import DeliveryTracking from "../components/Sales_Management/Delivery"
-import SalesLineItems from "../components/Sales_Management/SalesItoms"
-import ServiceCatalog from "../components/Servise/catalog"
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+import Board from "./Board";
+import ChartView from "./ChartView";
+import Settings from "./Settings";
+import HelpCenter from "./Help";
+import AddMember from "./AddMember";
+import Table from "./table";
+import Loader from "./Loader";
+import EmployeeTable from "./Manageteam";
+import EmployeeForm from "./Addemployee";
+import AttendanceApp from "./Attendance";
+import PayrollModule from "./Payroll";
+import PerformanceDashboard from "./Management";
+import AdminControls from "./Admincontrol";
+import ShiftScheduling from "./ShiftScheduling";
+import TaskManager from "./Management/Task_Creation";
+import AssignmentOwnership from "./Management/Assignment";
+import TrackingReporting from "./Management/Tracking";
+import NotificationsPage from "./Management/Notifications";
+import NotificationsEscalations from "./Management/NotificationsEscalations";
+import ProjectManagement from "./project_management/project-lifecycle";
+import FinancialTracking from "./project_management/Financial";
+import TeamResourceIntegration from "./project_management/Resource_Integration";
+import ClientManagement from "./Client Management/Client_Onboarding";
+import ProjectRevenue from "./Client Management/projectREV";
+import AdminControlss from "./Client Management/Admin_Controls";
+import SalesLifecycle from "./Sales_Management/Lifecycle";
+import DeliveryTracking from "./Sales_Management/Delivery";
+import SalesLineItems from "./Sales_Management/SalesItoms";
+import ServiceCatalog from "./Servise/catalog";
+import CameraInputPage from "./camera/cameraview";
+import CameraDashboard from "./camera/cameradashbaord";
 
-import './Dashboard.css';
+import "./Dashboard.css";
 
 function MembersPanel() {
-  const [visible] = useState(true);
-
   return (
     <div className="members-panel">
-
-      {visible && <Table />}
+      <Table />
     </div>
   );
 }
 
 export default function Dashboard({ user, setUser }) {
-  const [theme, setTheme] = useState('light');
-  const [view, setView] = useState('boards');
-  const [isLoading, setIsLoading] = useState(true);
+  const [theme, setTheme] = useState("light");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { "*": viewParam } = useParams();
+  const view = viewParam || "boards";
 
-  // Initial loader
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    setIsLoading(true);
+    const t1 = setTimeout(() => setIsLoading(false), 300);
+    return () => clearTimeout(t1);
+  }, [view]);
 
-  // Apply theme class to <html>
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   const toggleTheme = () =>
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
-    navigate('/');
+    navigate("/");
   };
 
-  const handleViewChange = (newView) => {
-    if (newView === view) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      setView(newView);
-      // fade-in content
-      setTimeout(() => setIsLoading(false), 500);
-    }, 300);
-  };
-
-  // If not logged in
-  if (!user) {
-    return (
-      <div className="login-prompt">
-        <h2>Please log in to view the dashboard</h2>
-      </div>
-    );
-  }
-
-  // Determine which panel to show
   let content;
   switch (view) {
-    case 'time':
-    case 'work':
+    case "time":
+    case "work":
       content = <ChartView />;
       break;
-    case 'settings':
+    case "settings":
       content = <Settings />;
       break;
-    case 'help':
+    case "help":
       content = <HelpCenter />;
       break;
-    case 'add-member':
+    case "add-member":
       content = <AddMember />;
       break;
-    case 'manageTeam':
+    case "manageTeam":
       content = <EmployeeTable />;
       break;
-    case 'attendance':
+    case "attendance":
       content = <AttendanceApp />;
       break;
-    case 'addEmployee':
+    case "addEmployee":
       content = <EmployeeForm />;
       break;
-        case 'AdminControls':
+    case "AdminControls":
       content = <AdminControls />;
       break;
-        case 'ShiftScheduling':
+    case "ShiftScheduling":
       content = <ShiftScheduling />;
       break;
-    case 'members':
+    case "members":
       content = <MembersPanel />;
       break;
-
-    case 'performance':
+    case "performance":
       content = <PerformanceDashboard />;
       break;
-       case 'TaskManager':
+    case "TaskManager":
       content = <TaskManager />;
       break;
-       case 'Assignment':
+    case "Assignment":
       content = <AssignmentOwnership />;
       break;
-       case 'Tracking':
+    case "Tracking":
       content = <TrackingReporting />;
       break;
-    case 'payroll':
+    case "payroll":
       content = <PayrollModule />;
       break;
-    case 'Notifications':
+    case "Notifications":
       content = <NotificationsPage />;
       break;
-    case 'NotificationsEscalation':
+    case "NotificationsEscalation":
       content = <NotificationsEscalations />;
       break;
-    case 'Lifecycle':
+    case "Lifecycle":
       content = <ProjectManagement />;
       break;
-    case 'Financial':
+    case "Financial":
       content = <FinancialTracking />;
       break;
-    case 'Resource':
+    case "Resource":
       content = <TeamResourceIntegration />;
       break;
-    case 'ClientOnboarding':
+    case "ClientOnboarding":
       content = <ClientManagement />;
       break;
-    case 'ClientRevenue':
+    case "ClientRevenue":
       content = <ProjectRevenue />;
       break;
-    case 'ClientAdminControls':
+    case "ClientAdminControls":
       content = <AdminControlss />;
       break;
-    case 'SalesLifecycle':
-      content = <SalesLifecycle  />;
+    case "SalesLifecycle":
+      content = <SalesLifecycle />;
       break;
-    case 'InvoiceTracking':
-      content = <DeliveryTracking  />;
+    case "InvoiceTracking":
+      content = <DeliveryTracking />;
       break;
-    case 'SalesLineItems':
-      content = <SalesLineItems  />;
+    case "SalesLineItems":
+      content = <SalesLineItems />;
       break;
-    case 'Service':
-      content = <ServiceCatalog  />;
+    case "Service":
+      content = <ServiceCatalog />;
       break;
-    case 'boards':
+    case "cameraview":
+      content = <CameraInputPage />;
+      break;
+    case "cameradashboard":
+      content = <CameraDashboard />;
+      break;
+    case "boards":
     default:
       content = (
-        <Board
-          authToken={user.token}
-          userRole={user.role}
-          theme={theme}
-        />
+        <Board authToken={user.token} userRole={user.role} theme={theme} />
       );
       break;
   }
@@ -194,20 +174,20 @@ export default function Dashboard({ user, setUser }) {
     <div className={`app-container ${theme}`}>
       <Sidebar
         logout={handleLogout}
-        onSelect={handleViewChange}
+        onSelect={(newView) => navigate(`/dashboard/${newView}`)}
+        currentView={view}
       />
       <div className="main-content">
         <Navbar
           theme={theme}
           toggleTheme={toggleTheme}
-          onAddMember={() => handleViewChange('members')}
+          onAddMember={() => navigate("/dashboard/members")}
+          onViewCameraFeed={() => navigate("/dashboard/cameraview")}
+
+          onLogout={handleLogout}
         />
         <div className="content-area">
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <div className="fade-in">{content}</div>
-          )}
+          {isLoading ? <Loader /> : <div className="fade-in">{content}</div>}
         </div>
       </div>
     </div>

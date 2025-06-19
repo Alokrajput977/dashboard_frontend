@@ -1,16 +1,18 @@
+// src/components/Navbar.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMoon, faSun, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faVideo, faEye } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
-function Navbar({ theme, toggleTheme, onAddMember }) {
+function Navbar({ onAddMember, onViewCameraFeed }) {
   return (
-    <nav className={`navbar-container ${theme}`}>
+    <nav className="navbar-container">
       <div className="navbar-title">
-        <h2></h2>
+        <h2>Dashboard</h2>
       </div>
 
       <div className="navbar-right">
+        {/* Search Section */}
         <div className="search-container">
           <input
             type="text"
@@ -22,14 +24,14 @@ function Navbar({ theme, toggleTheme, onAddMember }) {
           </button>
         </div>
 
-        <button
-          className="theme-toggle-btn"
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-        >
-          <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
-        </button>
+        <div className="camera-system" onClick={onViewCameraFeed} title="Add Camera">
+          <FontAwesomeIcon icon={faVideo} className="camera-icon" />
+          <button className="view-btn">
+            <FontAwesomeIcon icon={faEye} /> View
+          </button>
+        </div>
 
+        {/* Add Member */}
         <button
           className="add-member-btn"
           onClick={onAddMember}

@@ -1,0 +1,64 @@
+.camera-input-container {
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  padding: 2rem;
+  max-width: 450px;
+  margin: 3rem auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.camera-input-container h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.camera-input-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.camera-input-container input:focus {
+  border-color: #8b5cf6;
+  outline: none;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #8b5cf6;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-group button:hover {
+  background-color: #7c3aed;
+  transform: translateY(-2px);
+}
+
+.button-group button:active {
+  transform: translateY(0);
+  background-color: #6d28d9;
+}
