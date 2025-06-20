@@ -1,7 +1,7 @@
 .camera-input-container {
-  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  background: #0f1535;
   padding: 2rem;
-  max-width: 450px;
+  max-width: 750px;
   margin: 3rem auto;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -11,7 +11,7 @@
 
 .camera-input-container h2 {
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #fff;
   font-weight: 600;
   font-size: 1.8rem;
 }

@@ -1,10 +1,15 @@
-// src/components/Navbar.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch, faVideo, faEye } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 function Navbar({ onAddMember, onViewCameraFeed }) {
+  // Grab the saved user (set by Login) from localStorage:
+  const storedUser = localStorage.getItem('user');
+  const role = storedUser
+    ? JSON.parse(storedUser).role?.toString().trim().toLowerCase()
+    : null;
+
   return (
     <nav className="navbar-container">
       <div className="navbar-title">
@@ -24,15 +29,19 @@ function Navbar({ onAddMember, onViewCameraFeed }) {
           </button>
         </div>
 
-        {/* Camera Monitor System — CLICKABLE ICON */}
-        <div className="camera-system" onClick={onViewCameraFeed} title="Add Camera">
-          <FontAwesomeIcon icon={faVideo} className="camera-icon" />
-          <button className="view-btn">
-            <FontAwesomeIcon icon={faEye} /> View
-          </button>
-        </div>
-
-        {/* Add Member */}
+        {/* Camera Monitor System — only if role === "manager" */}
+        {role === 'manager' && (
+          <div
+            className="camera-system"
+            onClick={onViewCameraFeed}
+            title="View Camera Feed"
+          >
+            <FontAwesomeIcon icon={faVideo} className="camera-icon" />
+            <button className="view-btn">
+              <FontAwesomeIcon icon={faEye} /> View
+            </button>
+          </div>
+        )}
         <button
           className="add-member-btn"
           onClick={onAddMember}

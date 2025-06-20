@@ -1,5 +1,3 @@
-// src/components/camera/CameraInputPage.jsx
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CameraInputPage.css";
@@ -23,11 +21,11 @@ const CameraInputPage = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ip, username, password }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) throw new Error(data.error);
-        navigate("/dashboard/cameradashboard");
+      .then((res) => {
+        if (!res.ok) throw new Error("Camera not added");
+        return res.json();
       })
+      .then(() => navigate("/dashboard/cameradashboard"))
       .catch((err) => alert(err.message));
   };
 

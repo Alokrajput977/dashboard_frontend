@@ -11,41 +11,74 @@ const CameraDashboard = () => {
   const videoRefs = useRef({});
   const navigate = useNavigate();
 
-  // Fetch cameras from backend
+  // Get all cameras from backend
+  const fetchCameras = async () => {
+    try {
+      const res = await fetch(`http://${serverIP}/api/cameras`);
+      const data = await res.json();
+      setCameras(data);
+    } catch (err) {
+      console.error("Fetch camera error:", err);
+    }
+  };
+
   useEffect(() => {
-    fetch(`http://${serverIP}/api/cameras`)
-      .then((res) => res.json())
-      .then((data) => setCameras(data))
-      .catch(console.error);
+    fetchCameras();
   }, []);
 
-  // Attach videojs after components are mounted
   useEffect(() => {
+    const timers = [];
+
     cameras.forEach((camera) => {
       const videoElement = videoRefs.current[camera.ip];
       if (videoElement && !videoElement.player) {
         const streamUrl = `http://${serverIP}/streams/${camera.folder}/stream.m3u8`;
 
-        const player = videojs(videoElement, {
-          autoplay: true,
-          muted: true,
-          controls: true,
-          responsive: true,
-          fluid: true,
-          controlBar: {
-            playToggle: false,
-            volumePanel: false,
-            fullscreenToggle: true,
-          },
-          sources: [
-            {
-              src: streamUrl,
-              type: "application/x-mpegURL",
-            },
-          ],
-        });
+        const tryInitializePlayer = () => {
+          fetch(streamUrl, { method: "HEAD" })
+            .then((res) => {
+              if (res.ok) {
+                const player = videojs(videoElement, {
+                  autoplay: true,
+                  muted: true,
+                  controls: true,
+                  responsive: true,
+                  fluid: true,
+                  html5: {
+                    vhs: { overrideNative: true },
+                    nativeAudioTracks: false,
+                    nativeVideoTracks: false,
+                  },
+                  controlBar: {
+                    playToggle: false,
+                    volumePanel: false,
+                    fullscreenToggle: true,
+                  },
+                  userActions: {
+                    click: () => {},
+                  },
+                  sources: [
+                    {
+                      src: streamUrl,
+                      type: "application/x-mpegURL",
+                    },
+                  ],
+                });
 
-        videoElement.player = player;
+                player.ready(() => {
+                  player.tech().el().style.pointerEvents = "none";
+                  player.play().catch(() => {});
+                });
+
+                videoElement.player = player;
+              } else {
+                timers.push(setTimeout(tryInitializePlayer, 1000));
+              }
+            })
+            .catch(() => timers.push(setTimeout(tryInitializePlayer, 1000)));
+        };
+
+        tryInitializePlayer();
       }
     });
 
@@ -55,28 +88,22 @@ const CameraDashboard = () => {
           videoEl.player.dispose();
         }
       });
+      timers.forEach(clearTimeout);
     };
   }, [cameras]);
 
-  // Remove camera
   const removeCamera = async (ip) => {
     try {
-      const res = await fetch(`http://${serverIP}/api/cameras/${ip}`, {
+      await fetch(`http://${serverIP}/api/cameras/${ip}`, {
         method: "DELETE",
       });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to remove camera");
-      }
-
       if (videoRefs.current[ip]?.player) {
         videoRefs.current[ip].player.dispose();
         delete videoRefs.current[ip];
       }
-
       setCameras((prev) => prev.filter((cam) => cam.ip !== ip));
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("Error removing camera: " + err.message);
     }
   };
 
