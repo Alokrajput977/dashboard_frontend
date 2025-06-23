@@ -35,6 +35,7 @@ import SalesLineItems from "./Sales_Management/SalesItoms";
 import ServiceCatalog from "./Servise/catalog";
 import CameraInputPage from "./camera/cameraview";
 import CameraDashboard from "./camera/cameradashbaord";
+import ServiceInventory from "../components/Servise/Inventory"
 
 import "./Dashboard.css";
 
@@ -161,6 +162,9 @@ export default function Dashboard({ user, setUser }) {
       break;
     case "cameradashboard":
       content = <CameraDashboard />;
+      break;
+    case "Inventory":
+      content = <ServiceInventory />;
       break;
     case "boards":
     default:

@@ -1,0 +1,100 @@
+.inventory-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1b2145;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.inventory-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #1b2145;
+  margin-bottom: 1.5rem;
+}
+
+.form-section {
+  background-color: #0f1535;
+  border-left: 6px solid #1b2145;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(27, 33, 69, 0.1);
+}
+
+.inventory-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.inventory-form input,
+.inventory-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.inventory-form textarea {
+  grid-column: span 2;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn-add {
+  grid-column: span 2;
+  background-color: #1b2145;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-add svg {
+  margin-right: 5px;
+}
+
+.btn-add:hover {
+  background-color: #2d366b;
+}
+
+.table-section {
+  background-color: #0f1535;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(27, 33, 69, 0.1);
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+}
+
+
+.actions button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin: 0 5px;
+  color: #1b2145;
+  transition: transform 0.2s ease;
+}
+
+.actions button:hover {
+  transform: scale(1.1);
+  color: #2d366b;
+}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CameraInputPage.css";
 
-const serverIP = "192.168.0.113:3001";
+const serverIP = "192.168.0.104:3001";
 
 const CameraInputPage = () => {
   const [ip, setIP] = useState("");

@@ -4,7 +4,7 @@ import "video.js/dist/video-js.css";
 import { useNavigate } from "react-router-dom";
 import "./CameraDashboard.css";
 
-const serverIP = "192.168.0.113:3001";
+const serverIP = "192.168.0.104:3001";
 
 const CameraDashboard = () => {
   const [cameras, setCameras] = useState([]);
