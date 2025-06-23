@@ -5,6 +5,30 @@
   --transition: 0.3s ease;
 }
 
+/* Message System */
+.message-system {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b2145;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.message-icon {
+  font-size: 1.2rem;
+  color: var(--sidebar-accent);
+}
+
+.message-system:hover {
+  background-color: #272c52;
+  transform: scale(1.05);
+}
+
+
 .navbar-container {
   display: flex;
   align-items: center;

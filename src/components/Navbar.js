@@ -1,10 +1,16 @@
+// src/components/Navbar.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSearch, faVideo, faEye } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faSearch,
+  faVideo,
+  faEye,
+  faCommentDots
+} from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
-function Navbar({ onAddMember, onViewCameraFeed }) {
-  // Grab the saved user (set by Login) from localStorage:
+function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
   const storedUser = localStorage.getItem('user');
   const role = storedUser
     ? JSON.parse(storedUser).role?.toString().trim().toLowerCase()
@@ -17,7 +23,7 @@ function Navbar({ onAddMember, onViewCameraFeed }) {
       </div>
 
       <div className="navbar-right">
-        {/* Search Section */}
+        {/* Search */}
         <div className="search-container">
           <input
             type="text"
@@ -29,7 +35,7 @@ function Navbar({ onAddMember, onViewCameraFeed }) {
           </button>
         </div>
 
-        {/* Camera Monitor System — only if role === "manager" */}
+        {/* Camera System - only visible for manager */}
         {role === 'manager' && (
           <div
             className="camera-system"
@@ -42,6 +48,17 @@ function Navbar({ onAddMember, onViewCameraFeed }) {
             </button>
           </div>
         )}
+
+        {/* Messages Icon - opens chatbox */}
+        <div
+          className="message-system"
+          onClick={onMessagesClick}
+          title="View Messages"
+        >
+          <FontAwesomeIcon icon={faCommentDots} className="message-icon" />
+        </div>
+
+        {/* Employee Table Button */}
         <button
           className="add-member-btn"
           onClick={onAddMember}

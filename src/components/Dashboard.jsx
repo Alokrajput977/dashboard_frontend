@@ -36,6 +36,7 @@ import ServiceCatalog from "./Servise/catalog";
 import CameraInputPage from "./camera/cameraview";
 import CameraDashboard from "./camera/cameradashbaord";
 import ServiceInventory from "../components/Servise/Inventory"
+import ChatApp from "../components/Message/chatapp"
 
 import "./Dashboard.css";
 
@@ -166,6 +167,10 @@ export default function Dashboard({ user, setUser }) {
     case "Inventory":
       content = <ServiceInventory />;
       break;
+    case "messages":
+      content = <ChatApp />;
+      break;
+
     case "boards":
     default:
       content = (
@@ -187,7 +192,7 @@ export default function Dashboard({ user, setUser }) {
           toggleTheme={toggleTheme}
           onAddMember={() => navigate("/dashboard/members")}
           onViewCameraFeed={() => navigate("/dashboard/cameraview")}
-
+          onMessagesClick={() => navigate("/dashboard/messages")} 
           onLogout={handleLogout}
         />
         <div className="content-area">
