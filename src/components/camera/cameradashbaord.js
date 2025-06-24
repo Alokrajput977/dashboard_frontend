@@ -26,71 +26,73 @@ const CameraDashboard = () => {
     fetchCameras();
   }, []);
 
-  useEffect(() => {
-    const timers = [];
+ useEffect(() => {
+  const timers = [];
+  const currentRefs = videoRefs.current; // ✅ copy to local variable
 
-    cameras.forEach((camera) => {
-      const videoElement = videoRefs.current[camera.ip];
-      if (videoElement && !videoElement.player) {
-        const streamUrl = `http://${serverIP}/streams/${camera.folder}/stream.m3u8`;
+  cameras.forEach((camera) => {
+    const videoElement = currentRefs[camera.ip];
+    if (videoElement && !videoElement.player) {
+      const streamUrl = `http://${serverIP}/streams/${camera.folder}/stream.m3u8`;
 
-        const tryInitializePlayer = () => {
-          fetch(streamUrl, { method: "HEAD" })
-            .then((res) => {
-              if (res.ok) {
-                const player = videojs(videoElement, {
-                  autoplay: true,
-                  muted: true,
-                  controls: true,
-                  responsive: true,
-                  fluid: true,
-                  html5: {
-                    vhs: { overrideNative: true },
-                    nativeAudioTracks: false,
-                    nativeVideoTracks: false,
+      const tryInitializePlayer = () => {
+        fetch(streamUrl, { method: "HEAD" })
+          .then((res) => {
+            if (res.ok) {
+              const player = videojs(videoElement, {
+                autoplay: true,
+                muted: true,
+                controls: true,
+                responsive: true,
+                fluid: true,
+                html5: {
+                  vhs: { overrideNative: true },
+                  nativeAudioTracks: false,
+                  nativeVideoTracks: false,
+                },
+                controlBar: {
+                  playToggle: false,
+                  volumePanel: false,
+                  fullscreenToggle: true,
+                },
+                userActions: {
+                  click: () => {},
+                },
+                sources: [
+                  {
+                    src: streamUrl,
+                    type: "application/x-mpegURL",
                   },
-                  controlBar: {
-                    playToggle: false,
-                    volumePanel: false,
-                    fullscreenToggle: true,
-                  },
-                  userActions: {
-                    click: () => {},
-                  },
-                  sources: [
-                    {
-                      src: streamUrl,
-                      type: "application/x-mpegURL",
-                    },
-                  ],
-                });
+                ],
+              });
 
-                player.ready(() => {
-                  player.tech().el().style.pointerEvents = "none";
-                  player.play().catch(() => {});
-                });
+              player.ready(() => {
+                player.tech().el().style.pointerEvents = "none";
+                player.play().catch(() => {});
+              });
 
-                videoElement.player = player;
-              } else {
-                timers.push(setTimeout(tryInitializePlayer, 1000));
-              }
-            })
-            .catch(() => timers.push(setTimeout(tryInitializePlayer, 1000)));
-        };
+              videoElement.player = player;
+            } else {
+              timers.push(setTimeout(tryInitializePlayer, 1000));
+            }
+          })
+          .catch(() => timers.push(setTimeout(tryInitializePlayer, 1000)));
+      };
 
-        tryInitializePlayer();
+      tryInitializePlayer();
+    }
+  });
+
+  return () => {
+    Object.values(currentRefs).forEach((videoEl) => {
+      if (videoEl?.player) {
+        videoEl.player.dispose();
       }
     });
+    timers.forEach(clearTimeout);
+  };
+}, [cameras]);
 
-    return () => {
-      Object.values(videoRefs.current).forEach((videoEl) => {
-        if (videoEl?.player) {
-          videoEl.player.dispose();
-        }
-      });
-      timers.forEach(clearTimeout);
-    };
-  }, [cameras]);
 
   const removeCamera = async (ip) => {
     try {

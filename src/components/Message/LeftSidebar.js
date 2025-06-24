@@ -12,7 +12,7 @@ const emojis = [
 
 const getRandomEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
 
-const LeftSidebar = ({ onSelectUser }) => {
+const LeftSidebar = ({ currentUser, onSelectUser }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,20 +23,22 @@ const LeftSidebar = ({ onSelectUser }) => {
         return res.json();
       })
       .then((data) => {
-        const enhancedUsers = data.map((user) => ({
-          ...user,
-          avatar: getRandomEmoji(),
-          time: new Date(user.createdAt).toLocaleTimeString("en-IN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          status: "I'm using ChatApp.",
-        }));
+        const enhancedUsers = data
+          .filter(user => user.username !== currentUser.username) // 💡 Filter out current user
+          .map((user) => ({
+            ...user,
+            avatar: getRandomEmoji(),
+            time: new Date(user.createdAt).toLocaleTimeString("en-IN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            status: "I'm using ChatApp.",
+          }));
         setUsers(enhancedUsers);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [currentUser]);
 
   return (
     <div className="sidebar-container">
@@ -50,7 +52,9 @@ const LeftSidebar = ({ onSelectUser }) => {
           users.map((user, index) => (
             <div
               className="sidebar-user"
-              key={user._id || index} onClick={() => onSelectUser(user)}style={{ cursor: "pointer" }}
+              key={user._id || index}
+              onClick={() => onSelectUser(user)}
+              style={{ cursor: "pointer" }}
             >
               <div className="avatar">{user.avatar}</div>
               <div className="user-info">

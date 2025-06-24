@@ -1,5 +1,6 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "./chatbox.css";
+import { FaVideo, FaPhoneAlt, FaUserCircle, FaPaperclip } from "react-icons/fa";
 
 const Chatbox = ({ selectedUser, messages, onSendMessage }) => {
   const [input, setInput] = useState("");
@@ -31,9 +32,21 @@ const Chatbox = ({ selectedUser, messages, onSendMessage }) => {
   return (
     <div className="chatbox-container">
       <div className="chatbox-header">
-        <div className="chat-user">
-          {selectedUser ? selectedUser.fullName : "Select a user to start chat"}
-        </div>
+        {selectedUser && (
+          <>
+            <FaUserCircle className="user-avatar" />
+            <div className="chat-user">{selectedUser.fullName}</div>
+            <div className="chat-actions">
+              <button className="call-btn" title="Audio Call">
+                <FaPhoneAlt />
+              </button>
+              <button className="video-btn" title="Video Call">
+                <FaVideo />
+              </button>
+            </div>
+          </>
+        )}
+        {!selectedUser && <div className="chat-user">Select a user to start chat</div>}
       </div>
 
       <div className="chatbox-body">
@@ -62,7 +75,9 @@ const Chatbox = ({ selectedUser, messages, onSendMessage }) => {
             style={{ display: "none" }}
             onChange={sendImage}
           />
-          <label htmlFor="upload" className="upload-btn">📎</label>
+          <label htmlFor="upload" className="upload-btn" title="Send image">
+            <FaPaperclip />
+          </label>
           <button onClick={sendMessage} className="send-btn">Send</button>
         </div>
       )}
