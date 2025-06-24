@@ -1,68 +1,78 @@
-/* src/components/LeftSidebar.css */
+/* LeftSidebar.css */
 
-
-.sidebar-header {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  padding: 20px 16px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* Sidebar container */
+.sidebar {
+  width: 280px;
+  background: #1b2145;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Header */
+.sidebar-header {
+  padding: 20px 16px;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollable users list */
 .sidebar-users {
   flex: 1;
   overflow-y: auto;
-  padding: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: #6b6b6b transparent;
+  padding: 8px 0;
 }
 
-.sidebar-users::-webkit-scrollbar {
-  width: 6px;
+/* Loading state */
+.loading {
+  padding: 16px;
+  text-align: center;
+  color: #aaa;
 }
 
-.sidebar-users::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 3px;
-}
-
+/* Individual user row */
 .sidebar-user {
   display: flex;
   align-items: center;
-  padding: 12px;
-  border-radius: 12px;
-  transition: background 0.25s ease;
+  padding: 12px 16px;
+  margin: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
   cursor: pointer;
-  margin-bottom: 8px;
-  background: rgba(255, 255, 255, 0.03);
 }
-
 .sidebar-user:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
 }
 
+/* Avatar circle */
 .avatar {
-  width: 42px;
-  height: 42px;
-  font-size: 20px;
-  background-color: #8b5cf6;
-  color: white;
+  width: 44px;
+  height: 44px;
+  background: #2e3260;
+  color: #fff;
+  font-size: 18px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 12px;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* User info block */
 .user-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  overflow: hidden;
 }
 
+/* Top row: name + timestamp */
 .user-name-time {
   display: flex;
   justify-content: space-between;
@@ -70,46 +80,97 @@
 }
 
 .user-name {
-  font-weight: 600;
-  font-size: 15px;
-  color: #f0f0f0;
-}
-
-.message-time {
-  font-size: 11px;
-  color: #aaa;
-}
-
-.last-message {
-  font-size: 13px;
-  color: #d0d0d0;
-  opacity: 0.8;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 190px;
 }
 
-.sidebar-footer {
-  padding: 14px;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background-color: rgba(255, 255, 255, 0.02);
+.message-time {
+  font-size: 12px;
+  color: #bbb;
+  flex-shrink: 0;
 }
+
+/* Bottom row: last message preview */
+.last-message {
+  font-size: 14px;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* Footer (optional) */
+/* If you still have Add Contact button/info */
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  background: #1a1f4a;
+}
+
+/* Avatar image */
+.avatar-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Fallback icon if image not found */
+.avatar-fallback {
+  width: 42px;
+  height: 42px;
+  background: #2e3260;
+  border-radius: 50%;
+  color: #cdd2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
 
 .add-contact-btn {
-  background: linear-gradient(135deg, #8b5cf6, #6c3bd0);
-  color: white;
+  background: #2e3260;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
+  padding: 8px 18px;
+  border-radius: 20px;
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.add-contact-btn:hover {
+  background: #3f436f;
+  transform: translateY(-1px);
 }
 
-.add-contact-btn:hover {
-  background: linear-gradient(135deg, #7c3aed, #582bbf);
-  transform: translateY(-1px);
+
+/* Custom scrollbar */
+.sidebar-users {
+  /* existing rules… */
+  /* add these two: */
+  scrollbar-width: thin;
+  scrollbar-color: #6e70f8 transparent;
+}
+
+.sidebar-users::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-users::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-users::-webkit-scrollbar-thumb {
+  background-color: #6e70f8;
+  border-radius: 3px;
+  border: 1px solid transparent;
 }

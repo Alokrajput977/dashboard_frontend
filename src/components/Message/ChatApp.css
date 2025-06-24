@@ -1,0 +1,6 @@
+.chat-app {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+}

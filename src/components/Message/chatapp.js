@@ -1,73 +1,55 @@
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
-import LeftSidebar from "./LeftSidebar";
-import Chatbox from "../Message/chatbox";
-
-const socket = io("http://localhost:4000", {
-  withCredentials: true
-});
+// src/components/Message/ChatApp.js
+import React, { useState } from 'react';
+import LeftSidebar from './LeftSidebar.js';
+import ChatBox from './chatbox.js';       // ← match filename & casing
+import './ChatApp.css';
 
 const ChatApp = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  // Mock current user; in a real app you'd get this from auth
+  const currentUser = { username: 'alice' };
+
+  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [messages, setMessages] = useState([]);
+  // chatHistory maps otherUsername => array of { sender, text, time }
+  const [chatHistory, setChatHistory] = useState({});
 
-  useEffect(() => {
-    const u = JSON.parse(localStorage.getItem("user"));
-    if (u) {
-      setCurrentUser(u);
-      socket.emit("join", u._id);
-    }
-  }, []);
+  const handleSelectUser = (user) => {
+    setSelectedUser(user);
+    // initialize history if not present
+    setChatHistory((prev) => ({
+      ...prev,
+      [user.username]: prev[user.username] || []
+    }));
+  };
 
-  useEffect(() => {
-    if (!selectedUser) return;
-     fetch(`http://localhost:4000/api/messages${selectedUser._id}`, {
-      credentials: "include"
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error("Fetch failed");
-        return r.json();
-      })
-      .then(setMessages)
-      .catch(console.error);
-  }, [selectedUser]);
-
-  useEffect(() => {
-    socket.on("receive-message", (msg) => {
-      if (
-        selectedUser &&
-        (msg.sender === selectedUser._id || msg.receiver === selectedUser._id)
-      ) {
-        setMessages((prev) => [...prev, msg]);
-      }
+  const handleSendMessage = (text) => {
+    if (!selectedUser || !text.trim()) return;
+    const time = new Date().toLocaleTimeString('en-IN', {
+      hour: '2-digit', minute: '2-digit'
     });
-    return () => socket.off("receive-message");
-  }, [selectedUser]);
-
-  const handleSend = async (userId, msg) => {
-    const payload = { ...msg, receiver: userId };
-    const res = await fetch("http://localhost:4000/api/messages", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) {
-      console.error("Send failed", await res.text());
-      return;
-    }
-    const saved = await res.json();
-    setMessages((prev) => [...prev, saved]);
-    socket.emit("send-message", { to: userId, message: saved });
+    const msg = { sender: currentUser.username, text, time };
+    setChatHistory((prev) => ({
+      ...prev,
+      [selectedUser.username]: [...prev[selectedUser.username], msg]
+    }));
   };
 
   return (
-    <div className="chat-wrapper">
-      <LeftSidebar currentUser={currentUser} onSelectUser={setSelectedUser} />
-      <Chatbox selectedUser={selectedUser} messages={messages} onSendMessage={handleSend} />
+    <div className="chat-app">
+      <LeftSidebar
+        currentUser={currentUser}
+        users={users}
+        setUsers={setUsers}
+        onSelectUser={handleSelectUser}
+      />
+      <ChatBox
+        currentUser={currentUser}
+        selectedUser={selectedUser}
+        messages={selectedUser ? chatHistory[selectedUser.username] : []}
+        onSendMessage={handleSendMessage}
+      />
     </div>
   );
-};
+};                                    
 
 export default ChatApp;

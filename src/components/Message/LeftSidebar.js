@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
-import "./LeftSidebar.css";
-
-const emojis = [
-  "👨‍💼", "👩‍💼",
-  "👨‍🎨", "👩‍🎨",
-  "👨‍🔧", "👩‍🔧",
-  "👨‍💻", "👩‍💻",
-  "👨‍🏫", "👩‍🏫",
-  "👨‍⚕️", "👩‍⚕️"
-];
-
-const getRandomEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
+// src/components/LeftSidebar.js
+import React, { useState, useEffect } from 'react';
+import { UserCircle } from 'lucide-react';
+import './LeftSidebar.css';
 
 const LeftSidebar = ({ currentUser, onSelectUser }) => {
   const [users, setUsers] = useState([]);
@@ -18,57 +9,63 @@ const LeftSidebar = ({ currentUser, onSelectUser }) => {
 
   useEffect(() => {
     fetch("http://localhost:5000/api/users")
-      .then((res) => {
+      .then(res => {
         if (!res.ok) throw new Error("Failed to fetch users");
         return res.json();
       })
-      .then((data) => {
-        const enhancedUsers = data
-          .filter(user => user.username !== currentUser.username) // 💡 Filter out current user
-          .map((user) => ({
-            ...user,
-            avatar: getRandomEmoji(),
-            time: new Date(user.createdAt).toLocaleTimeString("en-IN", {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            status: "I'm using ChatApp.",
+      .then(data => {
+        const enhanced = data
+          .filter(u => u.username !== currentUser.username)
+          .map(u => ({
+            username: u.username,
+            avatarUrl: u.avatarUrl, // assume avatar URL from backend
+            lastMessage: u.lastMessage || "No messages yet",
+            time: new Date(u.updatedAt || u.createdAt).toLocaleTimeString('en-IN', {
+              hour: '2-digit',
+              minute: '2-digit'
+            })
           }));
-        setUsers(enhancedUsers);
+        setUsers(enhanced);
       })
-      .catch((err) => console.error(err))
+      .catch(err => console.error(err))
       .finally(() => setLoading(false));
   }, [currentUser]);
 
   return (
-    <div className="sidebar-container">
-      <div className="sidebar-header">Messages</div>
+    <aside className="sidebar">
+      <div className="sidebar-header">Contacts</div>
+
       <div className="sidebar-users">
         {loading ? (
-          <p style={{ color: "#ccc", padding: "1rem" }}>Loading users...</p>
+          <div className="loading">Loading…</div>
         ) : users.length === 0 ? (
-          <p style={{ color: "#ccc", padding: "1rem" }}>No users found.</p>
+          <div className="loading">No contacts found</div>
         ) : (
-          users.map((user, index) => (
+          users.map(u => (
             <div
+              key={u.username}
               className="sidebar-user"
-              key={user._id || index}
-              onClick={() => onSelectUser(user)}
-              style={{ cursor: "pointer" }}
+              onClick={() => onSelectUser(u)}
             >
-              <div className="avatar">{user.avatar}</div>
+              {u.avatarUrl ? (
+                <img src={u.avatarUrl} alt="avatar" className="avatar-img" />
+              ) : (
+                <div className="avatar-fallback">
+                  <UserCircle size={28} />
+                </div>
+              )}
               <div className="user-info">
                 <div className="user-name-time">
-                  <span className="user-name">{user.fullName}</span>
-                  <span className="message-time">{user.time}</span>
+                  <span className="user-name">{u.username}</span>
+                  <span className="message-time">{u.time}</span>
                 </div>
-                <div className="last-message">{user.status}</div>
+                <div className="last-message">{u.lastMessage}</div>
               </div>
             </div>
           ))
         )}
       </div>
-    </div>
+    </aside>
   );
 };
 
