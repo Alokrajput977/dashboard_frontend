@@ -3,59 +3,63 @@ import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import EmojiPicker from 'emoji-picker-react';
 import {
-  Phone, Video, MoreVertical, UserCircle,
-  Image as ImageIcon, Smile
+  Phone,
+  Video,
+  MoreVertical,
+  UserCircle,
+  Image as ImageIcon,
+  Smile
 } from 'lucide-react';
+import placeholderImage from '../../assets/cute-text-messages-mobile-phone-screen-media-mix-removebg-preview.png';
 import './chatbox.css';
 
 const socket = io('http://localhost:5050');
 
 const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
-  const [input,        setInput]        = useState('');
-  const [messages,     setMessages]     = useState([]);
-  const [fileType,     setFileType]     = useState(null);
-  const [filePreview,  setFilePreview]  = useState(null);
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [fileType, setFileType] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const [showEmoji,    setShowEmoji]    = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
   const fileInputRef = useRef();
-  const endRef       = useRef();
+  const endRef = useRef();
 
-  // load history
+  // 1️⃣ Load chat history whenever selectedUser changes
   useEffect(() => {
     if (!selectedUser) return;
     fetch(
       `http://localhost:5050/api/messages/${currentUser.username}/${selectedUser.username}`
     )
-      .then(r => r.json())
+      .then(res => res.json())
       .then(setMessages)
       .catch(console.error);
   }, [selectedUser, currentUser.username]);
 
-  // scroll
+  // 2️⃣ Auto-scroll to bottom on new messages
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // realtime incoming
+  // 3️⃣ Listen for real-time incoming messages
   useEffect(() => {
     socket.on('receive_message', msg => {
       const isRelevant =
         selectedUser &&
         (msg.sender === selectedUser.username ||
          msg.receiver === selectedUser.username);
-
       if (isRelevant) {
-        setMessages(m => [...m, msg]);
+        setMessages(prev => [...prev, msg]);
       }
       onMessage(msg);
     });
     return () => socket.off('receive_message');
   }, [selectedUser, onMessage]);
 
-  // send
+  // Send message (text or base64-encoded image)
   const sendMessage = async text => {
     const msg = {
-      sender:   currentUser.username,
+      sender: currentUser.username,
       receiver: selectedUser.username,
       text,
       time: new Date().toLocaleTimeString('en-IN', {
@@ -63,17 +67,18 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         minute: '2-digit'
       })
     };
-    const res   = await fetch('http://localhost:5050/api/messages', {
-      method:  'POST',
+    const res = await fetch('http://localhost:5050/api/messages', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(msg)
+      body: JSON.stringify(msg)
     });
     const saved = await res.json();
-    setMessages(m => [...m, saved]);
+    setMessages(prev => [...prev, saved]);
     socket.emit('send_message', saved);
     onMessage(saved);
   };
 
+  // Handle text submit or image
   const handleSubmit = e => {
     e.preventDefault();
     if (!input.trim() && !filePreview) return;
@@ -87,26 +92,41 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
     setShowEmoji(false);
   };
 
+  // Trigger file input for images
   const handleFile = type => {
     setFileType(type);
     fileInputRef.current.click();
   };
+
+  // Read selected file as base64
   const onFileChange = e => {
     const f = e.target.files[0];
     if (!f) return;
-    const r = new FileReader();
-    r.onloadend = () => setFilePreview(r.result);
-    r.readAsDataURL(f);
+    const reader = new FileReader();
+    reader.onloadend = () => setFilePreview(reader.result);
+    reader.readAsDataURL(f);
   };
 
+  // If no contact selected, show placeholder image + message
   if (!selectedUser) {
-    return <div className="chat-box placeholder">Select a contact to chat</div>;
+    return (
+      <div className="chat-box placeholder">
+        <img
+          src={placeholderImage}
+          alt="Select a contact"
+          className="placeholder-image"
+        />
+        <p>Please select a contact to start chatting</p>
+      </div>
+    );
   }
 
-  const isMedia = (txt, t) => txt.startsWith(`[${t}]:`);
+  // Helper to detect media messages
+  const isMedia = (txt, type) => txt.startsWith(`[${type}]:`);
 
   return (
     <div className="chat-box">
+      {/* — Header with avatar, name, actions */}
       <header className="chat-header">
         <div className="user-info">
           {selectedUser.avatarUrl ? (
@@ -125,7 +145,7 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
             <MoreVertical
               size={20}
               className="icon more"
-              onClick={() => setShowMoreMenu(v => !v)}
+              onClick={() => setShowMoreMenu(val => !val)}
             />
             {showMoreMenu && (
               <div className="more-menu">
@@ -153,29 +173,24 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         </div>
       </header>
 
+      {/* — Messages list */}
       <div className="messages">
-        {messages.map((m, i) => {
+        {messages.map((m, idx) => {
           const mine = m.sender === currentUser.username;
           if (isMedia(m.text, 'image')) {
             return (
-              <div
-                key={i}
-                className={`message ${mine ? 'mine' : 'theirs'}`}
-              >
+              <div key={idx} className={`message ${mine ? 'mine' : 'theirs'}`}>
                 <img
                   src={m.text.replace('[image]:', '')}
                   className="message-image"
-                  alt=""
+                  alt="sent media"
                 />
                 <span className="msg-time">{m.time}</span>
               </div>
             );
           }
           return (
-            <div
-              key={i}
-              className={`message ${mine ? 'mine' : 'theirs'}`}
-            >
+            <div key={idx} className={`message ${mine ? 'mine' : 'theirs'}`}>
               <p>{m.text}</p>
               <span className="msg-time">{m.time}</span>
             </div>
@@ -184,6 +199,7 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         <div ref={endRef} />
       </div>
 
+      {/* — Input area */}
       <form className="input-area" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -194,13 +210,11 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         <Smile
           size={22}
           className="icon"
-          onClick={() => setShowEmoji(v => !v)}
+          onClick={() => setShowEmoji(val => !val)}
         />
         {showEmoji && (
           <div className="emoji-picker">
-            <EmojiPicker
-              onEmojiClick={(_, e) => setInput(i => i + e)}
-            />
+            <EmojiPicker onEmojiClick={(_, emoji) => setInput(i => i + emoji)} />
           </div>
         )}
         <ImageIcon
