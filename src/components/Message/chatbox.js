@@ -8,7 +8,9 @@ import {
   MoreVertical,
   UserCircle,
   Image as ImageIcon,
-  Smile
+  Smile,
+  XCircle,
+  CheckCircle
 } from 'lucide-react';
 import placeholderImage from '../../assets/cute-text-messages-mobile-phone-screen-media-mix-removebg-preview.png';
 import './chatbox.css';
@@ -16,6 +18,7 @@ import './chatbox.css';
 const socket = io('http://localhost:5050');
 
 const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
+  // Chat state
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [fileType, setFileType] = useState(null);
@@ -25,7 +28,19 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
   const fileInputRef = useRef();
   const endRef = useRef();
 
-  // 1️⃣ Load chat history whenever selectedUser changes
+  // Call state
+  const [callIncoming, setCallIncoming] = useState(false);
+  const [caller, setCaller] = useState(null);
+  const [inCall, setInCall] = useState(false);
+
+  // Register this client
+  useEffect(() => {
+    if (currentUser?.username) {
+      socket.emit('register', currentUser.username);
+    }
+  }, [currentUser]);
+
+  // Load history
   useEffect(() => {
     if (!selectedUser) return;
     fetch(
@@ -36,27 +51,58 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
       .catch(console.error);
   }, [selectedUser, currentUser.username]);
 
-  // 2️⃣ Auto-scroll to bottom on new messages
+  // Auto-scroll
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // 3️⃣ Listen for real-time incoming messages
+  // Incoming chat messages
   useEffect(() => {
     socket.on('receive_message', msg => {
-      const isRelevant =
+      const relevant =
         selectedUser &&
         (msg.sender === selectedUser.username ||
          msg.receiver === selectedUser.username);
-      if (isRelevant) {
-        setMessages(prev => [...prev, msg]);
-      }
+      if (relevant) setMessages(prev => [...prev, msg]);
       onMessage(msg);
     });
     return () => socket.off('receive_message');
   }, [selectedUser, onMessage]);
 
-  // Send message (text or base64-encoded image)
+  // Call signaling listeners
+  useEffect(() => {
+    socket.on('incoming_call', ({ from }) => {
+      if (selectedUser?.username === from) {
+        setCaller(from);
+        setCallIncoming(true);
+      }
+    });
+    socket.on('call_accepted', () => {
+      setCallIncoming(false);
+      setInCall(true);
+    });
+    socket.on('call_ended', ({ from }) => {
+      // Tear down call UI
+      setCallIncoming(false);
+      setInCall(false);
+      setCaller(null);
+      // Inject a system notification
+      const notification = {
+        sender: 'system',
+        receiver: currentUser.username,
+        text: `${from} has ended the call.`,
+        time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, notification]);
+    });
+    return () => {
+      socket.off('incoming_call');
+      socket.off('call_accepted');
+      socket.off('call_ended');
+    };
+  }, [selectedUser, currentUser.username]);
+
+  // Send chat message
   const sendMessage = async text => {
     const msg = {
       sender: currentUser.username,
@@ -78,7 +124,6 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
     onMessage(saved);
   };
 
-  // Handle text submit or image
   const handleSubmit = e => {
     e.preventDefault();
     if (!input.trim() && !filePreview) return;
@@ -92,13 +137,11 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
     setShowEmoji(false);
   };
 
-  // Trigger file input for images
   const handleFile = type => {
     setFileType(type);
     fileInputRef.current.click();
   };
 
-  // Read selected file as base64
   const onFileChange = e => {
     const f = e.target.files[0];
     if (!f) return;
@@ -107,7 +150,41 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
     reader.readAsDataURL(f);
   };
 
-  // If no contact selected, show placeholder image + message
+  // Call actions
+  const startCall = () => {
+    socket.emit('call_user', {
+      to: selectedUser.username,
+      from: currentUser.username
+    });
+  };
+  const acceptCall = () => {
+    socket.emit('accept_call', {
+      to: caller,
+      from: currentUser.username
+    });
+    setCallIncoming(false);
+    setInCall(true);
+  };
+  const endCall = () => {
+    // Notify the other party
+    socket.emit('end_call', {
+      to: inCall ? selectedUser.username : caller,
+      from: currentUser.username
+    });
+    // Local teardown + notification
+    setCallIncoming(false);
+    setInCall(false);
+    setCaller(null);
+    const notification = {
+      sender: 'system',
+      receiver: currentUser.username,
+      text: `You ended the call.`,
+      time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages(prev => [...prev, notification]);
+  };
+
+  // Placeholder
   if (!selectedUser) {
     return (
       <div className="chat-box placeholder">
@@ -121,16 +198,41 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
     );
   }
 
-  // Helper to detect media messages
-  const isMedia = (txt, type) => txt.startsWith(`[${type}]:`);
+  const isMedia = (txt, t) => txt.startsWith(`[${t}]:`);
 
   return (
     <div className="chat-box">
-      {/* — Header with avatar, name, actions */}
+      {/* Incoming call */}
+      {callIncoming && (
+        <div className="call-banner incoming">
+          <p>{caller} is calling…</p>
+          <button onClick={acceptCall}>
+            <CheckCircle size={16} /> Accept
+          </button>
+          <button onClick={endCall}>
+            <XCircle size={16} /> Decline
+          </button>
+        </div>
+      )}
+      {/* In-call */}
+      {inCall && (
+        <div className="call-banner in-call">
+          <p>In call with {selectedUser.username}</p>
+          <button onClick={endCall}>
+            <XCircle size={16} /> End Call
+          </button>
+        </div>
+      )}
+
+      {/* Header */}
       <header className="chat-header">
         <div className="user-info">
           {selectedUser.avatarUrl ? (
-            <img src={selectedUser.avatarUrl} className="avatar-img" alt="" />
+            <img
+              src={selectedUser.avatarUrl}
+              className="avatar-img"
+              alt=""
+            />
           ) : (
             <div className="avatar">
               <UserCircle size={25} />
@@ -139,13 +241,17 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
           <span className="chat-with">{selectedUser.username}</span>
         </div>
         <div className="header-actions">
-          <Phone size={20} className="icon call" />
+          <Phone
+            size={20}
+            className={`icon call ${inCall ? 'disabled' : ''}`}
+            onClick={startCall}
+          />
           <Video size={20} className="icon video" />
           <div className="more-menu-wrapper">
             <MoreVertical
               size={20}
               className="icon more"
-              onClick={() => setShowMoreMenu(val => !val)}
+              onClick={() => setShowMoreMenu(v => !v)}
             />
             {showMoreMenu && (
               <div className="more-menu">
@@ -173,13 +279,20 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         </div>
       </header>
 
-      {/* — Messages list */}
+      {/* Messages */}
       <div className="messages">
         {messages.map((m, idx) => {
           const mine = m.sender === currentUser.username;
-          if (isMedia(m.text, 'image')) {
+          const isSystem = m.sender === 'system';
+          const cls = isSystem
+            ? 'system'
+            : mine
+            ? 'mine'
+            : 'theirs';
+
+          if (!isSystem && isMedia(m.text, 'image')) {
             return (
-              <div key={idx} className={`message ${mine ? 'mine' : 'theirs'}`}>
+              <div key={idx} className={`message ${cls}`}>
                 <img
                   src={m.text.replace('[image]:', '')}
                   className="message-image"
@@ -189,8 +302,9 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
               </div>
             );
           }
+
           return (
-            <div key={idx} className={`message ${mine ? 'mine' : 'theirs'}`}>
+            <div key={idx} className={`message ${cls}`}>
               <p>{m.text}</p>
               <span className="msg-time">{m.time}</span>
             </div>
@@ -199,7 +313,7 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         <div ref={endRef} />
       </div>
 
-      {/* — Input area */}
+      {/* Input */}
       <form className="input-area" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -210,11 +324,13 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
         <Smile
           size={22}
           className="icon"
-          onClick={() => setShowEmoji(val => !val)}
+          onClick={() => setShowEmoji(v => !v)}
         />
         {showEmoji && (
           <div className="emoji-picker">
-            <EmojiPicker onEmojiClick={(_, emoji) => setInput(i => i + emoji)} />
+            <EmojiPicker
+              onEmojiClick={(_, emoji) => setInput(i => i + emoji)}
+            />
           </div>
         )}
         <ImageIcon

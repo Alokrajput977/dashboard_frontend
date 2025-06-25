@@ -350,3 +350,86 @@
   margin-bottom: 20px;
   opacity: 0.9;
 }
+
+
+/* Incoming / In-call banners */
+.call-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 0.9rem;
+  gap: 8px;
+}
+.call-banner.incoming {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+.call-banner.in-call {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+.call-banner button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+/* ———————————————— */
+/* System notification bubble (when call ends) */
+/* Match the “theirs” message style */
+.message.system {
+  max-width: 60%;
+  margin: 10px auto;              /* centered */
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f0f0f5;            /* same as .message.theirs */
+  color: #333;
+  font-style: italic;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ———————————————— */
+/* Call-banner styling — use bubble look instead of warning box */
+.call-banner.incoming,
+.call-banner.in-call {
+  background: #f0f0f5;            /* same as .message.theirs */
+  border: none;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 10px auto;
+  max-width: 60%;
+  justify-content: center;        /* center the text & buttons */
+}
+
+.call-banner.incoming p,
+.call-banner.in-call p {
+  flex: 1;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Buttons inside bubble get a neutral look */
+.call-banner button {
+  background: transparent;
+  color: #1b2145;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.call-banner button:hover {
+  background: #e5ddd5;
+}
