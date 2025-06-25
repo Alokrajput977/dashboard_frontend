@@ -29,6 +29,34 @@
 }
 
 
+.more-menu-wrapper {
+  position: relative;
+}
+
+.more-menu {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  z-index: 10;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 120px;
+}
+
+.more-menu div {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.more-menu div:hover {
+  background-color: #f0f0f0;
+}
+
+
 /* Small triangle/arrow like WhatsApp */
 .emoji-picker::before {
   content: "";

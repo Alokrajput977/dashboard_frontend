@@ -1,189 +1,153 @@
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import EmojiPicker from 'emoji-picker-react';
-import {
-  Phone, Video, MoreVertical, UserCircle, Image as ImageIcon, Smile
-} from 'lucide-react';
+import { Phone, Video, MoreVertical, UserCircle, Image as ImageIcon, Smile } from 'lucide-react';
 import './chatbox.css';
 
 const socket = io('http://localhost:5050');
 
-const ChatBox = ({ currentUser, selectedUser }) => {
+const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [fileType, setFileType] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const fileInputRef = useRef();
   const endRef = useRef();
 
-  // Fetch previous messages
+  // fetch history when chat opens
   useEffect(() => {
-    if (selectedUser) {
-      fetch(`http://localhost:5050/api/messages/${currentUser.username}/${selectedUser.username}`)
-        .then(res => res.json())
-        .then(data => setMessages(data))
-        .catch(err => console.error('Fetch error:', err));
-    }
-  }, [selectedUser]);
+    if (!selectedUser) return;
+    fetch(`http://localhost:5050/api/messages/${currentUser.username}/${selectedUser.username}`)
+      .then(r => r.json())
+      .then(data => setMessages(data))
+      .catch(console.error);
+  }, [selectedUser, currentUser.username]);
 
-  // Scroll to bottom
+  // scroll down
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Receive messages
+  // listen for incoming messages
   useEffect(() => {
-    socket.on('receive_message', (msg) => {
-      if (
-        selectedUser &&
-        (msg.sender === selectedUser.username || msg.receiver === selectedUser.username)
-      ) {
-        setMessages(prev => [...prev, msg]);
-      }
-    });
-    return () => {
-      socket.off('receive_message');
-    };
-  }, [selectedUser]);
+    socket.on('receive_message', msg => {
+      // append if conversation matches
+      const isRelevant = selectedUser &&
+        (msg.sender === selectedUser.username || msg.receiver === selectedUser.username);
 
-  const sendMessageToBackend = async (text) => {
-    const newMsg = {
+      if (isRelevant) {
+        setMessages(m => [...m, msg]);
+      }
+      // notify parent for badge + preview
+      onMessage(msg);
+    });
+    return () => { socket.off('receive_message'); };
+  }, [onMessage, selectedUser]);
+
+  // send any text or file message
+  const sendMessage = async (text) => {
+    const msg = {
       sender: currentUser.username,
       receiver: selectedUser.username,
       text,
-      time: new Date().toLocaleTimeString('en-IN', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
+      time: new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' })
     };
-
-    try {
-      const res = await fetch('http://localhost:5050/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newMsg)
-      });
-
-      const saved = await res.json();
-      setMessages(prev => [...prev, saved]);
-      socket.emit('send_message', saved);
-    } catch (err) {
-      console.error('Send error:', err);
-    }
+    // persist
+    const res = await fetch('http://localhost:5050/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(msg)
+    });
+    const saved = await res.json();
+    setMessages(m => [...m, saved]);
+    socket.emit('send_message', saved);
+    onMessage(saved);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!input.trim() && !filePreview) return;
-
     if (filePreview) {
-      const fullText = `[${fileType}]:${filePreview}`;
-      await sendMessageToBackend(fullText);
-      setFilePreview(null);
+      sendMessage(`[${fileType}]:${filePreview}`);
       setFileType(null);
+      setFilePreview(null);
     } else {
-      await sendMessageToBackend(input);
+      sendMessage(input);
     }
     setInput('');
     setShowEmojiPicker(false);
   };
 
-  const handleUploadType = (type) => {
+  // file chooser
+  const handleUploadType = type => {
     setFileType(type);
-    setShowDropdown(false);
     fileInputRef.current.click();
   };
-
-  const handleFileChange = (e) => {
+  const handleFileChange = e => {
     const file = e.target.files[0];
-    if (!file) return;
-
+    if (!file) return alert('No file');
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setFilePreview(reader.result);
-    };
-
-    if (fileType === 'image' && file.type.startsWith('image/')) {
-      reader.readAsDataURL(file);
-    } else if (fileType === 'video' && file.type.startsWith('video/')) {
-      reader.readAsDataURL(file);
-    } else if (
-      fileType === 'document' &&
-      (file.type === 'application/pdf' || file.name.endsWith('.docx'))
-    ) {
-      reader.readAsDataURL(file);
-    } else {
-      alert('Unsupported file type.');
-      setFileType(null);
-    }
+    reader.onloadend = () => setFilePreview(reader.result);
+    reader.readAsDataURL(file);
   };
 
-  const isMediaMessage = (text, type) => text.startsWith(`[${type}]:`);
+  const isMedia = (txt, t) => txt.startsWith(`[${t}]:`);
 
-  const handleEmojiClick = (emojiData) => {
-    setInput((prev) => prev + emojiData.emoji);
-  };
-
-  if (!selectedUser)
+  if (!selectedUser) {
     return <div className="chat-box placeholder">Select a contact to chat</div>;
+  }
 
   return (
     <div className="chat-box">
       <header className="chat-header">
         <div className="user-info">
-          {selectedUser.avatarUrl ? (
-            <img src={selectedUser.avatarUrl} alt="avatar" className="avatar-img" />
-          ) : (
-            <div className="avatar"><UserCircle size={25} /></div>
-          )}
+          {selectedUser.avatarUrl
+            ? <img src={selectedUser.avatarUrl} alt="" className="avatar-img" />
+            : <div className="avatar"><UserCircle size={25} /></div>
+          }
           <span className="chat-with">{selectedUser.username}</span>
         </div>
         <div className="header-actions">
           <Phone size={20} className="icon call" />
           <Video size={20} className="icon video" />
-          <MoreVertical size={20} className="icon more" />
+          <div className="more-menu-wrapper">
+            <MoreVertical size={20} onClick={() => setShowMoreMenu(v => !v)} className="icon more" />
+            {showMoreMenu && (
+              <div className="more-menu">
+                <div onClick={async () => {
+                  if (window.confirm('Delete all messages?')) {
+                    await fetch(`http://localhost:5050/api/messages/${currentUser.username}/${selectedUser.username}`, { method:'DELETE' });
+                    setMessages([]);
+                  }
+                  setShowMoreMenu(false);
+                }}>🗑 Delete Chat</div>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
       <div className="messages">
-        {messages.map((msg, i) => {
-          const mine = msg.sender === currentUser.username;
-          if (isMediaMessage(msg.text, 'image')) {
+        {messages.map((m,i) => {
+          const mine = m.sender === currentUser.username;
+          if (isMedia(m.text,'image')) {
             return (
-              <div key={i} className={`message ${mine ? 'mine' : 'theirs'}`}>
-                <img src={msg.text.replace('[image]:', '')} className="message-image" alt="sent" />
-                <span className="msg-time">{msg.time}</span>
-              </div>
-            );
-          } else if (isMediaMessage(msg.text, 'video')) {
-            return (
-              <div key={i} className={`message ${mine ? 'mine' : 'theirs'}`}>
-                <video controls className="message-video">
-                  <source src={msg.text.replace('[video]:', '')} type="video/mp4" />
-                </video>
-                <span className="msg-time">{msg.time}</span>
-              </div>
-            );
-          } else if (isMediaMessage(msg.text, 'document')) {
-            return (
-              <div key={i} className={`message ${mine ? 'mine' : 'theirs'}`}>
-                <a href={msg.text.replace('[document]:', '')} download target="_blank" rel="noreferrer">
-                  📄 Download Document
-                </a>
-                <span className="msg-time">{msg.time}</span>
-              </div>
-            );
-          } else {
-            return (
-              <div key={i} className={`message ${mine ? 'mine' : 'theirs'}`}>
-                <p>{msg.text}</p>
-                <span className="msg-time">{msg.time}</span>
+              <div key={i} className={`message ${mine?'mine':'theirs'}`}>
+                <img src={m.text.replace('[image]:','')} className="message-image" alt="" />
+                <span className="msg-time">{m.time}</span>
               </div>
             );
           }
+          // video, doc, or plain text...
+          return (
+            <div key={i} className={`message ${mine?'mine':'theirs'}`}>
+              <p>{m.text}</p>
+              <span className="msg-time">{m.time}</span>
+            </div>
+          );
         })}
         <div ref={endRef} />
       </div>
@@ -191,43 +155,20 @@ const ChatBox = ({ currentUser, selectedUser }) => {
       <form className="input-area" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Type a message..."
+          placeholder="Type a message…"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e=>setInput(e.target.value)}
         />
-
-        <Smile
-          size={22}
-          className="icon emoji-icon"
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-        />
-
-        <div className="upload-dropdown">
-          <ImageIcon size={20} className="icon image-upload-icon" onClick={() => setShowDropdown(!showDropdown)} />
-          {showDropdown && (
-            <div className="upload-menu">
-              <div onClick={() => handleUploadType('image')}>📷 Image</div>
-              <div onClick={() => handleUploadType('video')}>🎥 Video</div>
-              <div onClick={() => handleUploadType('document')}>📄 Document</div>
-            </div>
-          )}
-        </div>
-
+        <Smile size={22} className="icon" onClick={()=>setShowEmojiPicker(v=>!v)} />
         {showEmojiPicker && (
           <div className="emoji-picker">
-            <EmojiPicker onEmojiClick={handleEmojiClick} height={350} width={300} />
+            <EmojiPicker onEmojiClick={(_, emoji) => setInput(i=>i+emoji)} />
           </div>
         )}
-
+        <ImageIcon size={20} className="icon" onClick={()=>handleUploadType('image')} />
         <input
-          type="file"
-          ref={fileInputRef}
-          accept={
-            fileType === 'image' ? 'image/*' :
-              fileType === 'video' ? 'video/*' :
-                fileType === 'document' ? '.pdf,.docx' : '*'
-          }
-          style={{ display: 'none' }}
+          type="file" ref={fileInputRef}
+          style={{display:'none'}}
           onChange={handleFileChange}
         />
         <button type="submit">Send</button>

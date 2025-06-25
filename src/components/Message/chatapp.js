@@ -6,11 +6,11 @@ import './ChatApp.css';
 
 const ChatApp = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [chatHistory, setChatHistory] = useState({});
+  const [unreadCounts, setUnreadCounts] = useState({});
+  const [latestMessages, setLatestMessages] = useState({});
 
-  // Load current user from localStorage
+  // ✅ Load current user from localStorage
   useEffect(() => {
     const stored = localStorage.getItem('user');
     if (stored) {
@@ -18,7 +18,7 @@ const ChatApp = () => {
     }
   }, []);
 
-  // Redirect or show message if user is not logged in
+  // ❗ Redirect or show message if user not logged in
   if (!currentUser) {
     return (
       <div style={{ padding: '2rem', fontSize: '1.2rem', color: '#666' }}>
@@ -27,40 +27,47 @@ const ChatApp = () => {
     );
   }
 
+  // ✅ Handle user selection
   const handleSelectUser = (user) => {
     setSelectedUser(user);
-    setChatHistory((prev) => ({
-      ...prev,
-      [user.username]: prev[user.username] || [],
-    }));
+    // Reset unread count for that user
+    setUnreadCounts(prev => ({ ...prev, [user.username]: 0 }));
   };
 
-  const handleSendMessage = (text) => {
-    if (!selectedUser || !text.trim()) return;
-    const time = new Date().toLocaleTimeString('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    const msg = { sender: currentUser.username, text, time };
-    setChatHistory((prev) => ({
+  // ✅ Handle message received/sent
+  const handleNewMessage = (msg) => {
+    const otherUser = msg.sender === currentUser.username ? msg.receiver : msg.sender;
+
+    // Update latest message for preview
+    setLatestMessages(prev => ({
       ...prev,
-      [selectedUser.username]: [...prev[selectedUser.username], msg],
+      [otherUser]: { text: msg.text, time: msg.time }
     }));
+
+    // Update unread count if message is from other user and not selected
+    if (msg.sender !== currentUser.username &&
+        (!selectedUser || selectedUser.username !== msg.sender)) {
+      setUnreadCounts(prev => ({
+        ...prev,
+        [msg.sender]: (prev[msg.sender] || 0) + 1
+      }));
+    }
   };
 
   return (
     <div className="chat-app">
       <LeftSidebar
         currentUser={currentUser}
-        users={users}
-        setUsers={setUsers}
+        selectedUser={selectedUser}
         onSelectUser={handleSelectUser}
+        unreadCounts={unreadCounts}
+        latestMessages={latestMessages}
       />
+
       <ChatBox
         currentUser={currentUser}
         selectedUser={selectedUser}
-        messages={selectedUser ? chatHistory[selectedUser.username] : []}
-        onSendMessage={handleSendMessage}
+        onMessage={handleNewMessage}
       />
     </div>
   );
