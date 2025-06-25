@@ -1,22 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client'; // 👈 Add this line
+import io from 'socket.io-client';
+import EmojiPicker from 'emoji-picker-react';
 import {
-  Phone, Video, MoreVertical, UserCircle, Image as ImageIcon
+  Phone, Video, MoreVertical, UserCircle, Image as ImageIcon, Smile
 } from 'lucide-react';
 import './chatbox.css';
 
-const socket = io('http://localhost:5050'); // 👈 Connect socket
+const socket = io('http://localhost:5050');
 
 const ChatBox = ({ currentUser, selectedUser }) => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [fileType, setFileType] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
   const fileInputRef = useRef();
   const endRef = useRef();
-  const [showDropdown, setShowDropdown] = useState(false);
 
-  // Fetch chat history when user selected
+  // Fetch previous messages
   useEffect(() => {
     if (selectedUser) {
       fetch(`http://localhost:5050/api/messages/${currentUser.username}/${selectedUser.username}`)
@@ -26,15 +29,14 @@ const ChatBox = ({ currentUser, selectedUser }) => {
     }
   }, [selectedUser]);
 
-  // Auto-scroll
+  // Scroll to bottom
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // 🔴 Listen to messages from other user
+  // Receive messages
   useEffect(() => {
     socket.on('receive_message', (msg) => {
-      // Check if the message is for the currently selected chat
       if (
         selectedUser &&
         (msg.sender === selectedUser.username || msg.receiver === selectedUser.username)
@@ -42,7 +44,6 @@ const ChatBox = ({ currentUser, selectedUser }) => {
         setMessages(prev => [...prev, msg]);
       }
     });
-
     return () => {
       socket.off('receive_message');
     };
@@ -54,7 +55,8 @@ const ChatBox = ({ currentUser, selectedUser }) => {
       receiver: selectedUser.username,
       text,
       time: new Date().toLocaleTimeString('en-IN', {
-        hour: '2-digit', minute: '2-digit'
+        hour: '2-digit',
+        minute: '2-digit'
       })
     };
 
@@ -67,8 +69,6 @@ const ChatBox = ({ currentUser, selectedUser }) => {
 
       const saved = await res.json();
       setMessages(prev => [...prev, saved]);
-
-      // 🟡 Emit to socket for receiver
       socket.emit('send_message', saved);
     } catch (err) {
       console.error('Send error:', err);
@@ -87,8 +87,8 @@ const ChatBox = ({ currentUser, selectedUser }) => {
     } else {
       await sendMessageToBackend(input);
     }
-
     setInput('');
+    setShowEmojiPicker(false);
   };
 
   const handleUploadType = (type) => {
@@ -122,6 +122,10 @@ const ChatBox = ({ currentUser, selectedUser }) => {
   };
 
   const isMediaMessage = (text, type) => text.startsWith(`[${type}]:`);
+
+  const handleEmojiClick = (emojiData) => {
+    setInput((prev) => prev + emojiData.emoji);
+  };
 
   if (!selectedUser)
     return <div className="chat-box placeholder">Select a contact to chat</div>;
@@ -191,6 +195,13 @@ const ChatBox = ({ currentUser, selectedUser }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
+
+        <Smile
+          size={22}
+          className="icon emoji-icon"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        />
+
         <div className="upload-dropdown">
           <ImageIcon size={20} className="icon image-upload-icon" onClick={() => setShowDropdown(!showDropdown)} />
           {showDropdown && (
@@ -201,13 +212,20 @@ const ChatBox = ({ currentUser, selectedUser }) => {
             </div>
           )}
         </div>
+
+        {showEmojiPicker && (
+          <div className="emoji-picker">
+            <EmojiPicker onEmojiClick={handleEmojiClick} height={350} width={300} />
+          </div>
+        )}
+
         <input
           type="file"
           ref={fileInputRef}
           accept={
             fileType === 'image' ? 'image/*' :
-            fileType === 'video' ? 'video/*' :
-            fileType === 'document' ? '.pdf,.docx' : '*'
+              fileType === 'video' ? 'video/*' :
+                fileType === 'document' ? '.pdf,.docx' : '*'
           }
           style={{ display: 'none' }}
           onChange={handleFileChange}

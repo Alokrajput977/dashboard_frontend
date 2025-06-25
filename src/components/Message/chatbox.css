@@ -6,6 +6,66 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+.emoji-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* WhatsApp-style emoji picker box */
+.emoji-picker {
+  position: absolute;
+  bottom: 55px;
+  right: 0;
+  width: 320px;
+  max-height: 370px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: fadeInSlideUp 0.25s ease;
+  overflow: hidden;
+}
+
+
+/* Small triangle/arrow like WhatsApp */
+.emoji-picker::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 20px;
+  border-width: 10px 10px 0 10px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+  filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.1));
+}
+
+/* Smooth appear animation */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Emoji icon */
+.emoji-icon {
+  margin-right: 12px;
+  cursor: pointer;
+  stroke: #1b2145;
+  transition: stroke 0.2s;
+}
+
+.emoji-icon:hover {
+  stroke: #2e3260;
+}
+
+
 /* Placeholder when no chat is selected */
 .placeholder {
   flex: 1;
@@ -110,10 +170,13 @@
 /* ===== Messages Area ===== */
 .messages {
   flex: 1;
-  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
   overflow-y: auto;
-  background: #fff;
+  background: #e5ddd5; /* WhatsApp-style */
 }
+
 
 .message {
   max-width: 60%;
