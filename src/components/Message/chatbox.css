@@ -6,6 +6,51 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* Image message style */
+.message-image {
+  max-width: 180px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.message-image:hover {
+  transform: scale(1.02);
+}
+
+/* Fullscreen preview */
+.image-viewer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-viewer-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.image-viewer-overlay .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+
 .emoji-container {
   position: relative;
   display: flex;

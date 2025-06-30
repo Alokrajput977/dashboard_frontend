@@ -19,7 +19,7 @@ function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-title">
-        <h2>Dashboard</h2>
+        {/* <h2>Dashboard</h2> */}
       </div>
 
       <div className="navbar-right">
