@@ -315,8 +315,9 @@ const ChatBox = ({ currentUser, selectedUser, onMessage }) => {
           {showEmoji && (
             <div className="emoji-picker">
               <EmojiPicker
-                onEmojiClick={(_, emoji) => setInput(i => i + emoji)}
+                onEmojiClick={(emojiData) => setInput(i => i + emojiData.emoji)}
               />
+
             </div>
           )}
           <ImageIcon
