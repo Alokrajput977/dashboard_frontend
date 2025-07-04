@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,11 +5,20 @@ import {
   faSearch,
   faVideo,
   faEye,
-  faCommentDots
+  faCommentDots,
+  faPencilRuler
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
-function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
+function Navbar({
+  theme,
+  toggleTheme,
+  onAddMember,
+  onViewCameraFeed,
+  onMessagesClick,
+  onDrawClick,
+  onLogout
+}) {
   const storedUser = localStorage.getItem('user');
   const role = storedUser
     ? JSON.parse(storedUser).role?.toString().trim().toLowerCase()
@@ -19,10 +27,11 @@ function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-title">
-        {/* <h2>Dashboard</h2> */}
+        {/* You can add a title or logo here */}
       </div>
-
       <div className="navbar-right">
+       
+
         {/* Search */}
         <div className="search-container">
           <input
@@ -35,7 +44,16 @@ function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
           </button>
         </div>
 
-        {/* Camera System - only visible for manager */}
+        {/* Drawing / Excalidraw */}
+        <button
+          className="draw-btn"
+          onClick={onDrawClick}
+          title="Open Drawing Canvas"
+        >
+          <FontAwesomeIcon icon={faPencilRuler} />
+        </button>
+
+        {/* Camera Feed (managers only) */}
         {role === 'manager' && (
           <div
             className="camera-system"
@@ -49,7 +67,7 @@ function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
           </div>
         )}
 
-        {/* Messages Icon - opens chatbox */}
+        {/* Messages */}
         <div
           className="message-system"
           onClick={onMessagesClick}
@@ -58,13 +76,18 @@ function Navbar({ onAddMember, onViewCameraFeed, onMessagesClick }) {
           <FontAwesomeIcon icon={faCommentDots} className="message-icon" />
         </div>
 
-        {/* Employee Table Button */}
+        {/* Add Member */}
         <button
           className="add-member-btn"
           onClick={onAddMember}
-          title="Add a new member"
+          title="Employee Table"
         >
           <FontAwesomeIcon icon={faPlus} /> Employee Table
+        </button>
+
+        {/* Logout */}
+        <button className="logout-btn" onClick={onLogout}>
+          Logout
         </button>
       </div>
     </nav>

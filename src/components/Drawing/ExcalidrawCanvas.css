@@ -1,0 +1,66 @@
+.draw-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+input[type="file"] {
+  display: none;
+}
+
+
+.excalidraw-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fb, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  border: 1px solid #e4e4e7;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #d4d4d8;
+  border-radius: 14px;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.15s;
+}
+
+.toolbar-button:hover {
+  background: #f3f4f6;
+  box-shadow: 0 4px 10px rgba(124, 83, 237, 0.2);
+}
+
+.toolbar-button:active {
+  transform: scale(0.95);
+}
+
+.toolbar-icon {
+  color: #7c3aed;
+  transition: color 0.2s;
+}
+
+.toolbar-button:hover .toolbar-icon {
+  color: #5b21b6;
+}
+
+.toolbar-button.active {
+  border: 2px solid #7c3aed;
+  background: #f3f0ff;
+}
+
+.draw-canvas {
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  background: #ffffff;
+  margin-top: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}

@@ -1,4 +1,3 @@
-// src/components/DashboardLayout.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -35,8 +34,9 @@ import SalesLineItems from "./Sales_Management/SalesItoms";
 import ServiceCatalog from "./Servise/catalog";
 import CameraInputPage from "./camera/cameraview";
 import CameraDashboard from "./camera/cameradashbaord";
-import ServiceInventory from "../components/Servise/Inventory"
-import ChatApp from "../components/Message/chatapp"
+import ServiceInventory from "../components/Servise/Inventory";
+import ChatApp from "../components/Message/chatapp";
+import ExcalidrawCanvas from "./Drawing/Draw";
 
 import "./Dashboard.css";
 
@@ -74,6 +74,7 @@ export default function Dashboard({ user, setUser }) {
     navigate("/");
   };
 
+  // Render the appropriate view
   let content;
   switch (view) {
     case "time":
@@ -170,7 +171,9 @@ export default function Dashboard({ user, setUser }) {
     case "messages":
       content = <ChatApp />;
       break;
-
+    case "draw":               // ← this key must match the onDrawClick route
+      content = <ExcalidrawCanvas />;
+      break;
     case "boards":
     default:
       content = (
@@ -192,7 +195,8 @@ export default function Dashboard({ user, setUser }) {
           toggleTheme={toggleTheme}
           onAddMember={() => navigate("/dashboard/members")}
           onViewCameraFeed={() => navigate("/dashboard/cameraview")}
-          onMessagesClick={() => navigate("/dashboard/messages")} 
+          onMessagesClick={() => navigate("/dashboard/messages")}
+          onDrawClick={() => navigate("/dashboard/draw")}  // ← routes to `draw`
           onLogout={handleLogout}
         />
         <div className="content-area">

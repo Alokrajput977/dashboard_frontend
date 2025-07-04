@@ -5,6 +5,29 @@
   --transition: 0.3s ease;
 }
 
+/* src/components/Navbar.css */
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* style the Draw button */
+.draw-btn {
+  background: none;
+  border: none;
+  color: var(--text-color); /* adapt to your theme variables */
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+.draw-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* Message System */
 .message-system {
   display: flex;
