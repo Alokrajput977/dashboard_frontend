@@ -85,10 +85,7 @@ function Navbar({
           <FontAwesomeIcon icon={faPlus} /> Employee Table
         </button>
 
-        {/* Logout */}
-        <button className="logout-btn" onClick={onLogout}>
-          Logout
-        </button>
+        
       </div>
     </nav>
   );

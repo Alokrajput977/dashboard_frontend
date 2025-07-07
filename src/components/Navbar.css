@@ -15,7 +15,7 @@
 
 /* style the Draw button */
 .draw-btn {
-  background: none;
+  background: #5355e8;
   border: none;
   color: var(--text-color); /* adapt to your theme variables */
   font-size: 1.25rem;
