@@ -8,6 +8,15 @@ input[type="file"] {
   display: none;
 }
 
+.text-input-overlay {
+  font-size: 20px;
+  padding: 2px;
+  border: 1px solid #7c3aed;
+  background: #fff;
+  color: #000;
+  outline: none;
+}
+
 
 .excalidraw-toolbar {
   display: flex;
